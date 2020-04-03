@@ -1,10 +1,60 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!--/**
+*@Author: wang shen
+*@Date:2020/3/29
+*@Description:该页面为网站的主页面
+*/-->
 <head>
     <meta charset="UTF-8">
-    <title>主页</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to=no">
+
+    <!--css Document-->
+    <link rel="stylesheet" href="css/bootstrap.min.css" >
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/basic.css">
+   <!--/css Document-->
+
+    <title>抗日战争专题主页</title>
 </head>
 <body>
+<!--js Document-->
+<!--jquery、popper、bootstrap-->
+<script type="text/javascript" src="/js/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+<script type="text/javascript" src="/js/bootstrap.min.js"></script>
+<!--js Document-->
+
+<!--container-->
+<div id="container">
+    <!--header-->
+    <div th:include="~{model::headerModel}"></div>
+    <!--content-->
+    <div id="mainContent">
+        <div class="card">
+            <div class="card-body">卡片一</div>
+        </div>
+        <div class="card">
+            <div class="card-body">卡片二</div>
+        </div>
+
+    </div>
+    <!--/content-->
+    <!--footer-->
+    <div id="footer">
+
+    </div>
+    <!--/footer-->
+
+
+</div>
+
+
+
+
+
 
 </body>
 </html>

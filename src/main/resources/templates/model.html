@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!--/**
+*@Author: wang shen
+*@Date:2020/3/29
+*@Description: 该页面是页面的模板，主要包含导航栏部分
+*/-->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to=no">
+
+    <!--css Document-->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/bootstrap.css">
+    <link rel="stylesheet" href="/css/basic.css">
+    <!--css Document-->
+
+    <title>导航栏模板</title>
+</head>
+<body>
+<!--js Document-->
+<!--jquery、popper、bootstrap-->
+<script type="text/javascript" src="/js/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+<script type="text/javascript" src="/js/bootstrap.min.js"></script>
+<!--js Document-->
+
+<!--container-->
+<div id="container">
+    <!--head-->
+    <div id="header" th:fragment="headerModel">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+            <a class="navbar-brand" href="/index.html">抗日战争历史专题</a>
+            <div class="collapse navbar-collapse mr-auto" id="navbarSupportedContent">
+                <ul class="navbar-nav ">
+                    <li class="nav-item">
+                        <!--<span>标签中的属性作用实在网页拥有阅读功能是可以读取高亮的字体-->
+                        <a class="nav-link" th:href="@{/index}">主页<span class="sr-only">主页</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">历史地图</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">历史时间轴</a>
+                    </li>
+                </ul>
+                <form class="form-inline my-2 my-lg-0">
+                    <div class="input-group-prepend ">
+                        <input class="form-control mr-sm-2" type="search" placeholder="请输入关键词" aria-label="Search">
+                    </div>
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-light my-2 my-sm-0" type="submit"><img src="../images/search.svg"
+                                                                                             width="24"
+                                                                                             height="20"></button>
+                    </div>
+                </form>
+                <div class="ml-auto">
+                    <a class="btn-link" th:href="@{/login}"><img src="../images/people-circle.svg" width="40" height="40"></a>
+                </div>
+            </div>
+        </nav>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" style="margin-top: 56px;" >
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">局部抗战</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">全国战争</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">伟大胜利</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">游击战</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">抗战人物</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">抗战故事</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">抗战资料</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">国际友人</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">抗战遗址</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+    <!--/header-->
+    <!--content-->
+    <div id="mainContent" >
+
+
+    </div>
+
+    <!--footer-->
+    <div id="footer">
+
+    </div>
+
+
+    <!--modal-->
+  <!--  <div class="modal fade" id="login" data-backdrop="static" tabindex="-1" role="dialog"
+         aria-labelledby="staticBackdropLabel" aria-hidden="true" th:fragment="modalModel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header ">
+                    <h5 class="modal-title text-primary" id="staticBackdropLabel">登录</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label" for="username">用户名:</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="username">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label" for="password">密码:</label>
+                            <div class="col-sm-10">
+                                <input type="password" class="form-control" id="password">
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                        <button type="button" class="btn btn-primary">登录</button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>-->
+
+
+</div>
+<!--/container-->
+
+</body>
+</html>
