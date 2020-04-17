@@ -7,7 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 
-
 /**
  * @Author: wangshen
  * @Date: 2020/4/2
@@ -16,19 +15,42 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class indexController {
 
-//日志
+    //日志
     Logger logger = LoggerFactory.getLogger(indexController.class);
 
-//部分导航栏的页面跳转处理
+    /*
+     * 点击抗日战争首页跳转的地方
+     * */
     @GetMapping("/index")
-    public String skipIndex(){
+    public String skipIndex() {
 
         return "index";
     }
 
+    /*
+     * 登录页面跳转
+     * */
     @GetMapping("/login")
-    public String skipLogin(){
+    public String skipLogin() {
         return "login";
+    }
+
+    /*
+     *关于抗战历史(局部、全国、伟大胜利），页面的跳转
+     * */
+    @GetMapping("/partHistory")
+    public String skipPartHistory() {
+        return "partHistory";
+    }
+
+    @GetMapping("/nationwideHistory")
+    public String skipNationwideHistory(){
+        return "nationwideHistory";
+    }
+
+    @GetMapping("/victoryHistory")
+    public String skipVictoryHistory(){
+        return "victoryHistory";
     }
 
 

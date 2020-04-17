@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nchu.anti_japan_history.webpage.mapper.UserMapper"><!--对应的mapper文件的路径-->
+    <resultMap id="BaseResultMap" type="com.nchu.anti_japan_history.webpage.entity.User"><!--对应的实体类-->
+        <id column="userId" property="userId" jdbcType="INTEGER"/><!--以下是表对应的属性-->
+        <result column="userName" property="userName"/>
+        <result column="userPassword" property="userPassword"/>
+        <result column="userPicture" property="userPicture"/>
+        <result column="userPower" property="userPower"/>
+    </resultMap>
+
+    <insert id="save" parameterType="com.nchu.anti_japan_history.webpage.entity.User">
+        INSERT INTO user(userName,userPassword,userPicture,userPower)
+        VALUES (#{userName},#{userPassword},#{userPicture},#{userPower})
+    </insert>
+
+
+   <!-- <select id="listAll" resultMap="departMap">
+        SELECT departId,departName,departmentLeading,departmentNum,departmentAddress,departmentResponsible
+        FROM department_message
+    </select>
+
+    <delete id="delete">
+        DELETE FROM department_message WHERE departId = #{departId};
+    </delete>
+
+
+    <update id="update" parameterType="cn.nchu.edu.software.policeManager.entity.DepartmentMessage">
+        UPDATE department_message SET departName=#{departName},departmentAddress=#{departmentAddress},
+        departmentLeading=#{departmentLeading},departmentNum=#{departmentNum},departmentResponsible=#{departmentResponsible}
+        WHERE departId=#{departId}
+    </update>
+
+    <select id="selectDepartId" resultMap="departMap">
+        SELECT departId,departName,departmentLeading,departmentNum,departmentAddress,departmentResponsible
+        FROM department_message
+        WHERE departId = #{departId}
+    </select>
+
+    <select id="queryByKeyword" resultMap="departMap">
+        SELECT departId,departName,departmentLeading,departmentNum,departmentAddress,departmentResponsible
+        FROM department_message
+        <where>
+            <if test="keyword!=null">
+                <bind name="keywordLike" value="'%'+keyword+'%'"></bind>
+                AND ((departName LIKE #{keywordLike}) OR (departmentLeading LIKE #{keywordLike})
+                OR (departmentNum LIKE #{keywordLike}) OR (departmentAddress LIKE #{keywordLike})
+                OR (departmentResponsible LIKE #{keywordLike}))
+            </if>
+        </where>
+    </select>
+-->
+</mapper>
