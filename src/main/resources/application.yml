@@ -1,0 +1,32 @@
+spring:
+  thymeleaf:
+    mode: HTML5
+    encoding: UTF-8
+    cache: false
+    servlet:
+      content-type: text/html
+  datasource:
+    url: jdbc:mysql://localhost:3306/antihistory?characterEncoding=UTF-8&useSSL=true
+    username: root
+    password: 106655
+    driver-class-name: com.mysql.jdbc.Driver
+  servlet:
+    multipart:
+      max-request-size: -1
+      max-file-size: -1
+mybatis:
+  #the package of .xml
+  mapperLocations: classpath:mapper/*.xml
+  #the package of entity
+  typeAliasesPackage: com.nchu.anti_japan_history.*.entity
+logging:
+  level:
+    root: info
+  #peizhi fang wen wai bu wen jian
+cbs:
+  imagesPath: file:/F:/Resource/images/
+  videoPath: file:/F:/Resource/video/
+  musicPath: file:/F:/Resource/music/
+
+
+

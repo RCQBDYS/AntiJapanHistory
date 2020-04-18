@@ -1,0 +1,109 @@
+<html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+    <meta charset="UTF-8">
+    <title>预览头像</title>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style type="text/css">
+        /*预览图片大小*/
+        #myImg img{
+            width: 250px;
+            height: 250px;
+        }
+    </style>
+</head>
+
+<body>
+
+<!--1:隐藏表单-->
+<form action="/show/upload.do" method="post" enctype="multipart/form-data" id="myForm" class="form">
+    <input type="file" id="myFile" name="myFile" style="display: none">
+</form>
+
+<!-- 2:按钮触发模态框 -->
+<button class="btn btn-default btn-lg" data-toggle="modal" data-target="#myModal">修改头像</button>
+
+
+<!--3: 模态框（Modal） -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="myModalLabel"> 上传头像</h4>
+            </div>
+            <div class="modal-body text-center">
+                <!-- -text-cente  bootstrap子元素居中--->
+                <span id="myImg">
+                	<!--预览图片位置，默认图片-->
+                    <img src="./img/notlogin.jpg" class="img-circle">
+                </span>
+
+            </div>
+            <div class="modal-footer">
+                <!--点击选择文件-->
+                <button type="button" class="btn btn-default" οnclick="$('#myFile').click();" >浏览</button>
+                <!--点击提交表单-->
+                <button type="button" class="btn btn-primary" id="btn">提交 </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+
+
+<script type="text/javascript">
+
+    //第一种实现--------------------------------------------------------------------------------------------
+    //  JS点击提交表单
+    //	var btn=document.getElementById("btn");
+    //	var form=document.getElementById("myForm");
+    //	btn.οnclick=function(){
+    //		form.submit();
+    //	}
+
+    //  JS预览
+    //  var myfile=document.getElementById("myFile");//获取上传文件表单
+    //  myfile.οnchange=function(){
+    //      var file=this.files[0] ;  // 获取input上传的图片数据;
+    //
+    //      var url=window.URL.createObjectURL(file);  // 得到file对象路径，可当成普通的文件路径一样使用，赋值给src;
+    //
+    //      document.getElementById("myImg").innerHTML="<img src='"+url+"' class='img-circle'/>";
+    //  }
+
+    //第二种实现--------------------------------------------------------------------------------------------
+    //  JQ点击提交表单
+    $("#btn").on("click", function () {
+        $('#myForm').submit();
+    });
+
+    //  JQ 预览
+    $("#myFile").change(function(){//上传文件表单
+        var file=this.files[0] ;  // 获取input上传的图片数据;
+        var url=window.URL.createObjectURL(file);  // 得到file对象路径，可当成普通的文件路径一样使用，赋值给src;
+        $("#myImg").html("<img src='"+url+"' class='img-circle'/>");
+
+
+        //获得原图片的长和宽-------------------------
+        //var img = new Image();// 创建对象
+        //img.src =url;// 改变图片的src
+        //img.onload = function(){// 加载完成执行
+        // 打印
+        //alert('width:'+img.width+',height:'+img.height);
+        //};
+
+    });
+
+
+
+
+</script>
+
+</html>
