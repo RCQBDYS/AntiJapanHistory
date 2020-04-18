@@ -21,19 +21,7 @@ public class WebAppConfig implements WebMvcConfigurer {
     //对图片的上传进行路径的配置，并设置项目在运行时能够对访问配置路径的下的文件
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry){
-        /*if (ImagesPath.equals("")||ImagesPath.equals("${cbs.imagesPath}")){
-            String imagesPath = WebAppConfig.class.getClassLoader().getResource("").getPath();
-            if (imagesPath.indexOf(".jar")>0){
-                imagesPath = imagesPath.substring(0,imagesPath.indexOf(".jar"));
 
-            }else if(imagesPath.indexOf("classes")>0){
-                imagesPath = "file:"+imagesPath.substring(0,imagesPath.indexOf("classes"));
-
-            }
-            imagesPath = imagesPath.substring(0,imagesPath.lastIndexOf("/"))+"/images/";
-            ImagesPath = imagesPath;
-        }
-        LoggerFactory.getLogger(WebAppConfig.class).info("imagesPath=" + ImagesPath);*/
         registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
         registry.addResourceHandler("/images/**").addResourceLocations("file:F:/Resource/images/");
     }

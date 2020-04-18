@@ -1,6 +1,7 @@
 package com.nchu.anti_japan_history.webpage.controller;
 
 import com.nchu.anti_japan_history.utils.RandomUtils;
+import com.nchu.anti_japan_history.utils.SensitiveWordFilter;
 import com.nchu.anti_japan_history.webpage.entity.AntiHistory;
 import com.nchu.anti_japan_history.webpage.service.AntiHistoryService;
 import org.slf4j.Logger;
@@ -58,6 +59,13 @@ public class HistoryController {
                                  @RequestParam(value = "antiHistoryContent")String antiHistoryContent){
         AntiHistory antiHistory = new AntiHistory();
         antiHistory.setAntiHistoryName(antiHistoryName);
+        //进行敏感词汇过滤，铭感词汇替换成
+        SensitiveWordFilter sensitiveWordFilter = new SensitiveWordFilter("CensorWords.txt");
+        sensitiveWordFilter.InitializationWork();
+        //System.out.println("被检测字符长度="+antiHistoryContent.length());
+        antiHistoryContent = sensitiveWordFilter.filterInfo(antiHistoryContent);
+        //System.out.println("过滤之后的Content="+antiHistoryContent);
+        //logger.info("替换后的内容：" + antiHistoryContent);
         antiHistory.setAntiHistoryContent(antiHistoryContent);
         int flag = 0;
         //通过对imagesPath路径的截取，以获得图片存储的文件路径
