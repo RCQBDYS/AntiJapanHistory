@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nchu.anti_japan_history.webpage.mapper.PictureMapper">
+    <resultMap id="pictureMap" type="com.nchu.anti_japan_history.webpage.entity.Picture">
+        <id column="pictureId" property="pictureId" jdbcType="INTEGER"/>
+        <result column="pictureWay" property="pictureWay" jdbcType="VARCHAR"/>
+        <result column="pictureDescription" property="pictureDescription" jdbcType="VARCHAR"/>
+        <result column="pictureName" property="pictureName" jdbcType="VARCHAR"/>
+        <result column="pictureContribution" property="pictureContribution" jdbcType="VARCHAR"/>
+        <result column="pictureState" property="pictureState" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <select id="pictureListAll" resultMap="pictureMap">
+        SELECT * FROM picturedata;
+    </select>
+
+    <insert id="pictureSave" parameterType="com.nchu.anti_japan_history.webpage.entity.Picture">
+        INSERT INTO picturedata(pictureName,pictureWay,pictureDescription, pictureState,pictureContribution)
+        VALUES (#{pictureName},#{pictureWay},#{pictureDescription},#{pictureState},#{pictureContribution})
+    </insert>
+
+    <!--<select id="listAll" resultMap="departMap">
+        SELECT departId,departName,departmentLeading,departmentNum,departmentAddress,departmentResponsible
+        FROM department_message
+    </select>-->
+
+    <!--<delete id="delete">
+        DELETE FROM department_message WHERE departId = #{departId};
+    </delete>
+
+    <insert id="save" parameterType="cn.nchu.edu.software.policeManager.entity.DepartmentMessage">
+        INSERT INTO department_message(departName,departmentAddress,departmentLeading, departmentNum,departmentResponsible)
+        VALUES (#{departName},#{departmentAddress},#{departmentLeading},#{departmentNum},#{departmentResponsible})
+    </insert>
+
+    <update id="update" parameterType="cn.nchu.edu.software.policeManager.entity.DepartmentMessage">
+        UPDATE department_message SET departName=#{departName},departmentAddress=#{departmentAddress},
+        departmentLeading=#{departmentLeading},departmentNum=#{departmentNum},departmentResponsible=#{departmentResponsible}
+        WHERE departId=#{departId}
+    </update>
+
+    <select id="selectDepartId" resultMap="departMap">
+        SELECT departId,departName,departmentLeading,departmentNum,departmentAddress,departmentResponsible
+        FROM department_message
+        WHERE departId = #{departId}
+    </select>
+
+    <select id="queryByKeyword" resultMap="departMap">
+        SELECT departId,departName,departmentLeading,departmentNum,departmentAddress,departmentResponsible
+        FROM department_message
+        <where>
+            <if test="keyword!=null">
+                <bind name="keywordLike" value="'%'+keyword+'%'"></bind>
+                AND ((departName LIKE #{keywordLike}) OR (departmentLeading LIKE #{keywordLike})
+                OR (departmentNum LIKE #{keywordLike}) OR (departmentAddress LIKE #{keywordLike})
+                OR (departmentResponsible LIKE #{keywordLike}))
+            </if>
+        </where>
+    </select>-->
+
+</mapper>

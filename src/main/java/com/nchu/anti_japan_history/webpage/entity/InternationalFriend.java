@@ -15,4 +15,6 @@ public class InternationalFriend implements Serializable {
     private String name;                   //姓名
     private String achievement;            //成就
     private String picture;                //图片
+    private Integer friendState;           //审核状态
+    private String friendContribution;     //贡献者
 }

@@ -18,11 +18,15 @@ public class WebAppConfig implements WebMvcConfigurer {
     @Value("${cbs.musicPath}")
     private  String MusicPath;
 
+    @Value("${cbs.pdf")
+    private  String pdf;
+
     //对图片的上传进行路径的配置，并设置项目在运行时能够对访问配置路径的下的文件
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry){
 
         registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
+        registry.addResourceHandler("/pdf/**").addResourceLocations("file:F:/Resource/pdf/");
         registry.addResourceHandler("/images/**").addResourceLocations("file:F:/Resource/images/");
     }
 

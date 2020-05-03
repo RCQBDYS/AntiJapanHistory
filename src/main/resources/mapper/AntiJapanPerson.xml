@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nchu.anti_japan_history.webpage.mapper.AntiJapanPersonMapper">
+    <resultMap id="AntiJapanPersonMap" type="com.nchu.anti_japan_history.webpage.entity.AntiJapanPerson">
+        <id column="antiJapanPersonId" property="antiJapanPersonId" jdbcType="INTEGER"/>
+        <result column="personName" property="personName" jdbcType="VARCHAR"/>
+        <result column="timeQuantum" property="timeQuantum" jdbcType="VARCHAR"/>
+        <result column="content" property="content" jdbcType="VARCHAR"/>
+        <result column="personPicture" property="personPicture" jdbcType="VARCHAR"/>
+        <result column="personState" property="personState" jdbcType="INTEGER"/>
+        <result column="personContribution" property="personContribution" jdbcType="VARCHAR"/>
+    </resultMap>
+    <select id="antiJapanPersonSelect" resultMap="AntiJapanPersonMap">
+        SELECT * FROM antijapanperson LIMIT 4;
+    </select>
+
+    <!--显示全部listAll-->
+    <select id="antiPersonListAll" resultMap="AntiJapanPersonMap">
+        SELECT * FROM antijapanperson;
+    </select>
+
+    <!--保存历史人物信息-->
+    <insert id="antiPersonSave" parameterType="com.nchu.anti_japan_history.webpage.entity.AntiJapanPerson">
+        INSERT INTO antijapanperson(personName,personPicture,timeQuantum,content,personState,personContribution)
+        VALUES (#{personName},#{personPicture},#{timeQuantum},#{content},#{personState},#{personContribution})
+    </insert>
+
+    <!--<delete id="delete">
+        DELETE FROM department_message WHERE departId = #{departId};
+    </delete>
+
+
+
+    <update id="update" parameterType="cn.nchu.edu.software.policeManager.entity.DepartmentMessage">
+        UPDATE department_message SET departName=#{departName},departmentAddress=#{departmentAddress},
+        departmentLeading=#{departmentLeading},departmentNum=#{departmentNum},departmentResponsible=#{departmentResponsible}
+        WHERE departId=#{departId}
+    </update>
+
+    <select id="selectDepartId" resultMap="departMap">
+        SELECT departId,departName,departmentLeading,departmentNum,departmentAddress,departmentResponsible
+        FROM department_message
+        WHERE departId = #{departId}
+    </select>
+
+    <select id="queryByKeyword" resultMap="departMap">
+        SELECT departId,departName,departmentLeading,departmentNum,departmentAddress,departmentResponsible
+        FROM department_message
+        <where>
+            <if test="keyword!=null">
+                <bind name="keywordLike" value="'%'+keyword+'%'"></bind>
+                AND ((departName LIKE #{keywordLike}) OR (departmentLeading LIKE #{keywordLike})
+                OR (departmentNum LIKE #{keywordLike}) OR (departmentAddress LIKE #{keywordLike})
+                OR (departmentResponsible LIKE #{keywordLike}))
+            </if>
+        </where>
+    </select>-->
+
+</mapper>

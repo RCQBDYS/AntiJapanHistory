@@ -6,6 +6,8 @@ import com.nchu.anti_japan_history.webpage.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @Author: wangshen
  * @Date: 2020/4/10
@@ -31,5 +33,20 @@ public class UserServiceImpl implements UserService {
     @Override
     public User login(String userName, String userPassword) {
         return userMapper.login(userName,userPassword);
+    }
+
+    @Override
+    public List<User> selectUserName(String userName) {
+        return userMapper.selectUserName(userName);
+    }
+
+    @Override
+    public User selectById(Long userId) {
+        return userMapper.selectById(userId);
+    }
+
+    @Override
+    public int update(User user) {
+        return userMapper.update(user);
     }
 }

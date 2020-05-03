@@ -3,25 +3,66 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.nchu.anti_japan_history.webpage.mapper.AntiHistoryMapper">
-    <resultMap id="BaseResultMap" type="com.nchu.anti_japan_history.webpage.entity.AntiHistory">
-        <id column="antiHistoryId" property="antiHistoryId"/>
-        <result column="antiHistoryName" property="antiHistoryName"/>
-        <result column="antiHistoryPicture" property="antiHistoryName"/>
-        <result column="antiHistoryContent" property="antiHistoryContent"/>
+    <resultMap id="AntiHistoryMap" type="com.nchu.anti_japan_history.webpage.entity.AntiHistory">
+        <id column="antiHistoryId" property="antiHistoryId" jdbcType="INTEGER"/>
+        <result column="antiHistoryName" property="antiHistoryName" jdbcType="VARCHAR"/>
+        <result column="antiHistoryDescription" property="antiHistoryDescription" jdbcType="VARCHAR"/>
+        <result column="antiHistoryPicture" property="antiHistoryPicture" jdbcType="VARCHAR"/>
+        <result column="antiHistoryContent" property="antiHistoryContent" jdbcType="VARCHAR"/>
+        <result column="antiHistoryType" property="antiHistoryType" jdbcType="INTEGER"/>
+        <result column="antiHistoryState" property="antiHistoryState" jdbcType="INTEGER"/>
+        <result column="antiHistoryContribution" property="antiHistoryContribution" jdbcType="VARCHAR"/>
     </resultMap>
-    <!--<select id="listAll" resultMap="departMap">
-        SELECT departId,departName,departmentLeading,departmentNum,departmentAddress,departmentResponsible
-        FROM department_message
-    </select>-->
+    <!--index显示局部战争历史-->
+    <select id="partHistorySelect" resultMap="AntiHistoryMap">
+        SELECT * FROM antihistory where antiHistoryType='1' LIMIT 4;
+    </select>
+    <!--index显示全国战争历史-->
+    <select id="nationwideHistorySelect" resultMap="AntiHistoryMap">
+        SELECT * FROM antihistory where antiHistoryType='2' LIMIT 4;
+    </select>
+    <!--index显示伟大胜利历史-->
+    <select id="victoryHistorySelect" resultMap="AntiHistoryMap">
+        SELECT * FROM antihistory where antiHistoryType='3' LIMIT 4;
+    </select>
 
-    <!--<delete id="delete">
-        DELETE FROM department_message WHERE departId = #{departId};
-    </delete>-->
+    <!--index显示游击战争历史-->
+    <select id="guerrillaWarfareSelect" resultMap="AntiHistoryMap">
+        SELECT * FROM antihistory where antiHistoryType='4' LIMIT 4;
+    </select>
 
-    <insert id="addEntriesDataSave" parameterType="com.nchu.anti_japan_history.webpage.entity.AntiHistory">
-        INSERT INTO antihistory(antiHistoryName,antiHistoryPicture,antiHistoryContent)
-        VALUES (#{antiHistoryName},#{antiHistoryPicture},#{antiHistoryContent})
-    </insert>
+    <!-- 局部抗战LISTAAL-->
+    <select id="partListAll" resultMap="AntiHistoryMap">
+        SELECT * FROM antihistory where antiHistoryType='1';
+    </select>
+
+    <!--全国抗战listAll-->
+    <select id="nationwideListAll" resultMap="AntiHistoryMap">
+        SELECT * FROM antihistory where antiHistoryType='2';
+    </select>
+
+    <!--伟大胜利listAll-->
+    <select id="victoryListAll" resultMap="AntiHistoryMap">
+        SELECT * FROM antihistory where antiHistoryType='3';
+    </select>
+
+    <!--游击战争listAll-->
+    <select id="guerrillaWarfareListAll" resultMap="AntiHistoryMap">
+        SELECT * FROM antihistory where antiHistoryType='4';
+    </select>
+
+
+    <select id="addEntriesDataSave" parameterType="com.nchu.anti_japan_history.webpage.entity.AntiHistory" statementType="CALLABLE">
+        {call antiHistory_insert(
+        #{antiHistoryName,jdbcType=INTEGER,mode=IN},
+        #{antiHistoryDescription,jdbcType=VARCHAR,mode=IN},
+        #{antiHistoryPicture,jdbcType=VARCHAR, mode=IN},
+        #{antiHistoryContent, jdbcType=VARCHAR,mode=IN},
+        #{antiHistoryType,jdbcType=INTEGER,mode=IN},
+        #{antiHistoryContribution,jdbcType=VARCHAR,mode=IN},
+        #{antiHistoryState,jdbcType=INTEGER,mode=IN}
+        )}
+    </select>
 
     <!--<update id="update" parameterType="cn.nchu.edu.software.policeManager.entity.DepartmentMessage">
         UPDATE department_message SET departName=#{departName},departmentAddress=#{departmentAddress},

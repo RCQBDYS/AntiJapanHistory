@@ -20,12 +20,14 @@
           integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
     <!-- Custom styles for this template -->
     <link href="css/theme.css" rel="stylesheet">
+    <!--字体font-->
+    <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
 
 
 </head>
 <body>
 <!--nav-->
-<div th:fragment="navTop">
+<div>
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -38,7 +40,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">抗日战争历史专题</a>
+                <a class="navbar-brand">抗日战争历史专题</a>
             </div>
             <div id="navbar " class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-left">
@@ -56,15 +58,20 @@
                 </form>
                 <a class="btn-link navbar-right" th:if="${session.user eq null}" th:href="@{/login}"><img
                         class="img-circle"
-                        src="static\images\people-circle.svg" width="40"
-                        height="40"></a>
-                <a class="btn-link navbar-right" th:if="${session.user ne null}" href="#"><img
-                        class="img-circle"
-                        th:src="${session.user.userPicture}"
-                        width="60" height="60">
-                </a>
-                <a class="navbar-right" th:if="${session.user ne null}"><span class="label" th:text="${session.user.userName}"></span> </a>
-
+                        src="static\images\people-circle.svg" width="50"
+                        height="50"></a>
+                <ul class="navbar-right" th:if="${session.user ne null}">
+                    <li class="dropdown">
+                        <span th:text="${session.user.userName}" style="color: azure"></span>
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown">
+                            <img class="img-circle" th:src="${session.user.userPicture}" width="50" height="50">
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a th:href="@{/unit}"><i class="fa fa-user"></i>个人中心</a></li>
+                            <li><a th:href="@{/logout}"><i class="fa fa-power-off"></i>退出</a></li>
+                        </ul>
+                    </li>
+                </ul>
             </div><!--/.nav-collapse -->
         </div><!--/.container-->
     </nav>
@@ -88,153 +95,38 @@
         <h3>局部战争</h3>
     </div>
     <div class="row">
-        <div class="col-sm-6 col-md-3">
+        <div class="col-sm-6 col-md-3" th:each="case:${session.partList}">
             <div class="thumbnail">
-                <img>
-                alt="通用的占位符缩略图">
+                <img th:src="${case.antiHistoryPicture}" style="height: 160px;width: 254px;">
                 <div class="caption">
-                    <h3>缩略图标签</h3>
-                    <p>一些示例文本。一些示例文本。</p>
+                    <h3 th:text="${case.antiHistoryName}"></h3>
+                    <p th:text="${#strings.abbreviate(case.antiHistoryDescription,25)}"></p>
                     <p>
-                        <a href="#" class="btn btn-primary" role="button">
-                            按钮
-                        </a>
-                        <a href="#" class="btn btn-default" role="button">
-                            按钮
-                        </a>
-                    </p>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-6 col-md-3">
-            <div class="thumbnail">
-                <img src="/wp-content/uploads/2014/06/kittens.jpg"
-                     alt="通用的占位符缩略图">
-                <div class="caption">
-                    <h3>缩略图标签</h3>
-                    <p>一些示例文本。一些示例文本。</p>
-                    <p>
-                        <a href="#" class="btn btn-primary" role="button">
-                            按钮
-                        </a>
-                        <a href="#" class="btn btn-default" role="button">
-                            按钮
-                        </a>
-                    </p>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-6 col-md-3">
-            <div class="thumbnail">
-                <img src="/wp-content/uploads/2014/06/kittens.jpg"
-                     alt="通用的占位符缩略图">
-                <div class="caption">
-                    <h3>缩略图标签</h3>
-                    <p>一些示例文本。一些示例文本。</p>
-                    <p>
-                        <a href="#" class="btn btn-primary" role="button">
-                            按钮
-                        </a>
-                        <a href="#" class="btn btn-default" role="button">
-                            按钮
-                        </a>
-                    </p>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-6 col-md-3">
-            <div class="thumbnail">
-                <img src="/wp-content/uploads/2014/06/kittens.jpg"
-                     alt="通用的占位符缩略图">
-                <div class="caption">
-                    <h3>缩略图标签</h3>
-                    <p>一些示例文本。一些示例文本。</p>
-                    <p>
-                        <a href="#" class="btn btn-primary" role="button">
-                            按钮
-                        </a>
-                        <a href="#" class="btn btn-default" role="button">
-                            按钮
+                        <a th:href="@{/historyDetails}+${case.antiHistoryId}" class="btn btn-default" role="button">
+                            更多
                         </a>
                     </p>
                 </div>
             </div>
         </div>
     </div>
-    <div class="col-lg-2 col-lg-offset-11"><a th:href="@{/partHistory}">了解更多<img src="static\images\chevron-double-right.svg"></a>
+    <div class="col-lg-2 col-lg-offset-11"><a th:href="@{/partHistory}">了解更多<img
+            src="static\images\chevron-double-right.svg"></a>
     </div>
 
     <div class="page-header" id="idTwo">
         <h3>全国抗战</h3>
     </div>
     <div class="row">
-        <div class="col-sm-6 col-md-3">
+        <div class="col-sm-6 col-md-3" th:each="case:${session.nationwideList}">
             <div class="thumbnail">
-                <img src="/wp-content/uploads/2014/06/kittens.jpg"
-                     alt="通用的占位符缩略图">
+                <img th:src="${case.antiHistoryPicture}" style="height: 160px;width: 254px;">
                 <div class="caption">
-                    <h3>缩略图标签</h3>
-                    <p>一些示例文本。一些示例文本。</p>
+                    <h3 th:text="${case.antiHistoryName}"></h3>
+                    <p th:text="${#strings.abbreviate(case.antiHistoryDescription,25)}"></p>
                     <p>
-                        <a href="#" class="btn btn-primary" role="button">
-                            按钮
-                        </a>
-                        <a href="#" class="btn btn-default" role="button">
-                            按钮
-                        </a>
-                    </p>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-6 col-md-3">
-            <div class="thumbnail">
-                <img src="/wp-content/uploads/2014/06/kittens.jpg"
-                     alt="通用的占位符缩略图">
-                <div class="caption">
-                    <h3>缩略图标签</h3>
-                    <p>一些示例文本。一些示例文本。</p>
-                    <p>
-                        <a href="#" class="btn btn-primary" role="button">
-                            按钮
-                        </a>
-                        <a href="#" class="btn btn-default" role="button">
-                            按钮
-                        </a>
-                    </p>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-6 col-md-3">
-            <div class="thumbnail">
-                <img src="/wp-content/uploads/2014/06/kittens.jpg"
-                     alt="通用的占位符缩略图">
-                <div class="caption">
-                    <h3>缩略图标签</h3>
-                    <p>一些示例文本。一些示例文本。</p>
-                    <p>
-                        <a href="#" class="btn btn-primary" role="button">
-                            按钮
-                        </a>
-                        <a href="#" class="btn btn-default" role="button">
-                            按钮
-                        </a>
-                    </p>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-6 col-md-3">
-            <div class="thumbnail">
-                <img src="/wp-content/uploads/2014/06/kittens.jpg"
-                     alt="通用的占位符缩略图">
-                <div class="caption">
-                    <h3>缩略图标签</h3>
-                    <p>一些示例文本。一些示例文本。</p>
-                    <p>
-                        <a href="#" class="btn btn-primary" role="button">
-                            按钮
-                        </a>
-                        <a href="#" class="btn btn-default" role="button">
-                            按钮
+                        <a th:href="@{/historyDetails}+${case.antiHistoryId}" class="btn btn-default" role="button">
+                            更多
                         </a>
                     </p>
                 </div>
@@ -248,73 +140,15 @@
         <h3>伟大胜利</h3>
     </div>
     <div class="row">
-        <div class="col-sm-6 col-md-3">
+        <div class="col-sm-6 col-md-3" th:each="case:${session.victoryList}">
             <div class="thumbnail">
-                <img src="/wp-content/uploads/2014/06/kittens.jpg"
-                     alt="通用的占位符缩略图">
+                <img th:src="${case.antiHistoryPicture}" style="height: 160px;width: 254px;">
                 <div class="caption">
-                    <h3>缩略图标签</h3>
-                    <p>一些示例文本。一些示例文本。</p>
+                    <h3 th:text="${case.antiHistoryName}"></h3>
+                    <p th:text="${#strings.abbreviate(case.antiHistoryDescription,25)}"></p>
                     <p>
-                        <a href="#" class="btn btn-primary" role="button">
-                            按钮
-                        </a>
-                        <a href="#" class="btn btn-default" role="button">
-                            按钮
-                        </a>
-                    </p>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-6 col-md-3">
-            <div class="thumbnail">
-                <img src="/wp-content/uploads/2014/06/kittens.jpg"
-                     alt="通用的占位符缩略图">
-                <div class="caption">
-                    <h3>缩略图标签</h3>
-                    <p>一些示例文本。一些示例文本。</p>
-                    <p>
-                        <a href="#" class="btn btn-primary" role="button">
-                            按钮
-                        </a>
-                        <a href="#" class="btn btn-default" role="button">
-                            按钮
-                        </a>
-                    </p>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-6 col-md-3">
-            <div class="thumbnail">
-                <img src="/wp-content/uploads/2014/06/kittens.jpg"
-                     alt="通用的占位符缩略图">
-                <div class="caption">
-                    <h3>缩略图标签</h3>
-                    <p>一些示例文本。一些示例文本。</p>
-                    <p>
-                        <a href="#" class="btn btn-primary" role="button">
-                            按钮
-                        </a>
-                        <a href="#" class="btn btn-default" role="button">
-                            按钮
-                        </a>
-                    </p>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-6 col-md-3">
-            <div class="thumbnail">
-                <img src="/wp-content/uploads/2014/06/kittens.jpg"
-                     alt="通用的占位符缩略图">
-                <div class="caption">
-                    <h3>缩略图标签</h3>
-                    <p>一些示例文本。一些示例文本。</p>
-                    <p>
-                        <a href="#" class="btn btn-primary" role="button">
-                            按钮
-                        </a>
-                        <a href="#" class="btn btn-default" role="button">
-                            按钮
+                        <a th:href="@{/historyDetails}+${case.antiHistoryId}" class="btn btn-default" role="button">
+                            更多
                         </a>
                     </p>
                 </div>
@@ -328,153 +162,37 @@
         <h3>游击战争</h3>
     </div>
     <div class="row">
-        <div class="col-sm-6 col-md-3">
+        <div class="col-sm-6 col-md-3" th:each="case:${session.guerrillaList}">
             <div class="thumbnail">
-                <img src="/wp-content/uploads/2014/06/kittens.jpg"
-                     alt="通用的占位符缩略图">
+                <img th:src="${case.antiHistoryPicture}" style="height: 160px;width: 254px;">
                 <div class="caption">
-                    <h3>缩略图标签</h3>
-                    <p>一些示例文本。一些示例文本。</p>
+                    <h3 th:text="${case.antiHistoryName}"></h3>
+                    <p th:text="${#strings.abbreviate(case.antiHistoryDescription,25)}"></p>
                     <p>
-                        <a href="#" class="btn btn-primary" role="button">
-                            按钮
-                        </a>
-                        <a href="#" class="btn btn-default" role="button">
-                            按钮
-                        </a>
-                    </p>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-6 col-md-3">
-            <div class="thumbnail">
-                <img src="/wp-content/uploads/2014/06/kittens.jpg"
-                     alt="通用的占位符缩略图">
-                <div class="caption">
-                    <h3>缩略图标签</h3>
-                    <p>一些示例文本。一些示例文本。</p>
-                    <p>
-                        <a href="#" class="btn btn-primary" role="button">
-                            按钮
-                        </a>
-                        <a href="#" class="btn btn-default" role="button">
-                            按钮
-                        </a>
-                    </p>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-6 col-md-3">
-            <div class="thumbnail">
-                <img src="/wp-content/uploads/2014/06/kittens.jpg"
-                     alt="通用的占位符缩略图">
-                <div class="caption">
-                    <h3>缩略图标签</h3>
-                    <p>一些示例文本。一些示例文本。</p>
-                    <p>
-                        <a href="#" class="btn btn-primary" role="button">
-                            按钮
-                        </a>
-                        <a href="#" class="btn btn-default" role="button">
-                            按钮
-                        </a>
-                    </p>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-6 col-md-3">
-            <div class="thumbnail">
-                <img src="/wp-content/uploads/2014/06/kittens.jpg"
-                     alt="通用的占位符缩略图">
-                <div class="caption">
-                    <h3>缩略图标签</h3>
-                    <p>一些示例文本。一些示例文本。</p>
-                    <p>
-                        <a href="#" class="btn btn-primary" role="button">
-                            按钮
-                        </a>
-                        <a href="#" class="btn btn-default" role="button">
-                            按钮
+                        <a th:href="@{/historyDetails}+${case.antiHistoryId}" class="btn btn-default" role="button">
+                            更多
                         </a>
                     </p>
                 </div>
             </div>
         </div>
     </div>
-    <div class="col-lg-2 col-lg-offset-11"><a th:href="@{/ShortstopWar}">了解更多<img
+    <div class="col-lg-2 col-lg-offset-11"><a th:href="@{/guerrillaWarfare}">了解更多<img
             src="static\images\chevron-double-right.svg"></a></div>
 
     <div class="page-header" id="idFive">
         <h3>抗战人物</h3>
     </div>
     <div class="row">
-        <div class="col-sm-6 col-md-3">
+        <div class="col-sm-6 col-md-3" th:each="case:${session.antiJapanPersonList}">
             <div class="thumbnail">
-                <img src="/wp-content/uploads/2014/06/kittens.jpg"
-                     alt="通用的占位符缩略图">
+                <img th:src="${case.personPicture}" style="height: 160px;width: 254px;">
                 <div class="caption">
-                    <h3>缩略图标签</h3>
-                    <p>一些示例文本。一些示例文本。</p>
+                    <h3 th:text="${case.personName}"></h3>
+                    <p th:text="${#strings.abbreviate(case.content,25)}"></p>
                     <p>
-                        <a href="#" class="btn btn-primary" role="button">
-                            按钮
-                        </a>
-                        <a href="#" class="btn btn-default" role="button">
-                            按钮
-                        </a>
-                    </p>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-6 col-md-3">
-            <div class="thumbnail">
-                <img src="/wp-content/uploads/2014/06/kittens.jpg"
-                     alt="通用的占位符缩略图">
-                <div class="caption">
-                    <h3>缩略图标签</h3>
-                    <p>一些示例文本。一些示例文本。</p>
-                    <p>
-                        <a href="#" class="btn btn-primary" role="button">
-                            按钮
-                        </a>
-                        <a href="#" class="btn btn-default" role="button">
-                            按钮
-                        </a>
-                    </p>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-6 col-md-3">
-            <div class="thumbnail">
-                <img src="/wp-content/uploads/2014/06/kittens.jpg"
-                     alt="通用的占位符缩略图">
-                <div class="caption">
-                    <h3>缩略图标签</h3>
-                    <p>一些示例文本。一些示例文本。</p>
-                    <p>
-                        <a href="#" class="btn btn-primary" role="button">
-                            按钮
-                        </a>
-                        <a href="#" class="btn btn-default" role="button">
-                            按钮
-                        </a>
-                    </p>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-6 col-md-3">
-            <div class="thumbnail">
-                <img src="/wp-content/uploads/2014/06/kittens.jpg"
-                     alt="通用的占位符缩略图">
-                <div class="caption">
-                    <h3>缩略图标签</h3>
-                    <p>一些示例文本。一些示例文本。</p>
-                    <p>
-                        <a href="#" class="btn btn-primary" role="button">
-                            按钮
-                        </a>
-                        <a href="#" class="btn btn-default" role="button">
-                            按钮
+                        <a class="btn btn-default" role="button">
+                            更多
                         </a>
                     </p>
                 </div>
@@ -488,80 +206,22 @@
         <h3>抗战故事</h3>
     </div>
     <div class="row">
-        <div class="col-sm-6 col-md-3">
+        <div class="col-sm-6 col-md-3" th:each="case:${session.antiWarStoriesList}">
             <div class="thumbnail">
-                <img src="/wp-content/uploads/2014/06/kittens.jpg"
-                     alt="通用的占位符缩略图">
+                <img th:src="${case.storiesPicture}" style="height: 160px;width: 254px;">
                 <div class="caption">
-                    <h3>缩略图标签</h3>
-                    <p>一些示例文本。一些示例文本。</p>
+                    <h3 th:text="${case.title}"></h3>
+                    <p th:text="${#strings.abbreviate(case.storiesContent,25)}"></p>
                     <p>
-                        <a href="#" class="btn btn-primary" role="button">
-                            按钮
-                        </a>
-                        <a href="#" class="btn btn-default" role="button">
-                            按钮
-                        </a>
-                    </p>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-6 col-md-3">
-            <div class="thumbnail">
-                <img src="/wp-content/uploads/2014/06/kittens.jpg"
-                     alt="通用的占位符缩略图">
-                <div class="caption">
-                    <h3>缩略图标签</h3>
-                    <p>一些示例文本。一些示例文本。</p>
-                    <p>
-                        <a href="#" class="btn btn-primary" role="button">
-                            按钮
-                        </a>
-                        <a href="#" class="btn btn-default" role="button">
-                            按钮
-                        </a>
-                    </p>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-6 col-md-3">
-            <div class="thumbnail">
-                <img src="/wp-content/uploads/2014/06/kittens.jpg"
-                     alt="通用的占位符缩略图">
-                <div class="caption">
-                    <h3>缩略图标签</h3>
-                    <p>一些示例文本。一些示例文本。</p>
-                    <p>
-                        <a href="#" class="btn btn-primary" role="button">
-                            按钮
-                        </a>
-                        <a href="#" class="btn btn-default" role="button">
-                            按钮
-                        </a>
-                    </p>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-6 col-md-3">
-            <div class="thumbnail">
-                <img src="/wp-content/uploads/2014/06/kittens.jpg"
-                     alt="通用的占位符缩略图">
-                <div class="caption">
-                    <h3>缩略图标签</h3>
-                    <p>一些示例文本。一些示例文本。</p>
-                    <p>
-                        <a href="#" class="btn btn-primary" role="button">
-                            按钮
-                        </a>
-                        <a href="#" class="btn btn-default" role="button">
-                            按钮
+                        <a class="btn btn-default" role="button">
+                            更多
                         </a>
                     </p>
                 </div>
             </div>
         </div>
     </div>
-    <div class="col-lg-2 col-lg-offset-11"><a th:href="@{/AntiHistory}">了解更多<img
+    <div class="col-lg-2 col-lg-offset-11"><a th:href="@{/AntiStories}">了解更多<img
             src="static\images\chevron-double-right.svg"></a></div>
 
     <div class="page-header" id="idSeven">
@@ -570,231 +230,85 @@
     <div class="row">
         <div class="col-sm-6 col-md-3">
             <div class="thumbnail">
-                <img src="/wp-content/uploads/2014/06/kittens.jpg"
-                     alt="通用的占位符缩略图">
-                <div class="caption">
-                    <h3>缩略图标签</h3>
-                    <p>一些示例文本。一些示例文本。</p>
-                    <p>
-                        <a href="#" class="btn btn-primary" role="button">
-                            按钮
-                        </a>
-                        <a href="#" class="btn btn-default" role="button">
-                            按钮
-                        </a>
-                    </p>
+                <a th:href="@{/book}"><img src="static/images/historyBook.jpg" style="height: 320px;width: 254px;"></a>
+                <div class="container">
+                    <div class="carousel-caption">
+                        <p style="font-size: xx-large;color: #0f0f0f">书籍</p>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="col-sm-6 col-md-3">
             <div class="thumbnail">
-                <img src="/wp-content/uploads/2014/06/kittens.jpg"
-                     alt="通用的占位符缩略图">
-                <div class="caption">
-                    <h3>缩略图标签</h3>
-                    <p>一些示例文本。一些示例文本。</p>
-                    <p>
-                        <a href="#" class="btn btn-primary" role="button">
-                            按钮
-                        </a>
-                        <a href="#" class="btn btn-default" role="button">
-                            按钮
-                        </a>
-                    </p>
+                <a th:href="@{/periodical}"><img src="static/images/periodical.jpg" style="height: 320px;width: 254px;"></a>
+                <div class="container">
+                    <div class="carousel-caption">
+                        <p style="font-size: xx-large;color: #0f0f0f">期刊</p>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="col-sm-6 col-md-3">
             <div class="thumbnail">
-                <img src="/wp-content/uploads/2014/06/kittens.jpg"
-                     alt="通用的占位符缩略图">
-                <div class="caption">
-                    <h3>缩略图标签</h3>
-                    <p>一些示例文本。一些示例文本。</p>
-                    <p>
-                        <a href="#" class="btn btn-primary" role="button">
-                            按钮
-                        </a>
-                        <a href="#" class="btn btn-default" role="button">
-                            按钮
-                        </a>
-                    </p>
+                <a th:href="@{/newspaper}"><img src="static/images/newspaper.jpg"
+                                                style="height: 320px;width: 254px;"></a>
+                <div class="container">
+                    <div class="carousel-caption">
+                        <p style="font-size: xx-large;color: #0f0f0f">报纸</p>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="col-sm-6 col-md-3">
             <div class="thumbnail">
-                <img src="/wp-content/uploads/2014/06/kittens.jpg"
-                     alt="通用的占位符缩略图">
-                <div class="caption">
-                    <h3>缩略图标签</h3>
-                    <p>一些示例文本。一些示例文本。</p>
-                    <p>
-                        <a href="#" class="btn btn-primary" role="button">
-                            按钮
-                        </a>
-                        <a href="#" class="btn btn-default" role="button">
-                            按钮
-                        </a>
-                    </p>
+                <a th:href="@{/picture}"><img src="static/images/picture.jpg" style="height: 320px;width: 254px;"></a>
+                <div class="container">
+                    <div class="carousel-caption">
+                        <p style="font-size: xx-large;color: #0f0f0f">图片</p>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="col-lg-2 col-lg-offset-11"><a th:href="@{/AntiDatum}">了解更多<img src="../images/chevron-double-right.svg"></a>
-    </div>
+    <!-- <div class="col-lg-2 col-lg-offset-11"><a th:href="@{/AntiDatum}">了解更多<img
+             src="static\images\chevron-double-right.svg"></a>
+     </div>-->
 
     <div class="page-header" id="idEight">
         <h3>抗战遗址</h3>
     </div>
     <div class="row">
-        <div class="col-sm-6 col-md-3">
+        <div class="col-sm-6 col-md-3" th:each="case:${session.antiSiteList}">
             <div class="thumbnail">
-                <img src="/wp-content/uploads/2014/06/kittens.jpg"
-                     alt="通用的占位符缩略图">
+                <img th:src="${case.antiSitePicture}" style="height: 160px;width: 254px;">
                 <div class="caption">
-                    <h3>缩略图标签</h3>
-                    <p>一些示例文本。一些示例文本。</p>
+                    <h3 th:text="${case.antiSiteName}"></h3>
+                    <p th:text="${#strings.abbreviate(case.address,25)}"></p>
                     <p>
-                        <a href="#" class="btn btn-primary" role="button">
-                            按钮
-                        </a>
-                        <a href="#" class="btn btn-default" role="button">
-                            按钮
-                        </a>
-                    </p>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-6 col-md-3">
-            <div class="thumbnail">
-                <img src="/wp-content/uploads/2014/06/kittens.jpg"
-                     alt="通用的占位符缩略图">
-                <div class="caption">
-                    <h3>缩略图标签</h3>
-                    <p>一些示例文本。一些示例文本。</p>
-                    <p>
-                        <a href="#" class="btn btn-primary" role="button">
-                            按钮
-                        </a>
-                        <a href="#" class="btn btn-default" role="button">
-                            按钮
-                        </a>
-                    </p>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-6 col-md-3">
-            <div class="thumbnail">
-                <img src="/wp-content/uploads/2014/06/kittens.jpg"
-                     alt="通用的占位符缩略图">
-                <div class="caption">
-                    <h3>缩略图标签</h3>
-                    <p>一些示例文本。一些示例文本。</p>
-                    <p>
-                        <a href="#" class="btn btn-primary" role="button">
-                            按钮
-                        </a>
-                        <a href="#" class="btn btn-default" role="button">
-                            按钮
-                        </a>
-                    </p>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-6 col-md-3">
-            <div class="thumbnail">
-                <img src="/wp-content/uploads/2014/06/kittens.jpg"
-                     alt="通用的占位符缩略图">
-                <div class="caption">
-                    <h3>缩略图标签</h3>
-                    <p>一些示例文本。一些示例文本。</p>
-                    <p>
-                        <a href="#" class="btn btn-primary" role="button">
-                            按钮
-                        </a>
-                        <a href="#" class="btn btn-default" role="button">
-                            按钮
+                        <a class="btn btn-default" role="button">
+                            更多
                         </a>
                     </p>
                 </div>
             </div>
         </div>
     </div>
-    <div class="col-lg-2 col-lg-offset-11"><a th:href="@{/AntiAddress}">了解更多<img
+    <div class="col-lg-2 col-lg-offset-11"><a th:href="@{/AntiSite}">了解更多<img
             src="static\images\chevron-double-right.svg"></a></div>
 
     <div class="page-header" id="idNine">
         <h3>国际友人</h3>
     </div>
     <div class="row">
-        <div class="col-sm-6 col-md-3">
+        <div class="col-sm-6 col-md-3" th:each="case:${session.internationalFriendList}">
             <div class="thumbnail">
-                <img src="/wp-content/uploads/2014/06/kittens.jpg"
-                     alt="通用的占位符缩略图">
+                <img th:src="${case.picture}" style="height: 160px;width: 254px;">
                 <div class="caption">
-                    <h3>缩略图标签</h3>
-                    <p>一些示例文本。一些示例文本。</p>
+                    <h3 th:text="${case.name}"></h3>
+                    <p th:text="${#strings.abbreviate(case.achievement,25)}"></p>
                     <p>
-                        <a href="#" class="btn btn-primary" role="button">
-                            按钮
-                        </a>
-                        <a href="#" class="btn btn-default" role="button">
-                            按钮
-                        </a>
-                    </p>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-6 col-md-3">
-            <div class="thumbnail">
-                <img src="/wp-content/uploads/2014/06/kittens.jpg"
-                     alt="通用的占位符缩略图">
-                <div class="caption">
-                    <h3>缩略图标签</h3>
-                    <p>一些示例文本。一些示例文本。</p>
-                    <p>
-                        <a href="#" class="btn btn-primary" role="button">
-                            按钮
-                        </a>
-                        <a href="#" class="btn btn-default" role="button">
-                            按钮
-                        </a>
-                    </p>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-6 col-md-3">
-            <div class="thumbnail">
-                <img src="/wp-content/uploads/2014/06/kittens.jpg"
-                     alt="通用的占位符缩略图">
-                <div class="caption">
-                    <h3>缩略图标签</h3>
-                    <p>一些示例文本。一些示例文本。</p>
-                    <p>
-                        <a href="#" class="btn btn-primary" role="button">
-                            按钮
-                        </a>
-                        <a href="#" class="btn btn-default" role="button">
-                            按钮
-                        </a>
-                    </p>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-6 col-md-3">
-            <div class="thumbnail">
-                <img src="/wp-content/uploads/2014/06/kittens.jpg"
-                     alt="通用的占位符缩略图">
-                <div class="caption">
-                    <h3>缩略图标签</h3>
-                    <p>一些示例文本。一些示例文本。</p>
-                    <p>
-                        <a href="#" class="btn btn-primary" role="button">
-                            按钮
-                        </a>
-                        <a href="#" class="btn btn-default" role="button">
-                            按钮
+                        <a class="btn btn-default" role="button">
+                            更多
                         </a>
                     </p>
                 </div>

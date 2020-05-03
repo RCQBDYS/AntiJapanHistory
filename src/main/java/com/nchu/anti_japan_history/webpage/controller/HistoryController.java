@@ -55,10 +55,18 @@ public class HistoryController {
     * */
     @PostMapping("/addEntriesData")
     public String addEntriesData(@RequestParam(value = "antiHistoryName")String antiHistoryName,
+                                 @RequestParam(value = "antiHistoryDescription")String antiHistoryDescription,
                                  @RequestParam(value = "antiHistoryPicture")MultipartFile antiHistoryPicture,
-                                 @RequestParam(value = "antiHistoryContent")String antiHistoryContent){
+                                 @RequestParam(value = "antiHistoryContent")String antiHistoryContent,
+                                 @RequestParam(value = "specialTopicId")Integer specialTopicId,
+                                 @RequestParam(value = "antiHistoryContribution")String antiHistoryContribution,
+                                 @RequestParam(value = "antiHistoryState")Integer antiHistoryState){
         AntiHistory antiHistory = new AntiHistory();
         antiHistory.setAntiHistoryName(antiHistoryName);
+        antiHistory.setAntiHistoryDescription(antiHistoryDescription);
+        antiHistory.setAntiHistoryContribution(antiHistoryContribution);
+        antiHistory.setAntiHistoryState(antiHistoryState);
+        antiHistory.setAntiHistoryType(specialTopicId);
         //进行敏感词汇过滤，铭感词汇替换成
         SensitiveWordFilter sensitiveWordFilter = new SensitiveWordFilter("CensorWords.txt");
         sensitiveWordFilter.InitializationWork();

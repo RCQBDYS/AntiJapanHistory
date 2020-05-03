@@ -16,4 +16,6 @@ public class AntiJapanPerson implements Serializable {
     private String timeQuantum;         //人物存在时间段
     private String content;             //人物介绍
     private String personPicture;       //人物图片
+    private Integer personState;        //审核状态
+    private String personContribution;  //贡献者
 }
