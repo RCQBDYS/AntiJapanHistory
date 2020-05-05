@@ -109,19 +109,6 @@ public class indexController {
         model.addAttribute("partListAll", partListAll);
         return "partHistory";
     }
-    //局部抗战史的信息显示
-  /*  @GetMapping("/partJson")
-    public void PartJson(Model model, HttpServletResponse httpServletResponse) throws IOException {
-        List<AntiHistory> partListAll = antiHistoryService.partListAll();
-        httpServletResponse.setCharacterEncoding("utf-8");
-        httpServletResponse.setContentType("text/html;charset=UTF-8");
-        String json = JSON.toJSONString(partListAll);
-        System.out.println("json ="+ json );
-        PrintWriter out = httpServletResponse.getWriter();
-        out.write(json);
-        model.addAttribute("partListAll", partListAll);
-    }*/
-
     @GetMapping("/nationwideHistory")
     public String skipNationwideHistory(Model model) {
         List<AntiHistory> nationwideListAll = antiHistoryService.nationwideListAll();
@@ -208,15 +195,15 @@ public class indexController {
     }
 
     //时间轴的跳转
-    @GetMapping("/historyTime")
+    @GetMapping("/timeDisplay")
     public String skipHistoryTime() {
-        return "historyTime";
+        return "timeDisplay";
     }
 
     //历史地图的跳转
-    @GetMapping("")
+    @GetMapping("mapDisplay")
     public String skipHistoryMap(){
-        return "historyMap";
+        return "mapDisplay";
     }
 
 

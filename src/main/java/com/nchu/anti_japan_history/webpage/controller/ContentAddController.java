@@ -109,11 +109,14 @@ public class ContentAddController {
                                  @RequestParam(value = "timeQuantum")String timeQuantum,
                                  @RequestParam(value = "content")String content,
                                  @RequestParam(value = "personState")Integer personState,
-                                 @RequestParam(value = "personContribution")String personContribution){
+                                 @RequestParam(value = "personContribution")String personContribution,
+                                 @RequestParam(value = "personDescription")String personDescription){
         //进行内容的敏感词汇过滤
         SensitiveWordFilter sensitiveWordFilter = new SensitiveWordFilter("CensorWords.txt");
         sensitiveWordFilter.InitializationWork();
         content = sensitiveWordFilter.filterInfo(content);
+        personDescription = sensitiveWordFilter.filterInfo(personDescription);
+        //System.out.println("content="+content);
 
         //上传图片
         String parentDirPath = ImagesPath.substring(ImagesPath.indexOf(':') + 1, ImagesPath.length());
@@ -129,6 +132,7 @@ public class ContentAddController {
         antiJapanPerson.setPersonContribution(personContribution);
         antiJapanPerson.setPersonState(personState);
         antiJapanPerson.setTimeQuantum(timeQuantum);
+        antiJapanPerson.setPersonDescription(personDescription);
         int flag = 0;
         if (!parentDir.exists()) //如果那个目录不存在先创建目录
         {
@@ -212,7 +216,8 @@ public class ContentAddController {
                                   @RequestParam(value = "storiesPicture")MultipartFile storiesPicture,
                                   @RequestParam(value = "storiesContent")String storiesContent,
                                   @RequestParam(value = "storiesContribution")String storiesContribution,
-                                  @RequestParam(value = "storiesState")Integer storiesState){
+                                  @RequestParam(value = "storiesState")Integer storiesState,
+                                  @RequestParam(value = "storiesDescription")String storiesDescription){
         //处理图片的存储
         String parentDirPath = ImagesPath.substring(ImagesPath.indexOf(':') + 1, ImagesPath.length());
         String originalFilename = storiesPicture.getOriginalFilename();
@@ -224,6 +229,7 @@ public class ContentAddController {
         sensitiveWordFilter.InitializationWork();
         title = sensitiveWordFilter.filterInfo(title);
         storiesContent = sensitiveWordFilter.filterInfo(storiesContent);
+        storiesDescription = sensitiveWordFilter.filterInfo(storiesDescription);
         //数据的填充
         AntiWarStories antiWarStories = new AntiWarStories();
         antiWarStories.setTitle(title);
@@ -231,6 +237,7 @@ public class ContentAddController {
         antiWarStories.setStoriesPicture(StoriesPicture);
         antiWarStories.setStoriesContribution(storiesContribution);
         antiWarStories.setStoriesState(storiesState);
+        antiWarStories.setStoriesDescription(storiesDescription);
         int flag = 0;
         if (!parentDir.exists()) //如果那个目录不存在先创建目录
         {
@@ -258,7 +265,8 @@ public class ContentAddController {
                              @RequestParam(value = "achievement")String achievement,
                              @RequestParam(value = "picture")MultipartFile picture,
                              @RequestParam(value = "friendState")Integer friendState,
-                             @RequestParam(value = "friendContribution")String friendContribution){
+                             @RequestParam(value = "friendContribution")String friendContribution,
+                             @RequestParam(value = "friendDescription")String friendDescription){
         //处理图片的存储
         String parentDirPath = ImagesPath.substring(ImagesPath.indexOf(':') + 1, ImagesPath.length());
         String originalFilename = picture.getOriginalFilename();
@@ -270,6 +278,7 @@ public class ContentAddController {
         sensitiveWordFilter.InitializationWork();
         name = sensitiveWordFilter.filterInfo(name);
         achievement = sensitiveWordFilter.filterInfo(achievement);
+        friendDescription = sensitiveWordFilter.filterInfo(friendDescription);
         //数据的导入
         InternationalFriend internationalFriend = new InternationalFriend();
         internationalFriend.setName(name);
@@ -277,6 +286,7 @@ public class ContentAddController {
         internationalFriend.setFriendContribution(friendContribution);
         internationalFriend.setFriendState(friendState);
         internationalFriend.setPicture(Picture);
+        internationalFriend.setFriendDescription(friendDescription);
         int flag = 0;
         if (!parentDir.exists()) //如果那个目录不存在先创建目录
         {

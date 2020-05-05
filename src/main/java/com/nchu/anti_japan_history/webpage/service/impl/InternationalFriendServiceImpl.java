@@ -26,4 +26,9 @@ public class InternationalFriendServiceImpl implements InternationalFriendServic
     public int internationalFriendSave(InternationalFriend internationalFriend) {
         return internationalFriendMapper.internationalFriendSave(internationalFriend);
     }
+
+    @Override
+    public InternationalFriend internationalFriendDisplay(Long internationalFriendId) {
+        return internationalFriendMapper.internationalFriendDisplay(internationalFriendId);
+    }
 }

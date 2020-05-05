@@ -11,4 +11,6 @@ public interface AntiJapanPersonService {
     List<AntiJapanPerson> antiPersonListAll();
     //历史人物信息保存
     int antiPersonSave(AntiJapanPerson antiJapanPerson);
+    //历史人物详细显示id
+    AntiJapanPerson antiPersonDisplay(Long antiJapanPersonId);
 }

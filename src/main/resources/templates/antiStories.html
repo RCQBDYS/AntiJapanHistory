@@ -38,18 +38,15 @@
     <div class="row">
         <div class="row">
             <div class="col-sm-6 col-md-3" th:each="case:${antiWarStoriesListAll}">
-                <div class="thumbnail">
-                    <img th:src="${case.storiesPicture}" style="height: 160px;width: 254px;">
-                    <div class="caption">
-                        <h3 th:text="${case.title}"></h3>
-                        <p th:text="${#strings.abbreviate(case.storiesContent,25)}"></p>
-                        <p>
-                            <a class="btn btn-default" role="button">
-                                更多
-                            </a>
-                        </p>
+                <a th:href="@{antiStoriesDisplay(antiWarId=${case.antiWarId})}">
+                    <div class="thumbnail" style="height: 300px;">
+                        <img th:src="${case.storiesPicture}" style="height: 160px;width: 254px;">
+                        <div class="caption">
+                            <h3 th:text="${case.title}"></h3>
+                            <p th:text="${#strings.abbreviate(case.storiesDescription,25)}"></p>
+                        </div>
                     </div>
-                </div>
+                </a>
             </div>
         </div>
 

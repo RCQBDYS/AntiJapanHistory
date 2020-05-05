@@ -6,25 +6,33 @@
     <resultMap id="internationalFriendMap" type="com.nchu.anti_japan_history.webpage.entity.InternationalFriend">
         <id column="internationalFriendId" property="internationalFriendId" jdbcType="INTEGER"/>
         <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="friendDescription" property="friendDescription" jdbcType="VARCHAR"/>
         <result column="achievement" property="achievement" jdbcType="VARCHAR"/>
         <result column="picture" property="picture" jdbcType="VARCHAR"/>
         <result column="friendState" property="friendState" jdbcType="INTEGER"/>
         <result column="friendContribution" property="friendContribution" jdbcType="VARCHAR"/>
     </resultMap>
 
+    <!--主页国际友人信息显示-->
     <select id="internationalFriendSelect" resultMap="internationalFriendMap">
         SELECT * FROM internationalfriend LIMIT 4;
     </select>
 
+    <!--国际友人信息全部显示-->
     <select id="internationalFriendListAll" resultMap="internationalFriendMap">
         SELECT * FROM internationalfriend;
     </select>
 
+    <!--国际友人信息保存-->
     <insert id="internationalFriendSave" parameterType="com.nchu.anti_japan_history.webpage.entity.InternationalFriend">
-        INSERT INTO internationalfriend(name,achievement,picture, friendState,friendContribution)
-        VALUES (#{name},#{achievement},#{picture},#{friendState},#{friendContribution})
+        INSERT INTO internationalfriend(name,friendDescription,achievement,picture, friendState,friendContribution)
+        VALUES (#{name},#{friendDescription},#{achievement},#{picture},#{friendState},#{friendContribution})
     </insert>
 
+    <!--国际友人信息详细显示-->
+    <select id="internationalFriendDisplay" resultMap="internationalFriendMap">
+        SELECT * FROM internationalfriend WHERE internationalFriendId=#{internationalFriendId};
+    </select>
     <!--<select id="listAll" resultMap="departMap">
         SELECT departId,departName,departmentLeading,departmentNum,departmentAddress,departmentResponsible
         FROM department_message

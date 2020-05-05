@@ -15,19 +15,26 @@
         <result column="antiSiteContribution" property="antiSiteContribution" jdbcType="VARCHAR"/>
     </resultMap>
 
+    <!--历史遗址主页面信息的显示-->
     <select id="antiSiteSelect" resultMap="AntiSiteMap">
         SELECT * FROM antisite LIMIT 4;
     </select>
 
+    <!--历史博物馆信息的全部显示-->
     <select id="antiSiteListAll" resultMap="AntiSiteMap">
         SELECT * FROM antisite;
     </select>
 
+    <!--历史遗址信息的保存-->
     <insert id="antiSiteSave" parameterType="com.nchu.anti_japan_history.webpage.entity.AntiSite">
         INSERT INTO antisite(antiSiteName,antiSitePicture,exhibitions, collections,address,url,antiSiteState,antiSiteContribution)
         VALUES (#{antiSiteName},#{antiSitePicture},#{exhibitions},#{collections},#{address},#{url},#{antiSiteState},#{antiSiteContribution})
     </insert>
 
+    <!--历史遗址详细显示-->
+    <select id="antiSiteDisplay" resultMap="AntiSiteMap">
+        SELECT * FROM antisite WHERE antiSiteId = #{antiSiteId};
+    </select>
 
 
  <!--   <select id="listAll" resultMap="departMap">

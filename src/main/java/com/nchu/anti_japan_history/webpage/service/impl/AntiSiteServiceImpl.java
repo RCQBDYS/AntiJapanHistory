@@ -28,4 +28,9 @@ public class AntiSiteServiceImpl implements AntiSiteService {
     public int antiSiteSave(AntiSite antiSite) {
         return antiSiteMapper.antiSiteSave(antiSite);
     }
+
+    @Override
+    public AntiSite antiSiteDisplay(Long antiSiteId) {
+        return antiSiteMapper.antiSiteDisplay(antiSiteId);
+    }
 }

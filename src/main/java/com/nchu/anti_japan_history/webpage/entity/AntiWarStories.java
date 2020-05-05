@@ -13,6 +13,7 @@ import java.io.Serializable;
 public class AntiWarStories implements Serializable {
     private Integer antiWarId;      //抗战故事Id
     private String title;           //抗战故事标题
+    private String storiesDescription;//抗战故事描述
     private String storiesContent;  //抗战故事内容
     private String storiesPicture;  //抗战故事图片
     private Integer storiesState;   //审核状态

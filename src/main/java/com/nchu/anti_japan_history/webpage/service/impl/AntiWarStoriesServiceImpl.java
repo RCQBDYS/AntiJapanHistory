@@ -28,4 +28,9 @@ public class AntiWarStoriesServiceImpl implements AntiWarStoriesService {
     public int antiStoriesSave(AntiWarStories antiWarStories) {
         return antiWarStoriesMapper.antiStoriesSave(antiWarStories);
     }
+
+    @Override
+    public AntiWarStories antiStoriesDisplay(Long antiWarId) {
+        return antiWarStoriesMapper.antiStoriesDisplay(antiWarId);
+    }
 }

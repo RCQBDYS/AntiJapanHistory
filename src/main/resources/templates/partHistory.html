@@ -48,8 +48,8 @@
             <div id="navbar " class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-left">
                     <li><a th:href="@{/index}">主页</a></li>
-                    <li><a th:href="@{/historyMap}">历史地图</a></li>
-                    <li><a th:href="@{/historyTime}">历史时间轴</a></li>
+                    <li><a th:href="@{/mapDisplay}" target="_bank">历史地图</a></li>
+                    <li><a th:href="@{/timeDisplay}" target="_bank">历史时间轴</a></li>
                 </ul>
                 <a class="btn-link navbar-right" th:if="${session.user eq null}" th:href="@{/login}"><img
                         class="img-circle"
@@ -63,6 +63,7 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li><a th:href="@{/unit}"><i class="fa fa-user"></i>个人中心</a></li>
+                            <li th:if="${session.user.userPower eq 1}" ><a th:href="@{/adminCenter}" target="_bank"><i class="fa fa-wrench"></i>管理中心</a></li>
                             <li><a th:href="@{/logout}"><i class="fa fa-power-off"></i>退出</a></li>
                         </ul>
                     </li>
@@ -99,31 +100,23 @@
         <div class="col-lg-offset-11"><a id="addEntries" th:href="@{/addEntries}"><P>添加条目</P></a></div>
     </div>
     <div class="row" id="content">
-
-         <div class="col-sm-6 col-md-3" th:each="case:${partListAll}">
-             <div class="thumbnail">
-                 <img th:src="${case.antiHistoryPicture}" style="height: 160px;width: 254px;">
-                 <div class="caption">
-                     <h3 th:text="${case.antiHistoryName}"></h3>
-                     <p th:text="${#strings.abbreviate(case.antiHistoryDescription,25)}"></p>
-                     <p>
-                         <a th:href="@{/historyDetails}+${case.antiHistoryId}" class="btn btn-default" role="button">
-                             更多
-                         </a>
-                     </p>
-                 </div>
-             </div>
-         </div>
+        <div class="col-sm-6 col-md-3" th:each="case:${partListAll}">
+            <a th:href="@{/partHistoryDisplay(antiHistoryId=${case.antiHistoryId})}">
+                <div class="thumbnail" style="height: 300px;">
+                    <img th:src="${case.antiHistoryPicture}" style="height: 160px;width: 254px;">
+                    <div class="caption">
+                        <h3 th:text="${case.antiHistoryName}"></h3>
+                        <p th:text="${#strings.abbreviate(case.antiHistoryDescription,25)}"></p>
+                    </div>
+                </div>
+            </a>
+        </div>
     </div>
-  <!--  <div style="width: auto;padding: 20px;"><a class="btn button-block" id="button_more"><img
-            src="static\images\chevron-double-down.svg"
-            style="width:20px;height: 20px;"></a>
-    </div>-->
 </div>
 
 
 <!--javascript-->
-<script type="text/javascript" th:inline="none">
+<script type="text/javascript">
     /*
     *添加条目的时候进行
     * */
@@ -140,40 +133,6 @@
             }
         });
     });
-
-    /*//获取更多
-    var num = 0;
-    var start = 0;
-    var Size = 4;
-    $(function () {
-        $.ajax({
-            url: "/partJson",
-            type: "get",
-            dataType: "json",
-            async: false,
-            success: function (result) {
-
-                }
-                $("#content").append(html);
-            }
-        });
-
-        $("#button_more").click(function () {
-            $.ajax({
-                url: "",
-                type: "get",
-                dataType: "json",
-                async: false,
-                success: function (data) {
-                    if (data.list.length > 0) {
-                        alert(data);
-                    }
-                }
-            });
-        });
-    });*/
-
-
 </script>
 </body>
 </html>

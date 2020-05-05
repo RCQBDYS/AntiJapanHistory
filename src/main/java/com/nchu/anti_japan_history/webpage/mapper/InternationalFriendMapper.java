@@ -11,4 +11,6 @@ public interface InternationalFriendMapper {
     List<InternationalFriend> internationalFriendListAll();
     //国际友人信息的保存
     int internationalFriendSave(InternationalFriend internationalFriend);
+    //国际友人信息详细显示
+    InternationalFriend internationalFriendDisplay(Long internationalFriendId);
 }

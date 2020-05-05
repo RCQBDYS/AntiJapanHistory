@@ -11,4 +11,6 @@ public interface AntiSiteMapper {
     List<AntiSite> antiSiteListAll();
     //历史博物馆信息保存
     int antiSiteSave(AntiSite antiSite);
+    //历史博物馆信息详细显示
+    AntiSite antiSiteDisplay(Long antiSiteId);
 }

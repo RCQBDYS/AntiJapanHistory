@@ -1,6 +1,7 @@
 package com.nchu.anti_japan_history.webpage.mapper;
 
 import com.nchu.anti_japan_history.webpage.entity.AntiHistory;
+import com.nchu.anti_japan_history.webpage.entity.User;
 
 import java.util.List;
 
@@ -29,5 +30,7 @@ public interface AntiHistoryMapper {
     List<AntiHistory> victoryListAll();
     //游击战争历史显示all
     List<AntiHistory> guerrillaWarfareListAll();
+    //查阅具体信息
+    AntiHistory selectHistoryDisplay(Long historyId);
 
 }

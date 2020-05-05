@@ -38,16 +38,11 @@
     <div class="row">
         <div class="row">
             <div class="col-sm-6 col-md-3" th:each="case:${bookListAll}">
-                <div class="thumbnail">
+                <div class="thumbnail" style="height: 300px;">
                     <img th:src="${case.bookPicture}" style="height: 160px;width: 254px;">
                     <div class="caption">
                         <h3 th:text="${case.bookName}"></h3>
                         <p th:text="${#strings.abbreviate(case.briefIntroduction,25)}"></p>
-                        <p>
-                            <a class="btn btn-default" role="button">
-                                更多
-                            </a>
-                        </p>
                     </div>
                 </div>
             </div>

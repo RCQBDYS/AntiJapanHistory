@@ -27,4 +27,9 @@ public class AntiJapanPersonServiceImpl implements AntiJapanPersonService {
     public int antiPersonSave(AntiJapanPerson antiJapanPerson) {
         return antiJapanPersonMapper.antiPersonSave(antiJapanPerson);
     }
+
+    @Override
+    public AntiJapanPerson antiPersonDisplay(Long antiJapanPersonId) {
+        return antiJapanPersonMapper.antiPersonDisplay(antiJapanPersonId);
+    }
 }

@@ -5,6 +5,7 @@ package com.nchu.anti_japan_history.webpage.service;
 *@Description: 历史事件的服务接口
 */
 import com.nchu.anti_japan_history.webpage.entity.AntiHistory;
+import com.nchu.anti_japan_history.webpage.entity.User;
 
 import java.util.List;
 
@@ -27,5 +28,7 @@ public interface AntiHistoryService {
     List<AntiHistory> victoryListAll();
     //游击战争历史显示all
     List<AntiHistory> guerrillaWarfareListAll();
+    //查阅具体信息
+    AntiHistory selectHistoryDisplay(Long historyId);
 
 }

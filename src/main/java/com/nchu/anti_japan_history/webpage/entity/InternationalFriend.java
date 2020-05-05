@@ -13,6 +13,7 @@ import java.io.Serializable;
 public class InternationalFriend implements Serializable {
     private Integer internationalFriendId; //国际友人id
     private String name;                   //姓名
+    private String friendDescription;      //描述
     private String achievement;            //成就
     private String picture;                //图片
     private Integer friendState;           //审核状态

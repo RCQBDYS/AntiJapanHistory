@@ -199,6 +199,12 @@ public class UserController {
         return "userUnit";
     }
 
+    //管理员进入管理中心
+    @GetMapping("/adminCenter")
+    public String skipAdminCenter(){
+        return "adminCenter";
+    }
+
 
 
 

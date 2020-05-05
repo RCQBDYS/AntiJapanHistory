@@ -6,6 +6,7 @@
     <resultMap id="AntiWarStoriesMap" type="com.nchu.anti_japan_history.webpage.entity.AntiWarStories">
         <id column="antiWarId" property="antiWarId" jdbcType="INTEGER"/>
         <result column="title" property="title" jdbcType="VARCHAR"/>
+        <result column="storiesDescription" property="storiesDescription" jdbcType="VARCHAR"/>
         <result column="storiesContent" property="storiesContent" jdbcType="VARCHAR"/>
         <result column="storiesPicture" property="storiesPicture" jdbcType="VARCHAR"/>
         <result column="storiesState" property="storiesState" jdbcType="INTEGER"/>
@@ -24,9 +25,13 @@
 
 
     <insert id="antiStoriesSave" parameterType="com.nchu.anti_japan_history.webpage.entity.AntiWarStories">
-        INSERT INTO antiwarstories(title,storiesPicture,storiesContent, storiesContribution,storiesState)
-        VALUES (#{title},#{storiesPicture},#{storiesContent},#{storiesContribution},#{storiesState})
+        INSERT INTO antiwarstories(title,storiesDescription,storiesPicture,storiesContent, storiesContribution,storiesState)
+        VALUES (#{title},#{storiesDescription},#{storiesPicture},#{storiesContent},#{storiesContribution},#{storiesState})
     </insert>
+
+    <select id="antiStoriesDisplay" resultMap="AntiWarStoriesMap">
+        SELECT * FROM antiwarstories WHERE antiWarId = #{antiWarId};
+    </select>
 
 
     <!--<select id="listAll" resultMap="departMap">

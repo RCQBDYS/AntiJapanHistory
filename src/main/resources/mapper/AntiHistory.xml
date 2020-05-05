@@ -64,6 +64,11 @@
         )}
     </select>
 
+    <select id="selectHistoryDisplay" resultMap="AntiHistoryMap">
+        SELECT * FROM antihistory where antiHistoryId=#{antiHistoryId};
+    </select>
+
+
     <!--<update id="update" parameterType="cn.nchu.edu.software.policeManager.entity.DepartmentMessage">
         UPDATE department_message SET departName=#{departName},departmentAddress=#{departmentAddress},
         departmentLeading=#{departmentLeading},departmentNum=#{departmentNum},departmentResponsible=#{departmentResponsible}

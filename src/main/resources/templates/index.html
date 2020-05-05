@@ -28,7 +28,7 @@
 <body>
 <!--nav-->
 <div>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
+    <nav class="navbar navbar-inverse navbar-fixed-top" id="ul">
         <div class="container">
             <div class="navbar-header">
                 <!--bootstrap 为响应式布局，当屏幕较小时，导航栏也会缩小，届时其他导航则会缩到导航栏中，一个icon-bar对应一横-->
@@ -45,8 +45,8 @@
             <div id="navbar " class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-left">
                     <li><a th:href="@{/index}">主页</a></li>
-                    <li><a th:href="@{/historyMap}">历史地图</a></li>
-                    <li><a th:href="@{/historyTime}">历史时间轴</a></li>
+                    <li><a th:href="@{/mapDisplay}"  target="_bank">历史地图</a></li>
+                    <li><a th:href="@{/timeDisplay}"  target="_bank">历史时间轴</a></li>
                 </ul>
                 <form class="navbar-form navbar-left">
                     <div class="form-group">
@@ -68,6 +68,7 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li><a th:href="@{/unit}"><i class="fa fa-user"></i>个人中心</a></li>
+                            <li th:if="${session.user.userPower eq 1}"><a th:href="@{/adminCenter}" target="_bank"><i class="fa fa-wrench"></i>管理中心</a></li>
                             <li><a th:href="@{/logout}"><i class="fa fa-power-off"></i>退出</a></li>
                         </ul>
                     </li>
@@ -77,7 +78,7 @@
     </nav>
 </div>
 
-<ul class="breadcrumb" id="ul">
+<ul class="breadcrumb" >
     <li><a href="#idOne">局部战争</a></li>
     <li><a href="#idTwo">全国抗战</a></li>
     <li><a href="#idThree">伟大胜利</a></li>
@@ -96,18 +97,15 @@
     </div>
     <div class="row">
         <div class="col-sm-6 col-md-3" th:each="case:${session.partList}">
-            <div class="thumbnail">
-                <img th:src="${case.antiHistoryPicture}" style="height: 160px;width: 254px;">
-                <div class="caption">
-                    <h3 th:text="${case.antiHistoryName}"></h3>
-                    <p th:text="${#strings.abbreviate(case.antiHistoryDescription,25)}"></p>
-                    <p>
-                        <a th:href="@{/historyDetails}+${case.antiHistoryId}" class="btn btn-default" role="button">
-                            更多
-                        </a>
-                    </p>
+            <a th:href="@{/partHistoryDisplay(antiHistoryId=${case.antiHistoryId})}">
+                <div class="thumbnail" style="height: 300px;">
+                    <img th:src="${case.antiHistoryPicture}" style="height: 160px;width: 254px;">
+                    <div class="caption">
+                        <h3 th:text="${case.antiHistoryName}"></h3>
+                        <p th:text="${#strings.abbreviate(case.antiHistoryDescription,25)}"></p>
+                    </div>
                 </div>
-            </div>
+            </a>
         </div>
     </div>
     <div class="col-lg-2 col-lg-offset-11"><a th:href="@{/partHistory}">了解更多<img
@@ -119,18 +117,15 @@
     </div>
     <div class="row">
         <div class="col-sm-6 col-md-3" th:each="case:${session.nationwideList}">
-            <div class="thumbnail">
-                <img th:src="${case.antiHistoryPicture}" style="height: 160px;width: 254px;">
-                <div class="caption">
-                    <h3 th:text="${case.antiHistoryName}"></h3>
-                    <p th:text="${#strings.abbreviate(case.antiHistoryDescription,25)}"></p>
-                    <p>
-                        <a th:href="@{/historyDetails}+${case.antiHistoryId}" class="btn btn-default" role="button">
-                            更多
-                        </a>
-                    </p>
+            <a th:href="@{/partHistoryDisplay(antiHistoryId=${case.antiHistoryId})}">
+                <div class="thumbnail" style="height: 300px;">
+                    <img th:src="${case.antiHistoryPicture}" style="height: 160px;width: 254px;">
+                    <div class="caption">
+                        <h3 th:text="${case.antiHistoryName}"></h3>
+                        <p th:text="${#strings.abbreviate(case.antiHistoryDescription,25)}"></p>
+                    </div>
                 </div>
-            </div>
+            </a>
         </div>
     </div>
     <div class="col-lg-2 col-lg-offset-11"><a th:href="@{/nationwideHistory}">了解更多<img
@@ -141,18 +136,16 @@
     </div>
     <div class="row">
         <div class="col-sm-6 col-md-3" th:each="case:${session.victoryList}">
-            <div class="thumbnail">
-                <img th:src="${case.antiHistoryPicture}" style="height: 160px;width: 254px;">
-                <div class="caption">
-                    <h3 th:text="${case.antiHistoryName}"></h3>
-                    <p th:text="${#strings.abbreviate(case.antiHistoryDescription,25)}"></p>
-                    <p>
-                        <a th:href="@{/historyDetails}+${case.antiHistoryId}" class="btn btn-default" role="button">
-                            更多
-                        </a>
-                    </p>
+            <a th:href="@{/partHistoryDisplay(antiHistoryId=${case.antiHistoryId})}">
+                <div class="thumbnail" style="height: 300px;">
+                    <img th:src="${case.antiHistoryPicture}" style="height: 160px;width: 254px;">
+                    <div class="caption">
+                        <h3 th:text="${case.antiHistoryName}"></h3>
+                        <p th:text="${#strings.abbreviate(case.antiHistoryDescription,25)}"></p>
+                    </div>
                 </div>
-            </div>
+            </a>
+
         </div>
     </div>
     <div class="col-lg-2 col-lg-offset-11"><a th:href="@{/victoryHistory}">了解更多<img
@@ -163,18 +156,15 @@
     </div>
     <div class="row">
         <div class="col-sm-6 col-md-3" th:each="case:${session.guerrillaList}">
-            <div class="thumbnail">
-                <img th:src="${case.antiHistoryPicture}" style="height: 160px;width: 254px;">
-                <div class="caption">
-                    <h3 th:text="${case.antiHistoryName}"></h3>
-                    <p th:text="${#strings.abbreviate(case.antiHistoryDescription,25)}"></p>
-                    <p>
-                        <a th:href="@{/historyDetails}+${case.antiHistoryId}" class="btn btn-default" role="button">
-                            更多
-                        </a>
-                    </p>
+            <a th:href="@{/partHistoryDisplay(antiHistoryId=${case.antiHistoryId})}">
+                <div class="thumbnail" style="height: 300px;">
+                    <img th:src="${case.antiHistoryPicture}" style="height: 160px;width: 254px;">
+                    <div class="caption">
+                        <h3 th:text="${case.antiHistoryName}"></h3>
+                        <p th:text="${#strings.abbreviate(case.antiHistoryDescription,25)}"></p>
+                    </div>
                 </div>
-            </div>
+            </a>
         </div>
     </div>
     <div class="col-lg-2 col-lg-offset-11"><a th:href="@{/guerrillaWarfare}">了解更多<img
@@ -185,18 +175,15 @@
     </div>
     <div class="row">
         <div class="col-sm-6 col-md-3" th:each="case:${session.antiJapanPersonList}">
-            <div class="thumbnail">
-                <img th:src="${case.personPicture}" style="height: 160px;width: 254px;">
-                <div class="caption">
-                    <h3 th:text="${case.personName}"></h3>
-                    <p th:text="${#strings.abbreviate(case.content,25)}"></p>
-                    <p>
-                        <a class="btn btn-default" role="button">
-                            更多
-                        </a>
-                    </p>
+            <a th:href="@{/antiPersonDisplay(antiJapanPersonId=${case.antiJapanPersonId})}">
+                <div class="thumbnail" style="height: 300px;">
+                    <img th:src="${case.personPicture}" style="height: 160px;width: 254px;">
+                    <div class="caption">
+                        <h3 th:text="${case.personName}"></h3>
+                        <p th:text="${#strings.abbreviate(case.personDescription,25)}"></p>
+                    </div>
                 </div>
-            </div>
+            </a>
         </div>
     </div>
     <div class="col-lg-2 col-lg-offset-11"><a th:href="@{/AntiPerson}">了解更多<img
@@ -207,18 +194,15 @@
     </div>
     <div class="row">
         <div class="col-sm-6 col-md-3" th:each="case:${session.antiWarStoriesList}">
-            <div class="thumbnail">
-                <img th:src="${case.storiesPicture}" style="height: 160px;width: 254px;">
-                <div class="caption">
-                    <h3 th:text="${case.title}"></h3>
-                    <p th:text="${#strings.abbreviate(case.storiesContent,25)}"></p>
-                    <p>
-                        <a class="btn btn-default" role="button">
-                            更多
-                        </a>
-                    </p>
+            <a th:href="@{/antiStoriesDisplay(antiWarId=${case.antiWarId})}">
+                <div class="thumbnail" style="height: 300px;">
+                    <img th:src="${case.storiesPicture}" style="height: 160px;width: 254px;">
+                    <div class="caption">
+                        <h3 th:text="${case.title}"></h3>
+                        <p th:text="${#strings.abbreviate(case.storiesDescription,25)}"></p>
+                    </div>
                 </div>
-            </div>
+            </a>
         </div>
     </div>
     <div class="col-lg-2 col-lg-offset-11"><a th:href="@{/AntiStories}">了解更多<img
@@ -270,27 +254,21 @@
             </div>
         </div>
     </div>
-    <!-- <div class="col-lg-2 col-lg-offset-11"><a th:href="@{/AntiDatum}">了解更多<img
-             src="static\images\chevron-double-right.svg"></a>
-     </div>-->
 
     <div class="page-header" id="idEight">
         <h3>抗战遗址</h3>
     </div>
     <div class="row">
         <div class="col-sm-6 col-md-3" th:each="case:${session.antiSiteList}">
-            <div class="thumbnail">
-                <img th:src="${case.antiSitePicture}" style="height: 160px;width: 254px;">
-                <div class="caption">
-                    <h3 th:text="${case.antiSiteName}"></h3>
-                    <p th:text="${#strings.abbreviate(case.address,25)}"></p>
-                    <p>
-                        <a class="btn btn-default" role="button">
-                            更多
-                        </a>
-                    </p>
+            <a th:href="@{/antiSiteDisplay(antiSiteId=${case.antiSiteId})}">
+                <div class="thumbnail" style="height: 300px;">
+                    <img th:src="${case.antiSitePicture}" style="height: 160px;width: 254px;">
+                    <div class="caption">
+                        <h3 th:text="${case.antiSiteName}"></h3>
+                        <p th:text="${#strings.abbreviate(case.address,25)}"></p>
+                    </div>
                 </div>
-            </div>
+            </a>
         </div>
     </div>
     <div class="col-lg-2 col-lg-offset-11"><a th:href="@{/AntiSite}">了解更多<img
@@ -301,18 +279,15 @@
     </div>
     <div class="row">
         <div class="col-sm-6 col-md-3" th:each="case:${session.internationalFriendList}">
-            <div class="thumbnail">
-                <img th:src="${case.picture}" style="height: 160px;width: 254px;">
-                <div class="caption">
-                    <h3 th:text="${case.name}"></h3>
-                    <p th:text="${#strings.abbreviate(case.achievement,25)}"></p>
-                    <p>
-                        <a class="btn btn-default" role="button">
-                            更多
-                        </a>
-                    </p>
+            <a th:href="@{/friendDisplay(internationalFriendId=${case.internationalFriendId})}">
+                <div class="thumbnail" style="height: 300px;">
+                    <img th:src="${case.picture}" style="height: 160px;width: 254px;">
+                    <div class="caption">
+                        <h3 th:text="${case.name}"></h3>
+                        <p th:text="${#strings.abbreviate(case.friendDescription,25)}"></p>
+                    </div>
                 </div>
-            </div>
+            </a>
         </div>
     </div>
     <div class="col-lg-2 col-lg-offset-11"><a th:href="@{/NationalFriend}">了解更多<img

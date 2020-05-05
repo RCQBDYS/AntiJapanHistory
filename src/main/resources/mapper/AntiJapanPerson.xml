@@ -6,6 +6,7 @@
     <resultMap id="AntiJapanPersonMap" type="com.nchu.anti_japan_history.webpage.entity.AntiJapanPerson">
         <id column="antiJapanPersonId" property="antiJapanPersonId" jdbcType="INTEGER"/>
         <result column="personName" property="personName" jdbcType="VARCHAR"/>
+        <result column="personDescription" property="personDescription" jdbcType="VARCHAR"/>
         <result column="timeQuantum" property="timeQuantum" jdbcType="VARCHAR"/>
         <result column="content" property="content" jdbcType="VARCHAR"/>
         <result column="personPicture" property="personPicture" jdbcType="VARCHAR"/>
@@ -23,9 +24,14 @@
 
     <!--保存历史人物信息-->
     <insert id="antiPersonSave" parameterType="com.nchu.anti_japan_history.webpage.entity.AntiJapanPerson">
-        INSERT INTO antijapanperson(personName,personPicture,timeQuantum,content,personState,personContribution)
-        VALUES (#{personName},#{personPicture},#{timeQuantum},#{content},#{personState},#{personContribution})
+        INSERT INTO antijapanperson(personName,personDescription,personPicture,timeQuantum,content,personState,personContribution)
+        VALUES (#{personName},#{personDescription},#{personPicture},#{timeQuantum},#{content},#{personState},#{personContribution})
     </insert>
+
+    <!--历史人物信息具体显示-->
+    <select id="antiPersonDisplay" resultMap="AntiJapanPersonMap">
+        SELECT * FROM antijapanperson WHERE antiJapanPersonId = #{antiPersonDisplay};
+    </select>
 
     <!--<delete id="delete">
         DELETE FROM department_message WHERE departId = #{departId};

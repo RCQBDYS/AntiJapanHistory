@@ -1,6 +1,7 @@
 package com.nchu.anti_japan_history.webpage.service.impl;
 
 import com.nchu.anti_japan_history.webpage.entity.AntiHistory;
+import com.nchu.anti_japan_history.webpage.entity.User;
 import com.nchu.anti_japan_history.webpage.mapper.AntiHistoryMapper;
 import com.nchu.anti_japan_history.webpage.service.AntiHistoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,5 +62,10 @@ public class AntiHistoryServiceImpl implements AntiHistoryService {
     @Override
     public List<AntiHistory> guerrillaWarfareListAll() {
         return antiHistoryMapper.guerrillaWarfareListAll();
+    }
+
+    @Override
+    public AntiHistory selectHistoryDisplay(Long historyId) {
+        return antiHistoryMapper.selectHistoryDisplay(historyId);
     }
 }

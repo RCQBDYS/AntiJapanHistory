@@ -11,4 +11,6 @@ public interface AntiWarStoriesMapper {
     List<AntiWarStories> antiStoriesListAll();
     //保存抗战故事
     int antiStoriesSave(AntiWarStories antiWarStories);
+    //抗战故事的详细显示id
+    AntiWarStories antiStoriesDisplay(Long antiWarId);
 }
