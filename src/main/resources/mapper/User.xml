@@ -12,23 +12,49 @@
         <result column="userPoint" property="userPoint"/>
     </resultMap>
 
+    <!-- 注册新用户-->
     <insert id="save" parameterType="com.nchu.anti_japan_history.webpage.entity.User">
         INSERT INTO user(userName,userPassword,userPicture,userPower)
         VALUES (#{userName},#{userPassword},#{userPicture},#{userPower})
     </insert>
 
+    <!--检验用户名是否重名-->
     <select id="selectUserName" resultMap="userMap">
         SELECT userName FROM user where userName = #{userName};
     </select>
 
+    <!--查询用户个人信息-->
     <select id="selectById" resultMap="userMap">
         SELECT * FROM user where userId = #{userId};
     </select>
 
+    <!--更新用户信息-->
     <update id="update" parameterType="com.nchu.anti_japan_history.webpage.entity.User">
-        UPDATE user set userName = #{userName},userPassword=#{userPassword},userPicture=#{userPicture}
+        UPDATE user set userName = #{userName},userPassword=#{userPassword},userPicture=#{userPicture},userPower=#{userPower}
         where userId = #{userId};
     </update>
+
+    <!--查询所有数据信息-->
+    <select id="userMessageListAll" resultMap="userMap">
+        SELECT * FROM user;
+    </select>
+
+    <!--进行用户信息的模糊查询-->
+    <select id="searchByKeyWord" resultMap="userMap" parameterType="String">
+        SELECT * FROM user
+        <where>
+            <if test="keyWord!=null">
+                <bind name="keyWordLike" value="'%'+ keyWord +'%'"></bind>
+            AND userName LIKE #{keyWordLike}
+            </if>
+        </where>
+    </select>
+
+    <!--删除用户信息-->
+    <delete id="deleteById">
+         DELETE FROM user WHERE userId = #{userId};
+     </delete>
+
 
 
     <!-- <select id="listAll" resultMap="departMap">

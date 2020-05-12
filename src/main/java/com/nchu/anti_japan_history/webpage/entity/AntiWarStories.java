@@ -18,4 +18,5 @@ public class AntiWarStories implements Serializable {
     private String storiesPicture;  //抗战故事图片
     private Integer storiesState;   //审核状态
     private String storiesContribution;//贡献者
+    private String storiesNotReason;//未通过原因
 }

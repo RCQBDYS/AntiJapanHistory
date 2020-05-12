@@ -22,4 +22,5 @@ public class Books implements Serializable {
     private String briefIntroduction;   //书籍简介
     private Integer bookState;          //审核状态
     private String bookContribution;    //贡献者
+    private String bookNotReason;       //未通过原因
 }

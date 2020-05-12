@@ -109,6 +109,7 @@ public class indexController {
         model.addAttribute("partListAll", partListAll);
         return "partHistory";
     }
+    //全国历史全部页面跳转
     @GetMapping("/nationwideHistory")
     public String skipNationwideHistory(Model model) {
         List<AntiHistory> nationwideListAll = antiHistoryService.nationwideListAll();
@@ -116,9 +117,10 @@ public class indexController {
         return "nationwideHistory";
     }
 
+
     @GetMapping("/victoryHistory")
     public String skipVictoryHistory(Model model) {
-        List<AntiHistory> victoryListAll = antiHistoryService.nationwideListAll();
+        List<AntiHistory> victoryListAll = antiHistoryService.victoryListAll();
         model.addAttribute("victoryListAll", victoryListAll);
         return "victoryHistory";
     }
@@ -196,13 +198,53 @@ public class indexController {
 
     //时间轴的跳转
     @GetMapping("/timeDisplay")
-    public String skipHistoryTime() {
+    public String skipHistoryTime(Model model) {
+        List<AntiHistory> antiHistoryTimeList = antiHistoryService.timeListAll();
+        model.addAttribute("antiHistoryTimeList",antiHistoryTimeList);
         return "timeDisplay";
     }
 
     //历史地图的跳转
     @GetMapping("mapDisplay")
-    public String skipHistoryMap(){
+    public String skipHistoryMap(Model model){
+        List<AntiHistory> JiangxiListAll = antiHistoryService.JiangxiListAll();
+        List<AntiHistory> HeilongjiangListAll = antiHistoryService.HeilongjiangListAll();
+        List<AntiHistory> JilinListAll = antiHistoryService.JilinListAll();
+        List<AntiHistory> LiaoningListAll = antiHistoryService.LiaoningListAll();
+        List<AntiHistory> HebeiListAll = antiHistoryService.HebeiListAll();
+        List<AntiHistory> ShandongListAll = antiHistoryService.ShandongListAll();
+        List<AntiHistory> JiangsuListAll = antiHistoryService.JiangsuListAll();
+        List<AntiHistory> ZhejiangListAll = antiHistoryService.ZhejiangListAll();
+        List<AntiHistory> HenanListAll = antiHistoryService.HenanListAll();
+        List<AntiHistory> ShanxiListAll = antiHistoryService.ShanxiListAll();
+        List<AntiHistory> HubeiListAll = antiHistoryService.HubeiListAll();
+        List<AntiHistory> HunanListAll = antiHistoryService.HunanListAll();
+        List<AntiHistory> YunnanListAll = antiHistoryService.YunnanListAll();
+        List<AntiHistory> ShanghaiListAll = antiHistoryService.ShanghaiListAll();
+        List<AntiHistory> ChongqingListAll = antiHistoryService.ChongqingListAll();
+        List<AntiHistory> BeijingListAll = antiHistoryService.BeijingListAll();
+        List<AntiHistory> NeimengguListAll = antiHistoryService.NeimengguListAll();
+        List<AntiHistory> GuangxiListAll = antiHistoryService.GuangxiListAll();
+        List<AntiHistory> GuangdongListAll = antiHistoryService.GuangdongListAll();
+        model.addAttribute("JiangxiListAll",JiangxiListAll);
+        model.addAttribute("HeilongjiangListAll",HeilongjiangListAll);
+        model.addAttribute("JilinListAll",JilinListAll);
+        model.addAttribute("LiaoningListAll",LiaoningListAll);
+        model.addAttribute("HebeiListAll",HebeiListAll);
+        model.addAttribute("ShandongListAll",ShandongListAll);
+        model.addAttribute("JiangsuListAll",JiangsuListAll);
+        model.addAttribute("ZhejiangListAll",ZhejiangListAll);
+        model.addAttribute("HenanListAll",HenanListAll);
+        model.addAttribute("ShanxiListAll",ShanxiListAll);
+        model.addAttribute("HubeiListAll",HubeiListAll);
+        model.addAttribute("HunanListAll",HunanListAll);
+        model.addAttribute("YunnanListAll",YunnanListAll);
+        model.addAttribute("ShanghaiListAll",ShanghaiListAll);
+        model.addAttribute("ChongqingListAll",ChongqingListAll);
+        model.addAttribute("BeijingListAll",BeijingListAll);
+        model.addAttribute("NeimengguListAll",NeimengguListAll);
+        model.addAttribute("GuangxiListAll",GuangxiListAll);
+        model.addAttribute("GuangdongListAll",GuangdongListAll);
         return "mapDisplay";
     }
 

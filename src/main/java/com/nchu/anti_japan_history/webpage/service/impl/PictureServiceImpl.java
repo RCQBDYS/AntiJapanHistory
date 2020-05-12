@@ -26,4 +26,40 @@ public class PictureServiceImpl implements PictureService {
     public int pictureSave(Picture picture) {
         return pictureMapper.pictureSave(picture);
     }
+
+    @Override
+    public Picture pictureDisplay(Long pictureId) {
+        return pictureMapper.pictureDisplay(pictureId);
+    }
+
+    @Override
+    public List<Picture> consumerPassPicture(String pictureContribution) {
+        return pictureMapper.consumerPassPicture(pictureContribution);
+    }
+
+    @Override
+    public List<Picture> consumerAuditPicture(String pictureContribution) {
+        return pictureMapper.consumerAuditPicture(pictureContribution);
+    }
+
+    @Override
+    public List<Picture> consumerNotAdoptedPicture(String pictureContribution) {
+        return pictureMapper.consumerNotAdoptedPicture(pictureContribution);
+    }
+
+    @Override
+    public List<Picture> adminPassPicture() {
+        return pictureMapper.adminPassPicture();
+    }
+
+    @Override
+    public List<Picture> adminAuditPicture() {
+        return pictureMapper.adminAuditPicture();
+    }
+
+    @Override
+    public List<Picture> adminNotAdoptedPicture() {
+        return pictureMapper.adminNotAdoptedPicture();
+    }
+
 }

@@ -18,4 +18,5 @@ public class InternationalFriend implements Serializable {
     private String picture;                //图片
     private Integer friendState;           //审核状态
     private String friendContribution;     //贡献者
+    private String friendNotReason;        //未通过原因
 }

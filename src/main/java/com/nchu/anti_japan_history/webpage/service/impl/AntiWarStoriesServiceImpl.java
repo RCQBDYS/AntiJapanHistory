@@ -33,4 +33,34 @@ public class AntiWarStoriesServiceImpl implements AntiWarStoriesService {
     public AntiWarStories antiStoriesDisplay(Long antiWarId) {
         return antiWarStoriesMapper.antiStoriesDisplay(antiWarId);
     }
+
+    @Override
+    public List<AntiWarStories> consumerPassStories(String storiesContribution) {
+        return antiWarStoriesMapper.consumerPassStories(storiesContribution);
+    }
+
+    @Override
+    public List<AntiWarStories> consumerAuditStories(String storiesContribution) {
+        return antiWarStoriesMapper.consumerAuditStories(storiesContribution);
+    }
+
+    @Override
+    public List<AntiWarStories> consumerNotAdoptedStores(String storiesContribution) {
+        return antiWarStoriesMapper.consumerNotAdoptedStores(storiesContribution);
+    }
+
+    @Override
+    public List<AntiWarStories> adminPassStories() {
+        return antiWarStoriesMapper.adminPassStories();
+    }
+
+    @Override
+    public List<AntiWarStories> adminAuditStories() {
+        return antiWarStoriesMapper.adminAuditStories();
+    }
+
+    @Override
+    public List<AntiWarStories> adminNotAdoptedStories() {
+        return antiWarStoriesMapper.adminNotAdoptedStories();
+    }
 }

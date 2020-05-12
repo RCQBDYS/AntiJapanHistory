@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -72,9 +73,9 @@ public class UserController {
         httpServletRequest.setCharacterEncoding("utf-8");
         httpServletResponse.setCharacterEncoding("utf-8");
         List<User> result = userService.selectUserName(userName);
-        if(result.isEmpty()){
+        if (result.isEmpty()) {
             httpServletResponse.getWriter().write("");
-        }else{
+        } else {
             httpServletResponse.getWriter().write("用户已存在");
         }
 
@@ -139,41 +140,47 @@ public class UserController {
     public String userMessageUpdate(@RequestParam(value = "userPicture") MultipartFile multipartFile,
                                     @RequestParam(value = "userName") String userName,
                                     @RequestParam(value = "userPassword") String userPassword,
-                                    @RequestParam(value = "userId") int userId, HttpSession session){
+                                    @RequestParam(value = "userPower") int userPower,
+                                    @RequestParam(value = "flag") int Flag,
+                                    @RequestParam(value = "sessionPicture")String sessionPicture,
+                                    @RequestParam(value = "userId") int userId, HttpSession session) {
         User user1 = new User();
         user1.setUserName(userName);
         user1.setUserPassword(userPassword);
         user1.setUserId(userId);
+        user1.setUserPower(userPower);
         //图片的保存
-        String parentDirPath = ImagesPath.substring(ImagesPath.indexOf(':') + 1, ImagesPath.length());
-        String originalFilename = multipartFile.getOriginalFilename();
-        String pictureName = RandomUtils.random() + originalFilename;
-        File parentDir = new File(parentDirPath);
-        String userPicture = "images" + "\\" + pictureName;
-        user1.setUserPicture(userPicture);
-        int flag = 0;
-        if (!parentDir.exists()) //如果那个目录不存在先创建目录
-        {
-            parentDir.mkdir();
-        }
-        try {
-            //全局配置文件中配置的目录加上文件名,将用户选择的图片，写入磁盘中
-            multipartFile.transferTo(new File(parentDirPath + pictureName));
-            flag = 1;
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (Flag == 0) {
+            //System.out.println("multipartFile=" + multipartFile);
+            //String parentDirPath = ImagesPath.substring(ImagesPath.indexOf(':') + 1, ImagesPath.length());
+            //String originalFilename = multipartFile.getOriginalFilename();
+            //System.out.println("originalFilename="+originalFilename);
+            //String userPicture = "images" + "\\" + originalFilename;
+            //System.out.println("userPicture="+userPicture);
+            user1.setUserPicture(sessionPicture);
+        } else {
+            String parentDirPath = ImagesPath.substring(ImagesPath.indexOf(':') + 1, ImagesPath.length());
+            System.out.println("multipartFile2="+multipartFile);
+            String originalFilename = multipartFile.getOriginalFilename();
+            System.out.println("originalFilename2="+originalFilename);
+            String pictureName = RandomUtils.random() + originalFilename;
+            File parentDir = new File(parentDirPath);
+            String userPicture = "images" + "\\" + pictureName;
+            user1.setUserPicture(userPicture);
+            try {
+                //全局配置文件中配置的目录加上文件名,将用户选择的图片，写入磁盘中
+                multipartFile.transferTo(new File(parentDirPath + pictureName));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
-        if (flag == 1){
-            userService.update(user1);
-            User user = userService.login(userName,userPassword);
-            session.removeAttribute("user");
-            session.setAttribute("user",user);
-            return "userUnit";
-        }else{
-            logger.info("修改失败！");
-            return "userUnit";
-        }
+        userService.update(user1);
+        User user = userService.login(userName, userPassword);
+        session.removeAttribute("user");
+        session.setAttribute("user", user);
+        return "userUnit";
+
     }
 
     //已注册用户进行登录
@@ -192,23 +199,11 @@ public class UserController {
         }
     }
 
-    //用户进入个人中心
-    @GetMapping("/unit")
-    public String skipUserUnit(Model model){
-        //List<AntiHistory> antiHistoryTable = antiHistoryService;
-        return "userUnit";
-    }
-
-    //管理员进入管理中心
+    //管理员进入管理中心并显示用户管理信息
     @GetMapping("/adminCenter")
-    public String skipAdminCenter(){
+    public String skipAdminCenter(Model model) {
+        List<User> userList = userService.userMessageListAll();
+        model.addAttribute("userList", userList);
         return "adminCenter";
     }
-
-
-
-
-
-
-
 }

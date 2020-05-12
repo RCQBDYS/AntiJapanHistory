@@ -26,4 +26,39 @@ public class NewspaperServiceImpl implements NewspaperService {
     public int newspaperSave(Newspaper newspaper) {
         return newspaperMapper.newspaperSave(newspaper);
     }
+
+    @Override
+    public Newspaper newspaperDisplay(Long newspaperId) {
+        return newspaperMapper.newspaperDisplay(newspaperId);
+    }
+
+    @Override
+    public List<Newspaper> consumerPassNewspaper(String newspaperContribution) {
+        return newspaperMapper.consumerPassNewspaper(newspaperContribution);
+    }
+
+    @Override
+    public List<Newspaper> consumerAuditNewspaper(String newspaperContribution) {
+        return newspaperMapper.consumerAuditNewspaper(newspaperContribution);
+    }
+
+    @Override
+    public List<Newspaper> consumerNotAdoptedNewspaper(String newspaperContribution) {
+        return newspaperMapper.consumerNotAdoptedNewspaper(newspaperContribution);
+    }
+
+    @Override
+    public List<Newspaper> adminPassNews() {
+        return newspaperMapper.adminPassNews();
+    }
+
+    @Override
+    public List<Newspaper> adminAuditNews() {
+        return newspaperMapper.adminAuditNews();
+    }
+
+    @Override
+    public List<Newspaper> adminNotAdoptedNews() {
+        return newspaperMapper.adminNotAdoptedNews();
+    }
 }

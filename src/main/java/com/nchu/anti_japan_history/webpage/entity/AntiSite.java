@@ -20,4 +20,5 @@ public class AntiSite implements Serializable {
     private String antiSitePicture; //遗址图片
     private Integer antiSiteState;  //审核状态
     private String antiSiteContribution;//贡献者
+    private String antiSiteNotReason;//未通过原因
 }

@@ -3,7 +3,6 @@ package com.nchu.anti_japan_history.webpage.controller;
 import com.nchu.anti_japan_history.utils.StringReplace;
 import com.nchu.anti_japan_history.webpage.entity.*;
 import com.nchu.anti_japan_history.webpage.service.*;
-import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -97,4 +96,39 @@ public class ContentDisplayController {
         return "detailsFriend";
     }
 
+    //书籍信息的详细显示
+    @GetMapping("/bookDisplay")
+    public String BookDisplay(String bookId,Model model){
+        Long BookId = Long.parseLong(bookId);
+        Books booksDisplay = bookService.bookDisplay(BookId);
+        model.addAttribute("booksDisplay",booksDisplay);
+        return "detailsBook";
+    }
+
+    //报纸信息的详细显示
+    @GetMapping("/newspaperDisplay")
+    public String NewspaperDisplay(String newspaperId,Model model){
+        Long NewspaperId = Long.parseLong(newspaperId);
+        Newspaper newspaperDisplay = newspaperService.newspaperDisplay(NewspaperId);
+        model.addAttribute("newspaperDisplay",newspaperDisplay);
+        return "detailsNewspaper";
+    }
+
+    //期刊信息的详细显示
+    @GetMapping("/periodicalDisplay")
+    public String PeriodicalDisplay(String periodicalId,Model model){
+        Long PeriodicalId = Long.parseLong(periodicalId);
+        Periodical periodicalDisplay = periodicalService.periodicalDisplay(PeriodicalId);
+        model.addAttribute("periodicalDisplay",periodicalDisplay);
+        return "detailsPeriodical";
+    }
+
+    //图片信息的详细显示
+    @GetMapping("/pictureDisplay")
+    public String PictureDisplay(String pictureId,Model model){
+        Long PictureId = Long.parseLong(pictureId);
+        Picture pictureDisplay = pictureService.pictureDisplay(PictureId);
+        model.addAttribute("pictureDisplay",pictureDisplay);
+        return "detailsPicture";
+    }
 }

@@ -22,4 +22,5 @@ public class Newspaper implements Serializable {
     private Date publicationTime;     //出版时间
     private Integer newspaperState;     //审核状态
     private String newspaperContribution;//贡献者
+    private String newspaperNotReason;//未通过原因
 }

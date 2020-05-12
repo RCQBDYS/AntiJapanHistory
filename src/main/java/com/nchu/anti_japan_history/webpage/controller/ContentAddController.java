@@ -558,6 +558,5 @@ public class ContentAddController {
             pictureService.pictureSave(picture);
             return "index";
         }
-
     }
 }

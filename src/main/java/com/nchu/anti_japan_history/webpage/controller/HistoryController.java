@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.Date;
 
 /**
  * @Author: wangshen
@@ -60,13 +61,17 @@ public class HistoryController {
                                  @RequestParam(value = "antiHistoryContent")String antiHistoryContent,
                                  @RequestParam(value = "specialTopicId")Integer specialTopicId,
                                  @RequestParam(value = "antiHistoryContribution")String antiHistoryContribution,
-                                 @RequestParam(value = "antiHistoryState")Integer antiHistoryState){
+                                 @RequestParam(value = "antiHistoryState")Integer antiHistoryState,
+                                 @RequestParam(value = "antiHistorySite")String antiHistorySite,
+                                 @RequestParam(value = "antiHistoryTime") Date antiHistoryTime){
         AntiHistory antiHistory = new AntiHistory();
         antiHistory.setAntiHistoryName(antiHistoryName);
         antiHistory.setAntiHistoryDescription(antiHistoryDescription);
         antiHistory.setAntiHistoryContribution(antiHistoryContribution);
         antiHistory.setAntiHistoryState(antiHistoryState);
         antiHistory.setAntiHistoryType(specialTopicId);
+        antiHistory.setAntiHistoryTime(antiHistoryTime);
+        antiHistory.setAntiHistorySite(antiHistorySite);
         //进行敏感词汇过滤，铭感词汇替换成
         SensitiveWordFilter sensitiveWordFilter = new SensitiveWordFilter("CensorWords.txt");
         sensitiveWordFilter.InitializationWork();

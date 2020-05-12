@@ -11,16 +11,17 @@
         <result column="picture" property="picture" jdbcType="VARCHAR"/>
         <result column="friendState" property="friendState" jdbcType="INTEGER"/>
         <result column="friendContribution" property="friendContribution" jdbcType="VARCHAR"/>
+        <result column="friendNotReason" property="friendNotReason" jdbcType="VARCHAR"/>
     </resultMap>
 
     <!--主页国际友人信息显示-->
     <select id="internationalFriendSelect" resultMap="internationalFriendMap">
-        SELECT * FROM internationalfriend LIMIT 4;
+        SELECT * FROM internationalfriend where friendState = '2' LIMIT 4;
     </select>
 
     <!--国际友人信息全部显示-->
     <select id="internationalFriendListAll" resultMap="internationalFriendMap">
-        SELECT * FROM internationalfriend;
+        SELECT * FROM internationalfriend where friendState = '2';
     </select>
 
     <!--国际友人信息保存-->
@@ -31,7 +32,33 @@
 
     <!--国际友人信息详细显示-->
     <select id="internationalFriendDisplay" resultMap="internationalFriendMap">
-        SELECT * FROM internationalfriend WHERE internationalFriendId=#{internationalFriendId};
+        SELECT * FROM internationalfriend WHERE internationalFriendId=#{internationalFriendId} and friendState = '2';
+    </select>
+
+    <!--普通用户查询通过国际友人信息-->
+    <select id="consumerPassFriend" resultMap="internationalFriendMap">
+        SELECT * FROM internationalfriend WHERE friendContribution=#{friendContribution} and friendState = '2';
+    </select>
+    <!--普通用户查询待审核-->
+    <select id="consumerAuditFriend" resultMap="internationalFriendMap">
+        SELECT * FROM internationalfriend WHERE friendContribution=#{friendContribution} and friendState = '0';
+    </select>
+    <!--普通用户查询未通过-->
+    <select id="consumerNotAdoptedFriend" resultMap="internationalFriendMap">
+        SELECT * FROM internationalfriend WHERE friendContribution=#{friendContribution} and friendState = '1';
+    </select>
+
+    <!--管理员查询通过-->
+    <select id="adminPassFriend" resultMap="internationalFriendMap">
+        SELECT * FROM internationalfriend WHERE friendState = '2';
+    </select>
+    <!--管理员查询待审核-->
+    <select id="adminAuditFriend" resultMap="internationalFriendMap">
+        SELECT * FROM internationalfriend WHERE friendState = '0';
+    </select>
+    <!--管理员查询未通过-->
+    <select id="adminNotAdoptedFriend" resultMap="internationalFriendMap">
+        SELECT * FROM internationalfriend WHERE friendState = '1';
     </select>
     <!--<select id="listAll" resultMap="departMap">
         SELECT departId,departName,departmentLeading,departmentNum,departmentAddress,departmentResponsible

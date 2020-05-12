@@ -14,17 +14,51 @@
         <result column="publicationTime" property="publicationTime" jdbcType="VARCHAR"/>
         <result column="newspaperState" property="newspaperState" jdbcType="INTEGER"/>
         <result column="newspaperContribution" property="newspaperContribution" jdbcType="VARCHAR"/>
+        <result column="newspaperNotReason" property="newspaperNotReason" jdbcType="VARCHAR"/>
     </resultMap>
 
+    <!--报纸信息的全部显示-->
     <select id="newspaperListAll" resultMap="newspaperMap">
-        SELECT * FROM newspaper;
+        SELECT * FROM newspaper where newspaperState = '2';
     </select>
 
+    <!--报纸信息的保存-->
     <insert id="newspaperSave" parameterType="com.nchu.anti_japan_history.webpage.entity.Newspaper">
         INSERT INTO newspaper(newspaperName,newspaperPicture,newspaperPath, principalPerson,publishing,placeOfPublication,publicationTime,newspaperState,newspaperContribution)
         VALUES (#{newspaperName},#{newspaperPicture},#{newspaperPath},#{principalPerson},#{publishing},#{placeOfPublication},#{publicationTime},#{newspaperState},#{newspaperContribution})
     </insert>
 
+    <!--报纸信息的详细显示-->
+    <select id="newspaperDisplay" resultMap="newspaperMap">
+        SELECT * FROM newspaper where newspaperId = #{newspaperId} and newspaperState = '2';
+    </select>
+
+    <!--普通用户查询通过的报纸信息-->
+    <select id="consumerPassNewspaper" resultMap="newspaperMap">
+        SELECT * FROM newspaper where newspaperContribution = #{newspaperContribution} and newspaperState = '2';
+    </select>
+    <!--普通用户查询待审核-->
+    <select id="consumerAuditNewspaper" resultMap="newspaperMap">
+        SELECT * FROM newspaper where newspaperContribution = #{newspaperContribution} and newspaperState = '0';
+    </select>
+    <!--普通用户查询未通过-->
+    <select id="consumerNotAdoptedNewspaper" resultMap="newspaperMap">
+        SELECT * FROM newspaper where newspaperContribution = #{newspaperContribution} and newspaperState = '1';
+    </select>
+
+
+    <!--管理员查询通过-->
+    <select id="adminPassNews" resultMap="newspaperMap">
+        SELECT * FROM newspaper where newspaperState = '2';
+    </select>
+    <!--管理员查询待审核-->
+    <select id="adminAuditNews" resultMap="newspaperMap">
+        SELECT * FROM newspaper where newspaperState = '0';
+    </select>
+    <!--管理员查询未通过-->
+    <select id="adminNotAdoptedNews" resultMap="newspaperMap">
+        SELECT * FROM newspaper where  newspaperState = '1';
+    </select>
     <!--<select id="listAll" resultMap="departMap">
         SELECT departId,departName,departmentLeading,departmentNum,departmentAddress,departmentResponsible
         FROM department_message

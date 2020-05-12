@@ -19,4 +19,5 @@ public class Periodical implements Serializable {
     private String sponsorPerson;       //作者
     private Integer periodicalState;    //审核状态
     private String periodicalContribution;//贡献者
+    private String periodicalNotReason;//未通过原因
 }

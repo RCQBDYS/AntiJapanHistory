@@ -16,7 +16,6 @@ public class StringReplace {
         content = content.replace("&#39;","\'");
         content = content.replace("&quot;","\"");
         content = content.replace("<br>","\n");
-
         return content;
     }
 }

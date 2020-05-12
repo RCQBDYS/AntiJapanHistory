@@ -83,6 +83,7 @@
                                     <label class="control-label col-lg-2"><i class="fa fa-user-o">用户名称:</i></label>
                                     <div class="col-lg-10">
                                         <input name="userName" class="form-control" th:value="${session.user.userName}" style="width: 200px;">
+                                        <input name="userPower" type="hidden" th:value="${session.user.userPower}">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -90,8 +91,10 @@
                                     <div class="col-lg-10">
                                         <img id="antiHistoryImg" th:src="${session.user.userPicture}" style="width: 150px;height:150px;"
                                              class="img-thumbnail">
-                                        <input name="userPicture" id="antiHistoryPicture" type="file" style="display: none">
+                                        <input name="userPicture"  id="antiHistoryPicture" type="file" style="display: none">
                                         <input name="userId" style="display: none" th:value="${session.user.userId}">
+                                        <input id="flag" name="flag" value="0" type="hidden">
+                                        <input name="sessionPicture" th:value="${session.user.userPicture}" hidden>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -127,18 +130,25 @@
                                         <thead>
                                         <tr>
                                             <td>#</td>
-                                            <td>名称</td>
-                                            <td>描述</td>
-                                            <td>内容</td>
+                                            <td>条目名称</td>
+                                            <td>条目类型</td>
+                                            <td>条目来源</td>
+                                            <td>操作</td>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <!--<tr th:each="case,state:${}">
+                                        <tr th:each="case,state:${consumerPassHistoryListAll}">
                                             <td th:text="${state.count}"></td>
-                                            <td><span th:text="${}"></span></td>
-                                            <td><span th:text="${}"></span></td>
-                                            <td><span th:text="${}"></span></td>
-                                        </tr>-->
+                                            <td><span th:text="${case.antiHistoryName}"></span></td>
+                                            <td th:switch="${case.antiHistoryType}">
+                                                <span th:case="'1'">局部战争</span>
+                                                <span th:case="'2'">全国抗战</span>
+                                                <span th:case="'3'">伟大胜利</span>
+                                                <span th:case="'4'">游击战争</span>
+                                            </td>
+                                            <td><span th:text="${case.antiHistoryContribution}"></span></td>
+                                            <td><a class="btn btn-info" th:href="@{/partHistoryDisplay(antiHistoryId=${case.antiHistoryId})}">查看</a></td>
+                                        </tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -147,19 +157,27 @@
                                         <thead>
                                         <tr>
                                             <td>#</td>
-                                            <td>名称</td>
-                                            <td>描述</td>
-                                            <td>内容</td>
+                                            <td>条目名称</td>
+                                            <td>条目类型</td>
                                             <td>审核状态</td>
+                                            <td>操作</td>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <!--<tr th:each="case,state:${}">
+                                        <tr th:each="case,state:${consumerAuditHistoryListAll}">
                                             <td th:text="${state.count}"></td>
-                                            <td><span th:text="${}"></span></td>
-                                            <td><span th:text="${}"></span></td>
-                                            <td><span th:text="${}"></span></td>
-                                        </tr>-->
+                                            <td><span th:text="${case.antiHistoryName}"></span></td>
+                                            <td th:switch="${case.antiHistoryType}">
+                                                <span th:case="'1'">局部战争</span>
+                                                <span th:case="'2'">全国抗战</span>
+                                                <span th:case="'3'">伟大胜利</span>
+                                                <span th:case="'4'">游击战争</span>
+                                            </td>
+                                            <td th:switch="${case.antiHistoryState}">
+                                                <span th:case="'0'">待审核中</span>
+                                            </td>
+                                            <td><a class="btn btn-info" th:href="@{/editAntiHistory(antiHistoryId=${case.antiHistoryId})}">修改</a></td>
+                                        </tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -168,20 +186,25 @@
                                         <thead>
                                         <tr>
                                             <td>#</td>
-                                            <td>名称</td>
-                                            <td>描述</td>
-                                            <td>内容</td>
-                                            <td>审核状态</td>
+                                            <td>条目名称</td>
+                                            <td>条目类型</td>
                                             <td>未通过原因</td>
+                                            <td>操作</td>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <!--<tr th:each="case,state:${}">
+                                        <tr th:each="case,state:${consumerNotAdoptedListAll}">
                                             <td th:text="${state.count}"></td>
-                                            <td><span th:text="${}"></span></td>
-                                            <td><span th:text="${}"></span></td>
-                                            <td><span th:text="${}"></span></td>
-                                        </tr>-->
+                                            <td><span th:text="${case.antiHistoryName}"></span></td>
+                                            <td th:switch="${case.antiHistoryType}">
+                                                <span th:case="'1'">局部战争</span>
+                                                <span th:case="'2'">全国抗战</span>
+                                                <span th:case="'3'">伟大胜利</span>
+                                                <span th:case="'4'">游击战争</span>
+                                            </td>
+                                            <td><span th:text="${case.notAdoptedReason}"></span></td>
+                                            <td><a class="btn btn-info" th:href="@{/editAntiHistory(antiHistoryId=${case.antiHistoryId})}">修改</a></td>
+                                        </tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -207,18 +230,20 @@
                                         <thead>
                                         <tr>
                                             <td>#</td>
-                                            <td>名称</td>
-                                            <td>描述</td>
-                                            <td>内容</td>
+                                            <td>人物名称</td>
+                                            <td>时间</td>
+                                            <td>贡献者</td>
+                                            <td>操作</td>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <!--<tr th:each="case,state:${}">
+                                        <tr th:each="case,state:${consumerPassPersonListAll}">
                                             <td th:text="${state.count}"></td>
-                                            <td><span th:text="${}"></span></td>
-                                            <td><span th:text="${}"></span></td>
-                                            <td><span th:text="${}"></span></td>
-                                        </tr>-->
+                                            <td><span th:text="${case.personName}"></span></td>
+                                            <td><span th:text="${case.timeQuantum}"></span></td>
+                                            <td><span th:text="${case.personContribution}"></span></td>
+                                            <td><a class="btn btn-info">查看</a></td>
+                                        </tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -227,19 +252,20 @@
                                         <thead>
                                         <tr>
                                             <td>#</td>
-                                            <td>名称</td>
-                                            <td>描述</td>
-                                            <td>内容</td>
-                                            <td>审核状态</td>
+                                            <td>人物名称</td>
+                                            <td>时间</td>
+                                            <td>贡献者</td>
+                                            <td>操作</td>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <!--<tr th:each="case,state:${}">
+                                        <tr th:each="case,state:${consumerAuditPersonListAll}">
                                             <td th:text="${state.count}"></td>
-                                            <td><span th:text="${}"></span></td>
-                                            <td><span th:text="${}"></span></td>
-                                            <td><span th:text="${}"></span></td>
-                                        </tr>-->
+                                            <td><span th:text="${case.personName}"></span></td>
+                                            <td><span th:text="${case.timeQuantum}"></span></td>
+                                            <td><span th:text="${case.personContribution}"></span></td>
+                                            <td><a class="btn btn-info">修改</a></td>
+                                        </tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -248,20 +274,22 @@
                                         <thead>
                                         <tr>
                                             <td>#</td>
-                                            <td>名称</td>
-                                            <td>描述</td>
-                                            <td>内容</td>
-                                            <td>审核状态</td>
+                                            <td>人物名称</td>
+                                            <td>时间</td>
+                                            <td>贡献者</td>
                                             <td>未通过原因</td>
+                                            <td>操作</td>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <!--<tr th:each="case,state:${}">
+                                        <tr th:each="case,state:${consumerNotAdoptedPersonListAll}">
                                             <td th:text="${state.count}"></td>
-                                            <td><span th:text="${}"></span></td>
-                                            <td><span th:text="${}"></span></td>
-                                            <td><span th:text="${}"></span></td>
-                                        </tr>-->
+                                            <td><span th:text="${case.personName}"></span></td>
+                                            <td><span th:text="${case.timeQuantum}"></span></td>
+                                            <td><span th:text="${case.personContribution}"></span></td>
+                                            <td><span th:text="${case.personNotReason}"></span></td>
+                                            <td><a class="btn btn-info">修改</a></td>
+                                        </tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -287,18 +315,18 @@
                                         <thead>
                                         <tr>
                                             <td>#</td>
-                                            <td>名称</td>
-                                            <td>描述</td>
-                                            <td>内容</td>
+                                            <td>故事标题</td>
+                                            <td>故事来源</td>
+                                            <td>操作</td>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <!--<tr th:each="case,state:${}">
+                                        <tr th:each="case,state:${consumerPassStories}">
                                             <td th:text="${state.count}"></td>
-                                            <td><span th:text="${}"></span></td>
-                                            <td><span th:text="${}"></span></td>
-                                            <td><span th:text="${}"></span></td>
-                                        </tr>-->
+                                            <td><span th:text="${case.title}"></span></td>
+                                            <td><span th:text="${case.storiesContribution}"></span></td>
+                                            <td><a class="btn btn-info">查看</a></td>
+                                        </tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -307,19 +335,18 @@
                                         <thead>
                                         <tr>
                                             <td>#</td>
-                                            <td>名称</td>
-                                            <td>描述</td>
-                                            <td>内容</td>
-                                            <td>审核状态</td>
+                                            <td>故事标题</td>
+                                            <td>故事来源</td>
+                                            <td>操作</td>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <!--<tr th:each="case,state:${}">
+                                        <tr th:each="case,state:${consumerAuditStories}">
                                             <td th:text="${state.count}"></td>
-                                            <td><span th:text="${}"></span></td>
-                                            <td><span th:text="${}"></span></td>
-                                            <td><span th:text="${}"></span></td>
-                                        </tr>-->
+                                            <td><span th:text="${case.title}"></span></td>
+                                            <td><span th:text="${case.storiesContribution}"></span></td>
+                                            <td><a class="btn btn-info">修改</a></td>
+                                        </tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -328,20 +355,20 @@
                                         <thead>
                                         <tr>
                                             <td>#</td>
-                                            <td>名称</td>
-                                            <td>描述</td>
-                                            <td>内容</td>
-                                            <td>审核状态</td>
+                                            <td>故事标题</td>
+                                            <td>故事来源</td>
                                             <td>未通过原因</td>
+                                            <td>操作</td>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <!--<tr th:each="case,state:${}">
+                                        <tr th:each="case,state:${consumerNotAdoptedStores}">
                                             <td th:text="${state.count}"></td>
-                                            <td><span th:text="${}"></span></td>
-                                            <td><span th:text="${}"></span></td>
-                                            <td><span th:text="${}"></span></td>
-                                        </tr>-->
+                                            <td><span th:text="${case.title}"></span></td>
+                                            <td><span th:text="${case.storiesContribution}"></span></td>
+                                            <td><span th:text="${case.storiesNotReason}"></span></td>
+                                            <td><a class="btn btn-info">修改</a></td>
+                                        </tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -367,18 +394,18 @@
                                         <thead>
                                         <tr>
                                             <td>#</td>
-                                            <td>名称</td>
-                                            <td>描述</td>
-                                            <td>内容</td>
+                                            <td>遗址名称</td>
+                                            <td>贡献来源</td>
+                                            <td>操作</td>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <!--<tr th:each="case,state:${}">
+                                        <tr th:each="case,state:${consumerPassSite}">
                                             <td th:text="${state.count}"></td>
-                                            <td><span th:text="${}"></span></td>
-                                            <td><span th:text="${}"></span></td>
-                                            <td><span th:text="${}"></span></td>
-                                        </tr>-->
+                                            <td><span th:text="${case.antiSiteName}"></span></td>
+                                            <td><span th:text="${case.antiSiteContribution}"></span></td>
+                                            <td><a class="btn btn-info">查看</a></td>
+                                        </tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -387,19 +414,20 @@
                                         <thead>
                                         <tr>
                                             <td>#</td>
-                                            <td>名称</td>
-                                            <td>描述</td>
-                                            <td>内容</td>
-                                            <td>审核状态</td>
+                                            <td>遗址名称</td>
+                                            <td>贡献来源</td>
+                                            <td>操作</td>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <!--<tr th:each="case,state:${}">
+                                        <tr th:each="case,state:${consumerAuditSite}">
                                             <td th:text="${state.count}"></td>
-                                            <td><span th:text="${}"></span></td>
-                                            <td><span th:text="${}"></span></td>
-                                            <td><span th:text="${}"></span></td>
-                                        </tr>-->
+                                            <td><span th:text="${case.antiSiteName}"></span></td>
+                                            <td><span th:text="${case.antiSiteContribution}"></span></td>
+                                            <td>
+                                                <a class="btn btn-info">修改</a>
+                                            </td>
+                                        </tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -408,20 +436,20 @@
                                         <thead>
                                         <tr>
                                             <td>#</td>
-                                            <td>名称</td>
-                                            <td>描述</td>
-                                            <td>内容</td>
-                                            <td>审核状态</td>
+                                            <td>遗址名称</td>
+                                            <td>贡献来源</td>
                                             <td>未通过原因</td>
+                                            <td>操作</td>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <!--<tr th:each="case,state:${}">
+                                        <tr th:each="case,state:${consumerNotAdoptedSite}">
                                             <td th:text="${state.count}"></td>
-                                            <td><span th:text="${}"></span></td>
-                                            <td><span th:text="${}"></span></td>
-                                            <td><span th:text="${}"></span></td>
-                                        </tr>-->
+                                            <td><span th:text="${case.antiSiteName}"></span></td>
+                                            <td><span th:text="${case.antiSiteContribution}"></span></td>
+                                            <td><span th:text="${case.antiSiteContribution}"></span></td>
+                                            <td><a class="btn btn-info">修改</a></td>
+                                        </tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -448,17 +476,17 @@
                                         <tr>
                                             <td>#</td>
                                             <td>名称</td>
-                                            <td>描述</td>
-                                            <td>内容</td>
+                                            <td>贡献者</td>
+                                            <td>操作</td>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <!--<tr th:each="case,state:${}">
+                                        <tr th:each="case,state:${consumerPassFriend}">
                                             <td th:text="${state.count}"></td>
-                                            <td><span th:text="${}"></span></td>
-                                            <td><span th:text="${}"></span></td>
-                                            <td><span th:text="${}"></span></td>
-                                        </tr>-->
+                                            <td><span th:text="${case.name}"></span></td>
+                                            <td><span th:text="${case.friendContribution}"></span></td>
+                                            <td><a class="btn btn-info">查看</a></td>
+                                        </tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -468,18 +496,19 @@
                                         <tr>
                                             <td>#</td>
                                             <td>名称</td>
-                                            <td>描述</td>
-                                            <td>内容</td>
-                                            <td>审核状态</td>
+                                            <td>贡献者</td>
+                                            <td>操作</td>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <!--<tr th:each="case,state:${}">
+                                        <tr th:each="case,state:${consumerAuditFriend}">
                                             <td th:text="${state.count}"></td>
-                                            <td><span th:text="${}"></span></td>
-                                            <td><span th:text="${}"></span></td>
-                                            <td><span th:text="${}"></span></td>
-                                        </tr>-->
+                                            <td><span th:text="${case.name}"></span></td>
+                                            <td><span th:text="${case.friendContribution}"></span></td>
+                                            <td>
+                                                <a class="btn btn-info">修改</a>
+                                            </td>
+                                        </tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -489,19 +518,19 @@
                                         <tr>
                                             <td>#</td>
                                             <td>名称</td>
-                                            <td>描述</td>
-                                            <td>内容</td>
-                                            <td>审核状态</td>
+                                            <td>贡献者</td>
                                             <td>未通过原因</td>
+                                            <td>操作</td>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <!--<tr th:each="case,state:${}">
+                                        <tr th:each="case,state:${consumerNotAdoptedFriend}">
                                             <td th:text="${state.count}"></td>
-                                            <td><span th:text="${}"></span></td>
-                                            <td><span th:text="${}"></span></td>
-                                            <td><span th:text="${}"></span></td>
-                                        </tr>-->
+                                            <td><span th:text="${case.name}"></span></td>
+                                            <td><span th:text="${case.friendContribution}"></span></td>
+                                            <td><span th:text="${case.friendNotReason}"></span></td>
+                                            <td><a class="btn btn-info">修改</a></td>
+                                        </tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -527,18 +556,18 @@
                                         <thead>
                                         <tr>
                                             <td>#</td>
-                                            <td>名称</td>
-                                            <td>描述</td>
-                                            <td>内容</td>
+                                            <td>图片名称</td>
+                                            <td>图片来源</td>
+                                            <td>操作</td>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <!--<tr th:each="case,state:${}">
+                                        <tr th:each="case,state:${consumerPassPicture}">
                                             <td th:text="${state.count}"></td>
-                                            <td><span th:text="${}"></span></td>
-                                            <td><span th:text="${}"></span></td>
-                                            <td><span th:text="${}"></span></td>
-                                        </tr>-->
+                                            <td><span th:text="${case.pictureName}"></span></td>
+                                            <td><span th:text="${case.pictureContribution}"></span></td>
+                                            <td><a class="btn btn-info">查看</a></td>
+                                        </tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -547,19 +576,18 @@
                                         <thead>
                                         <tr>
                                             <td>#</td>
-                                            <td>名称</td>
-                                            <td>描述</td>
-                                            <td>内容</td>
-                                            <td>审核状态</td>
+                                            <td>图片名称</td>
+                                            <td>图片来源</td>
+                                            <td>操作</td>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <!--<tr th:each="case,state:${}">
+                                        <tr th:each="case,state:${consumerAuditPicture}">
                                             <td th:text="${state.count}"></td>
-                                            <td><span th:text="${}"></span></td>
-                                            <td><span th:text="${}"></span></td>
-                                            <td><span th:text="${}"></span></td>
-                                        </tr>-->
+                                            <td><span th:text="${case.pictureName}"></span></td>
+                                            <td><span th:text="${case.pictureContribution}"></span></td>
+                                            <td><a class="btn btn-info">修改</a></td>
+                                        </tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -568,20 +596,20 @@
                                         <thead>
                                         <tr>
                                             <td>#</td>
-                                            <td>名称</td>
-                                            <td>描述</td>
-                                            <td>内容</td>
-                                            <td>审核状态</td>
+                                            <td>图片名称</td>
+                                            <td>图片来源</td>
                                             <td>未通过原因</td>
+                                            <td>操作</td>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <!--<tr th:each="case,state:${}">
+                                        <tr th:each="case,state:${consumerNotAdoptedPicture}">
                                             <td th:text="${state.count}"></td>
-                                            <td><span th:text="${}"></span></td>
-                                            <td><span th:text="${}"></span></td>
-                                            <td><span th:text="${}"></span></td>
-                                        </tr>-->
+                                            <td><span th:text="${case.pictureName}"></span></td>
+                                            <td><span th:text="${case.pictureContribution}"></span></td>
+                                            <td><span th:text="${case.pictureNotReason}"></span></td>
+                                            <td><a class="btn btn-info">修改</a></td>
+                                        </tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -607,18 +635,20 @@
                                         <thead>
                                         <tr>
                                             <td>#</td>
-                                            <td>名称</td>
-                                            <td>描述</td>
-                                            <td>内容</td>
+                                            <td>报纸名称</td>
+                                            <td>出版社</td>
+                                            <td>贡献者</td>
+                                            <td>操作</td>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <!--<tr th:each="case,state:${}">
+                                        <tr th:each="case,state:${consumerPassNews}">
                                             <td th:text="${state.count}"></td>
-                                            <td><span th:text="${}"></span></td>
-                                            <td><span th:text="${}"></span></td>
-                                            <td><span th:text="${}"></span></td>
-                                        </tr>-->
+                                            <td><span th:text="${case.newspaperName}"></span></td>
+                                            <td><span th:text="${case.publishing}"></span></td>
+                                            <td><span th:text="${case.newspaperContribution}"></span></td>
+                                            <td><a class="btn btn-info">查看</a></td>
+                                        </tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -627,19 +657,20 @@
                                         <thead>
                                         <tr>
                                             <td>#</td>
-                                            <td>名称</td>
-                                            <td>描述</td>
-                                            <td>内容</td>
-                                            <td>审核状态</td>
+                                            <td>报纸名称</td>
+                                            <td>出版社</td>
+                                            <td>贡献者</td>
+                                            <td>操作</td>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <!--<tr th:each="case,state:${}">
+                                        <tr th:each="case,state:${consumerAuditNews}">
                                             <td th:text="${state.count}"></td>
-                                            <td><span th:text="${}"></span></td>
-                                            <td><span th:text="${}"></span></td>
-                                            <td><span th:text="${}"></span></td>
-                                        </tr>-->
+                                            <td><span th:text="${case.newspaperName}"></span></td>
+                                            <td><span th:text="${case.publishing}"></span></td>
+                                            <td><span th:text="${case.newspaperContribution}"></span></td>
+                                            <td><a class="btn btn-info">修改</a></td>
+                                        </tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -648,20 +679,22 @@
                                         <thead>
                                         <tr>
                                             <td>#</td>
-                                            <td>名称</td>
-                                            <td>描述</td>
-                                            <td>内容</td>
-                                            <td>审核状态</td>
+                                            <td>报纸名称</td>
+                                            <td>出版社</td>
+                                            <td>贡献者</td>
                                             <td>未通过原因</td>
+                                            <td>操作</td>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <!--<tr th:each="case,state:${}">
+                                        <tr th:each="case,state:${consumerNotAdoptedNews}">
                                             <td th:text="${state.count}"></td>
-                                            <td><span th:text="${}"></span></td>
-                                            <td><span th:text="${}"></span></td>
-                                            <td><span th:text="${}"></span></td>
-                                        </tr>-->
+                                            <td><span th:text="${case.newspaperName}"></span></td>
+                                            <td><span th:text="${case.publishing}"></span></td>
+                                            <td><span th:text="${case.newspaperContribution}"></span></td>
+                                            <td><span th:text="${case.newspaperNotReason}"></span></td>
+                                            <td><a class="btn btn-info">修改</a></td>
+                                        </tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -687,18 +720,22 @@
                                         <thead>
                                         <tr>
                                             <td>#</td>
-                                            <td>名称</td>
-                                            <td>描述</td>
-                                            <td>内容</td>
+                                            <td>期刊名称</td>
+                                            <td>主要负责人</td>
+                                            <td>出版社</td>
+                                            <td>贡献者</td>
+                                            <td>操作</td>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <!--<tr th:each="case,state:${}">
+                                        <tr th:each="case,state:${consumerPassPeriodical}">
                                             <td th:text="${state.count}"></td>
-                                            <td><span th:text="${}"></span></td>
-                                            <td><span th:text="${}"></span></td>
-                                            <td><span th:text="${}"></span></td>
-                                        </tr>-->
+                                            <td><span th:text="${case.periodicalName}"></span></td>
+                                            <td><span th:text="${case.sponsorPerson}"></span></td>
+                                            <td><span th:text="${case.publishingCompany}"></span></td>
+                                            <td><span th:text="${case.periodicalContribution}"></span></td>
+                                            <td><a class="btn btn-info">查看</a></td>
+                                        </tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -707,19 +744,22 @@
                                         <thead>
                                         <tr>
                                             <td>#</td>
-                                            <td>名称</td>
-                                            <td>描述</td>
-                                            <td>内容</td>
-                                            <td>审核状态</td>
+                                            <td>期刊名称</td>
+                                            <td>主要负责人</td>
+                                            <td>出版社</td>
+                                            <td>贡献者</td>
+                                            <td>操作</td>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <!--<tr th:each="case,state:${}">
+                                        <tr th:each="case,state:${consumerAuditPeriodical}">
                                             <td th:text="${state.count}"></td>
-                                            <td><span th:text="${}"></span></td>
-                                            <td><span th:text="${}"></span></td>
-                                            <td><span th:text="${}"></span></td>
-                                        </tr>-->
+                                            <td><span th:text="${case.periodicalName}"></span></td>
+                                            <td><span th:text="${case.sponsorPerson}"></span></td>
+                                            <td><span th:text="${case.publishingCompany}"></span></td>
+                                            <td><span th:text="${case.periodicalContribution}"></span></td>
+                                            <td><a class="btn btn-info">修改</a></td>
+                                        </tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -728,20 +768,24 @@
                                         <thead>
                                         <tr>
                                             <td>#</td>
-                                            <td>名称</td>
-                                            <td>描述</td>
-                                            <td>内容</td>
-                                            <td>审核状态</td>
+                                            <td>期刊名称</td>
+                                            <td>主要负责人</td>
+                                            <td>出版社</td>
+                                            <td>贡献者</td>
                                             <td>未通过原因</td>
+                                            <td>操作</td>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <!--<tr th:each="case,state:${}">
+                                        <tr th:each="case,state:${consumerNotAdoptedPeriodical}">
                                             <td th:text="${state.count}"></td>
-                                            <td><span th:text="${}"></span></td>
-                                            <td><span th:text="${}"></span></td>
-                                            <td><span th:text="${}"></span></td>
-                                        </tr>-->
+                                            <td><span th:text="${case.periodicalName}"></span></td>
+                                            <td><span th:text="${case.sponsorPerson}"></span></td>
+                                            <td><span th:text="${case.publishingCompany}"></span></td>
+                                            <td><span th:text="${case.periodicalContribution}"></span></td>
+                                            <td><span th:text="${case.periodicalNotReason}"></span></td>
+                                            <td><a class="btn btn-info">修改</a></td>
+                                        </tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -766,18 +810,22 @@
                                         <thead>
                                         <tr>
                                             <td>#</td>
-                                            <td>名称</td>
-                                            <td>描述</td>
-                                            <td>内容</td>
+                                            <td>书籍名称</td>
+                                            <td>书籍作者</td>
+                                            <td>出版社</td>
+                                            <td>贡献者</td>
+                                            <td>操作</td>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <!--<tr th:each="case,state:${}">
+                                        <tr th:each="case,state:${consumerPassBook}">
                                             <td th:text="${state.count}"></td>
-                                            <td><span th:text="${}"></span></td>
-                                            <td><span th:text="${}"></span></td>
-                                            <td><span th:text="${}"></span></td>
-                                        </tr>-->
+                                            <td><span th:text="${case.bookName}"></span></td>
+                                            <td><span th:text="${case.bookAuthor}"></span></td>
+                                            <td><span th:text="${case.publishingCompany}"></span></td>
+                                            <td><span th:text="${case.bookContribution}"></span></td>
+                                            <td><a class="btn btn-info">查看</a></td>
+                                        </tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -786,19 +834,22 @@
                                         <thead>
                                         <tr>
                                             <td>#</td>
-                                            <td>名称</td>
-                                            <td>描述</td>
-                                            <td>内容</td>
-                                            <td>审核状态</td>
+                                            <td>书籍名称</td>
+                                            <td>书籍作者</td>
+                                            <td>出版社</td>
+                                            <td>贡献者</td>
+                                            <td>操作</td>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <!--<tr th:each="case,state:${}">
+                                        <tr th:each="case,state:${consumerAuditBook}">
                                             <td th:text="${state.count}"></td>
-                                            <td><span th:text="${}"></span></td>
-                                            <td><span th:text="${}"></span></td>
-                                            <td><span th:text="${}"></span></td>
-                                        </tr>-->
+                                            <td><span th:text="${case.bookName}"></span></td>
+                                            <td><span th:text="${case.bookAuthor}"></span></td>
+                                            <td><span th:text="${case.publishingCompany}"></span></td>
+                                            <td><span th:text="${case.bookContribution}"></span></td>
+                                            <td><a class="btn btn-info">修改</a></td>
+                                        </tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -807,20 +858,24 @@
                                         <thead>
                                         <tr>
                                             <td>#</td>
-                                            <td>名称</td>
-                                            <td>描述</td>
-                                            <td>内容</td>
-                                            <td>审核状态</td>
+                                            <td>书籍名称</td>
+                                            <td>书籍作者</td>
+                                            <td>出版社</td>
+                                            <td>贡献者</td>
                                             <td>未通过原因</td>
+                                            <td>操作</td>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <!--<tr th:each="case,state:${}">
+                                        <tr th:each="case,state:${consumerNotAdoptedBook}">
                                             <td th:text="${state.count}"></td>
-                                            <td><span th:text="${}"></span></td>
-                                            <td><span th:text="${}"></span></td>
-                                            <td><span th:text="${}"></span></td>
-                                        </tr>-->
+                                            <td><span th:text="${case.bookName}"></span></td>
+                                            <td><span th:text="${case.bookAuthor}"></span></td>
+                                            <td><span th:text="${case.publishingCompany}"></span></td>
+                                            <td><span th:text="${case.bookContribution}"></span></td>
+                                            <td><span th:text="${case.bookNotReason}"></span></td>
+                                            <td><a class="btn btn-info">修改</a></td>
+                                        </tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -871,6 +926,7 @@
             //监听文件读取结束后事件    
             reader.onloadend = function (e) {
                 //alert("文件路径为："+ e.target.result);
+                $("#flag").val("1");
                 $("#antiHistoryImg").attr("src", e.target.result);    //e.target.result就是最后的路径地址
             };
         }

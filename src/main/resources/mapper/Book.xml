@@ -14,17 +14,50 @@
         <result column="briefIntroduction" property="briefIntroduction" jdbcType="VARCHAR"/>
         <result column="bookState" property="bookState" jdbcType="INTEGER"/>
         <result column="bookContribution" property="bookContribution" jdbcType="VARCHAR"/>
+        <result column="bookNotReason" property="bookNotReason" jdbcType="VARCHAR"/>
     </resultMap>
 
+    <!--查询所有书籍信息-->
     <select id="bookListAll" resultMap="bookMap">
-        SELECT * FROM books;
+        SELECT * FROM books where bookState = '2' ;
     </select>
 
+    <!--书籍信息的保存-->
     <insert id="bookSave" parameterType="com.nchu.anti_japan_history.webpage.entity.Books">
         INSERT INTO books(bookName,bookPicture,bookPath, bookAuthor,publicationTime,publishingCompany,briefIntroduction,bookState,bookContribution)
         VALUES (#{bookName},#{bookPicture},#{bookPath},#{bookAuthor},#{publicationTime},#{publishingCompany},#{briefIntroduction},#{bookState},#{bookContribution})
     </insert>
 
+    <!--书籍信息的详细显示-->
+    <select id="bookDisplay" resultMap="bookMap">
+        SELECT * FROM books WHERE bookId = #{bookId} and bookState = '2';
+    </select>
+
+    <!--普通用户查询通过书籍信息-->
+    <select id="consumerPassBook" resultMap="bookMap">
+        SELECT * FROM books WHERE bookContribution = #{bookContribution} and bookState = '2';
+    </select>
+    <!--普通用户查询待审核-->
+    <select id="consumerAuditBook" resultMap="bookMap">
+        SELECT * FROM books WHERE bookContribution = #{bookContribution} and bookState = '0';
+    </select>
+    <!--普通用户查询未通过-->
+    <select id="consumerNotAdoptedBook" resultMap="bookMap">
+        SELECT * FROM books WHERE bookContribution = #{bookContribution} and bookState = '1';
+    </select>
+
+    <!--管理员查询通过-->
+    <select id="adminPassBook" resultMap="bookMap">
+        SELECT * FROM books WHERE bookState = '2';
+    </select>
+    <!--管理员查询待审核-->
+    <select id="adminAuditBook" resultMap="bookMap">
+        SELECT * FROM books WHERE bookState = '0';
+    </select>
+    <!--管理员查询未通过-->
+    <select id="adminNotAdoptedBook" resultMap="bookMap">
+        SELECT * FROM books WHERE bookState = '1';
+    </select>
     <!--<select id="listAll" resultMap="departMap">
         SELECT departId,departName,departmentLeading,departmentNum,departmentAddress,departmentResponsible
         FROM department_message

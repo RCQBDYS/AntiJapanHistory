@@ -33,4 +33,34 @@ public class AntiSiteServiceImpl implements AntiSiteService {
     public AntiSite antiSiteDisplay(Long antiSiteId) {
         return antiSiteMapper.antiSiteDisplay(antiSiteId);
     }
+
+    @Override
+    public List<AntiSite> consumerPassSite(String antiSiteContribution) {
+        return antiSiteMapper.consumerPassSite(antiSiteContribution);
+    }
+
+    @Override
+    public List<AntiSite> consumerAuditSite(String antiSiteContribution) {
+        return antiSiteMapper.consumerAuditSite(antiSiteContribution);
+    }
+
+    @Override
+    public List<AntiSite> consumerNotAdoptedSite(String antiSiteContribution) {
+        return antiSiteMapper.consumerNotAdoptedSite(antiSiteContribution);
+    }
+
+    @Override
+    public List<AntiSite> adminPassSite() {
+        return antiSiteMapper.adminPassSite();
+    }
+
+    @Override
+    public List<AntiSite> adminAuditSite() {
+        return antiSiteMapper.adminAuditSite();
+    }
+
+    @Override
+    public List<AntiSite> adminNotAdoptSite() {
+        return antiSiteMapper.adminNotAdoptSite();
+    }
 }

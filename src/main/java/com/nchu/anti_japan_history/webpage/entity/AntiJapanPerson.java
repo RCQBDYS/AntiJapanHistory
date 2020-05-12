@@ -19,4 +19,5 @@ public class AntiJapanPerson implements Serializable {
     private String personPicture;       //人物图片
     private Integer personState;        //审核状态
     private String personContribution;  //贡献者
+    private String personNotReason;     //未通过原因
 }

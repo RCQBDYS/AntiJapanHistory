@@ -7,6 +7,8 @@ package com.nchu.anti_japan_history.webpage.entity;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.sql.Date;
+
 @Data
 public class AntiHistory implements Serializable {
     private Integer antiHistoryId;        //历史事件id
@@ -17,4 +19,7 @@ public class AntiHistory implements Serializable {
     private Integer antiHistoryType;    //历史事件类型
     private Integer antiHistoryState;   //历史事件审核状态
     private String antiHistoryContribution;//历史事件贡献者
+    private String notAdoptedReason;        //未通过原因
+    private Date antiHistoryTime;           //历史事件的时间
+    private String antiHistorySite;         //历史事件的地点
 }

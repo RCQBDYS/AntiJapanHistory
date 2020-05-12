@@ -17,4 +17,5 @@ public class Picture implements Serializable {
     private String pictureName;         //图片名称
     private String pictureContribution; //贡献者
     private Integer pictureState;       //审核状态
+    private String pictureNotReason;    //未通过原因
 }

@@ -12,16 +12,50 @@
         <result column="sponsorPerson" property="sponsorPerson" jdbcType="VARCHAR"/>
         <result column="periodicalContribution" property="periodicalContribution" jdbcType="VARCHAR"/>
         <result column="periodicalState" property="periodicalState" jdbcType="INTEGER"/>
+        <result column="periodicalNotReason" property="periodicalNotReason" jdbcType="VARCHAR"/>
     </resultMap>
 
+    <!--期刊信息的全部显示-->
     <select id="periodicalListAll" resultMap="periodicalMap">
-        SELECT * FROM periodical;
+        SELECT * FROM periodical where periodicalState = '2';
     </select>
 
+    <!--期刊信息的保存-->
     <insert id="periodicalSave" parameterType="com.nchu.anti_japan_history.webpage.entity.Periodical">
         INSERT INTO periodical(periodicalName,periodicalPicture,periodicalPath, publishingCompany,sponsorPerson,periodicalState,periodicalContribution)
         VALUES (#{periodicalName},#{periodicalPicture},#{periodicalPath},#{publishingCompany},#{sponsorPerson},#{periodicalState},#{periodicalContribution})
     </insert>
+
+    <!--期刊信息的详细显示-->
+    <select id="periodicalDisplay" resultMap="periodicalMap">
+        SELECT * FROM periodical where periodicalId = #{periodicalId} and periodicalState = '2';
+    </select>
+
+    <!--普通用户查询通过期刊信息-->
+    <select id="consumerPassPeriodical" resultMap="periodicalMap">
+        SELECT * FROM periodical where periodicalContribution = #{periodicalContribution} and periodicalState = '2';
+    </select>
+    <!--普通用户查询待审核-->
+    <select id="consumerAuditPeriodical" resultMap="periodicalMap">
+        SELECT * FROM periodical where periodicalContribution = #{periodicalContribution} and periodicalState = '0';
+    </select>
+    <!--普通用户查询未通过-->
+    <select id="consumerNotAdoptedPeriodical" resultMap="periodicalMap">
+        SELECT * FROM periodical where periodicalContribution = #{periodicalContribution} and periodicalState = '1';
+    </select>
+
+    <!--管理员查询通过-->
+    <select id="adminPassPeriodical" resultMap="periodicalMap">
+        SELECT * FROM periodical where periodicalState = '2';
+    </select>
+    <!--管理员查询待审核-->
+    <select id="adminAuditPeriodical" resultMap="periodicalMap">
+        SELECT * FROM periodical where  periodicalState = '0';
+    </select>
+    <!--管理员查询未通过-->
+    <select id="adminNotAdoptedPeriodical" resultMap="periodicalMap">
+        SELECT * FROM periodical where periodicalState = '1';
+    </select>
 
     <!--<select id="listAll" resultMap="departMap">
         SELECT departId,departName,departmentLeading,departmentNum,departmentAddress,departmentResponsible

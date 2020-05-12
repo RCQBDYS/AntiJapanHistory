@@ -10,17 +10,50 @@
         <result column="pictureName" property="pictureName" jdbcType="VARCHAR"/>
         <result column="pictureContribution" property="pictureContribution" jdbcType="VARCHAR"/>
         <result column="pictureState" property="pictureState" jdbcType="INTEGER"/>
+        <result column="pictureNotReason" property="pictureNotReason" jdbcType="VARCHAR"/>
     </resultMap>
 
+    <!--图片信息的全部显示-->
     <select id="pictureListAll" resultMap="pictureMap">
-        SELECT * FROM picturedata;
+        SELECT * FROM picturedata where pictureState = '2';
     </select>
 
+    <!--图片信息的保存-->
     <insert id="pictureSave" parameterType="com.nchu.anti_japan_history.webpage.entity.Picture">
         INSERT INTO picturedata(pictureName,pictureWay,pictureDescription, pictureState,pictureContribution)
         VALUES (#{pictureName},#{pictureWay},#{pictureDescription},#{pictureState},#{pictureContribution})
     </insert>
 
+    <!--图片信息的详细显示-->
+    <select id="pictureDisplay" resultMap="pictureMap">
+        SELECT * FROM picturedata where pictureId=#{pictureId} and pictureState = '2';
+    </select>
+
+    <!--普通用户查询通过图片-->
+    <select id="consumerPassPicture" resultMap="pictureMap">
+        SELECT * FROM picturedata where pictureContribution=#{pictureContribution} and pictureState = '2';
+    </select>
+    <!--普通用户查询待审核-->
+    <select id="consumerAuditPicture" resultMap="pictureMap">
+        SELECT * FROM picturedata where pictureContribution=#{pictureContribution} and pictureState = '0';
+    </select>
+    <!--普通用户查询未通过-->
+    <select id="consumerNotAdoptedPicture" resultMap="pictureMap">
+        SELECT * FROM picturedata where pictureContribution=#{pictureContribution} and pictureState = '1';
+    </select>
+
+    <!--管理员查询通过-->
+    <select id="adminPassPicture" resultMap="pictureMap">
+        SELECT * FROM picturedata where pictureState = '2';
+    </select>
+    <!--管理员查询待审核-->
+    <select id="adminAuditPicture" resultMap="pictureMap">
+        SELECT * FROM picturedata where  pictureState = '0';
+    </select>
+    <!--管理员查询未通过-->
+    <select id="adminNotAdoptedPicture" resultMap="pictureMap">
+        SELECT * FROM picturedata where  pictureState = '1';
+    </select>
     <!--<select id="listAll" resultMap="departMap">
         SELECT departId,departName,departmentLeading,departmentNum,departmentAddress,departmentResponsible
         FROM department_message

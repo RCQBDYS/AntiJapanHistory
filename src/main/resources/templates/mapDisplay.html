@@ -37,7 +37,7 @@
 
         .mapTipText {
             width: 280px;
-            height: 110px;
+            height: 140px;
             background-color: #ffffff;
         }
 
@@ -130,46 +130,25 @@
     <!--弹框显示部分-->
     <div id="mapTipContent" style="width: 900px;margin: 0 auto;display: none">
 
+        <!--黑龙江-->
         <div class="mapTipText mapTipText0">
 
-            <div class="mapTipImg"><img src="static\images\heilongjiang.jpg" alt=""/></div>
+            <div class="mapTipImg"><img src="static\images\heilongjiang.jpg"/></div>
 
             <div class="mapTipList">
 
                 <h2><a href="">黑龙江<span>Heilongjiang</span></a></h2>
 
-                <ul>
+                <ul th:each="case:${HeilongjiangListAll}">
 
-                    <li><a href="">哈尔滨</a></li>
-
-                    <li><a href="">漠河</a></li>
-
-                    <li><a href="">五大连池</a></li>
-
-                    <li><a href="">兴凯湖</a></li>
-
-                    <li><a href="">雪乡</a></li>
-
-                    <li><a href="">大兴安岭</a></li>
-
-                    <li><a href="">齐齐哈尔</a></li>
-
-                    <li><a href="">牡丹江</a></li>
-
-                    <li><a href="">伊春</a></li>
-
-                    <li><a href="">大庆</a></li>
-
-                    <li><a href="">镜泊湖</a></li>
-
-                    <li><a href="">帽儿山</a></li>
+                    <li><a th:href="@{/partHistoryDisplay(antiHistoryId=${case.antiHistoryId})}"><span th:text="${case.antiHistoryName}"></span></a></li>
 
                 </ul>
 
             </div>
 
         </div>
-
+        <!--吉林-->
         <div class="mapTipText mapTipText1">
 
             <div class="mapTipImg"><img src="static\images\jilin.jpg" alt=""/></div>
@@ -178,38 +157,16 @@
 
                 <h2><a href="">吉林<span>Jilin</span></a></h2>
 
-                <ul>
+                <ul th:each="case:${JilinListAll}">
 
-                    <li><a href="">长白山</a></li>
-
-                    <li><a href="">长春</a></li>
-
-                    <li><a href="">延吉</a></li>
-
-                    <li><a href="">雾凇岛</a></li>
-
-                    <li><a href="">集安</a></li>
-
-                    <li><a href="">吉林市</a></li>
-
-                    <li><a href="">查干湖</a></li>
-
-                    <li><a href="">三角龙湾</a></li>
-
-                    <li><a href="">通化</a></li>
-
-                    <li><a href="">四平</a></li>
-
-                    <li><a href="">松原</a></li>
-
-                    <li><a href="">白城</a></li>
+                    <li><a th:href="@{/partHistoryDisplay(antiHistoryId=${case.antiHistoryId})}"><span th:text="${case.antiHistoryName}"></span></a></li>
 
                 </ul>
 
             </div>
 
         </div>
-
+        <!--辽宁-->
         <div class="mapTipText mapTipText2">
 
             <div class="mapTipImg"><img src="static\images\liaoning.jpg" alt=""/></div>
@@ -218,35 +175,298 @@
 
                 <h2><a href="">辽宁<span>Liaoning</span></a></h2>
 
-                <ul>
+                <ul th:each="case:${LiaoningListAll}">
 
-                    <li><a href="">大连</a></li>
+                    <li><a th:href="@{/partHistoryDisplay(antiHistoryId=${case.antiHistoryId})}"><span th:text="${case.antiHistoryName}"></span></a></li>
 
-                    <li><a href="">丹东</a></li>
+                </ul>
 
-                    <li><a href="">沈阳</a></li>
+            </div>
 
-                    <li><a href="">兴城</a></li>
+        </div>
+        <!--河北-->
+        <div class="mapTipText mapTipText3">
 
-                    <li><a href="">葫芦岛</a></li>
+            <div class="mapTipImg"><img src="static\images\liaoning.jpg" alt=""/></div>
 
-                    <li><a href="">绥中</a></li>
+            <div class="mapTipList">
 
-                    <li><a href="">旅顺</a></li>
+                <h2><a href="">河北<span>Hebei</span></a></h2>
 
-                    <li><a href="">锦州</a></li>
+                <ul th:each="case:${HebeiListAll}">
 
-                    <li><a href="">抚顺</a></li>
+                    <li><a th:href="@{/partHistoryDisplay(antiHistoryId=${case.antiHistoryId})}"><span th:text="${case.antiHistoryName}"></span></a></li>
 
-                    <li><a href="">鞍山</a></li>
+                </ul>
 
-                    <li><a href="">本溪</a></li>
+            </div>
 
-                    <li><a href="">营口</a></li>
+        </div>
+        <!--山东-->
+        <div class="mapTipText mapTipText4">
 
-                    <li><a href="">盘锦</a></li>
+            <div class="mapTipImg"><img src="static\images\liaoning.jpg" alt=""/></div>
 
-                    <li><a href="">长兴岛</a></li>
+            <div class="mapTipList">
+
+                <h2><a href="">山东<span>Shandong</span></a></h2>
+
+                <ul th:each="case:${ShandongListAll}">
+
+                    <li><a th:href="@{/partHistoryDisplay(antiHistoryId=${case.antiHistoryId})}"><span th:text="${case.antiHistoryName}"></span></a></li>
+
+                </ul>
+
+            </div>
+
+        </div>
+        <!--江苏-->
+        <div class="mapTipText mapTipText5">
+
+            <div class="mapTipImg"><img src="static\images\liaoning.jpg" alt=""/></div>
+
+            <div class="mapTipList">
+
+                <h2><a href="">江苏<span>Jiangsu</span></a></h2>
+
+                <ul th:each="case:${JiangsuListAll}">
+
+                    <li><a th:href="@{/partHistoryDisplay(antiHistoryId=${case.antiHistoryId})}"><span th:text="${case.antiHistoryName}"></span></a></li>
+
+                </ul>
+
+            </div>
+
+        </div>
+        <!--浙江-->
+        <div class="mapTipText mapTipText6">
+
+            <div class="mapTipImg"><img src="static\images\liaoning.jpg" alt=""/></div>
+
+            <div class="mapTipList">
+
+                <h2><a href="">浙江<span>Zhejiang</span></a></h2>
+
+                <ul th:each="case:${ZhejiangListAll}">
+
+                    <li><a th:href="@{/partHistoryDisplay(antiHistoryId=${case.antiHistoryId})}"><span th:text="${case.antiHistoryName}"></span></a></li>
+
+                </ul>
+
+            </div>
+
+        </div>
+        <!--河南-->
+        <div class="mapTipText mapTipText8">
+
+            <div class="mapTipImg"><img src="static\images\liaoning.jpg" alt=""/></div>
+
+            <div class="mapTipList">
+
+                <h2><a href="">河南<span>Henan</span></a></h2>
+
+                <ul th:each="case:${HenanListAll}">
+
+                    <li><a th:href="@{/partHistoryDisplay(antiHistoryId=${case.antiHistoryId})}"><span th:text="${case.antiHistoryName}"></span></a></li>
+
+                </ul>
+
+            </div>
+
+        </div>
+        <!--山西-->
+        <div class="mapTipText mapTipText9">
+
+            <div class="mapTipImg"><img src="static\images\liaoning.jpg" alt=""/></div>
+
+            <div class="mapTipList">
+
+                <h2><a href="">山西<span>Shanxi</span></a></h2>
+
+                <ul th:each="case:${ShanxiListAll}">
+
+                    <li><a th:href="@{/partHistoryDisplay(antiHistoryId=${case.antiHistoryId})}"><span th:text="${case.antiHistoryName}"></span></a></li>
+
+                </ul>
+
+            </div>
+
+        </div>
+        <!--湖北-->
+        <div class="mapTipText mapTipText12">
+
+            <div class="mapTipImg"><img src="static\images\liaoning.jpg" alt=""/></div>
+
+            <div class="mapTipList">
+
+                <h2><a href="">湖北<span>Hubei</span></a></h2>
+
+                <ul th:each="case:${HubeiListAll}">
+
+                    <li><a th:href="@{/partHistoryDisplay(antiHistoryId=${case.antiHistoryId})}"><span th:text="${case.antiHistoryName}"></span></a></li>
+
+                </ul>
+
+            </div>
+
+        </div>
+        <!--江西-->
+        <div class="mapTipText mapTipText13">
+
+            <div class="mapTipImg"><img src="static\images\liaoning.jpg" alt=""/></div>
+
+            <div class="mapTipList">
+
+                <h2><a href="">江西<span>Jiangxi</span></a></h2>
+
+                <ul th:each="case:${JiangxiListAll}">
+
+                    <li><a th:href="@{/partHistoryDisplay(antiHistoryId=${case.antiHistoryId})}"><span th:text="${case.antiHistoryName}"></span></a></li>
+
+                </ul>
+
+            </div>
+
+        </div>
+        <!--湖南-->
+        <div class="mapTipText mapTipText15">
+
+            <div class="mapTipImg"><img src="static\images\liaoning.jpg" alt=""/></div>
+
+            <div class="mapTipList">
+
+                <h2><a href="">湖南<span>Hunan</span></a></h2>
+
+                <ul th:each="case:${HunanListAll}">
+
+                    <li><a th:href="@{/partHistoryDisplay(antiHistoryId=${case.antiHistoryId})}"><span th:text="${case.antiHistoryName}"></span></a></li>
+
+                </ul>
+
+
+            </div>
+
+        </div>
+        <!--云南-->
+        <div class="mapTipText mapTipText18">
+
+            <div class="mapTipImg"><img src="static\images\liaoning.jpg" alt=""/></div>
+
+            <div class="mapTipList">
+
+                <h2><a href="">云南<span>Yunnan</span></a></h2>
+
+                <ul th:each="case:${YunnanListAll}">
+
+                    <li><a th:href="@{/partHistoryDisplay(antiHistoryId=${case.antiHistoryId})}"><span th:text="${case.antiHistoryName}"></span></a></li>
+
+                </ul>
+
+            </div>
+
+        </div>
+        <!--上海-->
+        <div class="mapTipText mapTipText21">
+
+            <div class="mapTipImg"><img src="static\images\liaoning.jpg" alt=""/></div>
+
+            <div class="mapTipList">
+
+                <h2><a href="">上海<span>Shanghai</span></a></h2>
+
+                <ul th:each="case:${ShanghaiListAll}">
+
+                    <li><a th:href="@{/partHistoryDisplay(antiHistoryId=${case.antiHistoryId})}"><span th:text="${case.antiHistoryName}"></span></a></li>
+
+                </ul>
+
+            </div>
+
+        </div>
+        <!--重庆-->
+        <div class="mapTipText mapTipText22">
+
+            <div class="mapTipImg"><img src="static\images\liaoning.jpg" alt=""/></div>
+
+            <div class="mapTipList">
+
+                <h2><a href="">重庆<span>Chongqing</span></a></h2>
+
+                <ul th:each="case:${ChongqingListAll}">
+
+                    <li><a th:href="@{/partHistoryDisplay(antiHistoryId=${case.antiHistoryId})}"><span th:text="${case.antiHistoryName}"></span></a></li>
+
+                </ul>
+
+            </div>
+
+        </div>
+        <!--北京-->
+        <div class="mapTipText mapTipText24">
+
+            <div class="mapTipImg"><img src="static\images\liaoning.jpg" alt=""/></div>
+
+            <div class="mapTipList">
+
+                <h2><a href="">北京<span>Beijing</span></a></h2>
+
+                <ul th:each="case:${BeijingListAll}">
+
+                    <li><a th:href="@{/partHistoryDisplay(antiHistoryId=${case.antiHistoryId})}"><span th:text="${case.antiHistoryName}"></span></a></li>
+
+                </ul>
+
+            </div>
+
+        </div>
+        <!--内蒙古-->
+        <div class="mapTipText mapTipText26">
+
+            <div class="mapTipImg"><img src="static\images\liaoning.jpg" alt=""/></div>
+
+            <div class="mapTipList">
+
+                <h2><a href="">内蒙古<span>Neimenggu</span></a></h2>
+
+                <ul th:each="case:${NeimengguListAll}">
+
+                    <li><a th:href="@{/partHistoryDisplay(antiHistoryId=${case.antiHistoryId})}"><span th:text="${case.antiHistoryName}"></span></a></li>
+
+                </ul>
+
+            </div>
+
+        </div>
+        <!--广西-->
+        <div class="mapTipText mapTipText27">
+
+            <div class="mapTipImg"><img src="static\images\liaoning.jpg" alt=""/></div>
+
+            <div class="mapTipList">
+
+                <h2><a href="">广西<span>Guangxi</span></a></h2>
+
+                <ul th:each="case:${GuangxiListAll}">
+
+                    <li><a th:href="@{/partHistoryDisplay(antiHistoryId=${case.antiHistoryId})}"><span th:text="${case.antiHistoryName}"></span></a></li>
+
+                </ul>
+
+            </div>
+
+        </div>
+        <!--广东-->
+        <div class="mapTipText mapTipText30">
+
+            <div class="mapTipImg"><img src="static\images\liaoning.jpg" alt=""/></div>
+
+            <div class="mapTipList">
+
+                <h2><a href="">广东<span>Guangdong</span></a></h2>
+
+                <ul th:each="case:${GuangdongListAll}">
+
+                    <li><a th:href="@{/partHistoryDisplay(antiHistoryId=${case.antiHistoryId})}"><span th:text="${case.antiHistoryName}"></span></a></li>
 
                 </ul>
 

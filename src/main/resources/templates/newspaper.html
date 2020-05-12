@@ -38,13 +38,15 @@
     <div class="row">
         <div class="row">
             <div class="col-sm-6 col-md-3" th:each="case:${newspaperListAll}">
-                <div class="thumbnail" style="height: 300px;">
-                    <img th:src="${case.newspaperPicture}" style="height: 160px;width: 254px;">
-                    <div class="caption">
-                        <h3 th:text="${case.newspaperName}"></h3>
-                        <p th:text="${#strings.abbreviate(case.publishing,25)}"></p>
+                <a th:href="@{/newspaperDisplay(newspaperId=${case.newspaperId})}">
+                    <div class="thumbnail" style="height: 300px;">
+                        <img th:src="${case.newspaperPicture}" style="height: 160px;width: 254px;">
+                        <div class="caption">
+                            <h3 th:text="${case.newspaperName}"></h3>
+                            <p th:text="${#strings.abbreviate(case.publishing,25)}"></p>
+                        </div>
                     </div>
-                </div>
+                </a>
             </div>
         </div>
 

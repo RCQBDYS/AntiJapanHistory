@@ -11,28 +11,56 @@
         <result column="storiesPicture" property="storiesPicture" jdbcType="VARCHAR"/>
         <result column="storiesState" property="storiesState" jdbcType="INTEGER"/>
         <result column="storiesContribution" property="storiesContribution" jdbcType="VARCHAR"/>
+        <result column="storiesNotReason" property="storiesNotReason" jdbcType="VARCHAR"/>
     </resultMap>
 
 
+    <!--主页查询抗战故事-->
     <select id="antiWarStoriesSelect" resultMap="AntiWarStoriesMap">
-        SELECT * FROM antiwarstories LIMIT 4;
+        SELECT * FROM antiwarstories where storiesState = '2' LIMIT 4;
     </select>
 
-
+    <!--查询所有抗战故事-->
     <select id="antiStoriesListAll" resultMap="AntiWarStoriesMap">
-        SELECT * FROM antiwarstories;
+        SELECT * FROM antiwarstories where storiesState = '2';
     </select>
 
-
+    <!--插入新的抗战故事-->
     <insert id="antiStoriesSave" parameterType="com.nchu.anti_japan_history.webpage.entity.AntiWarStories">
         INSERT INTO antiwarstories(title,storiesDescription,storiesPicture,storiesContent, storiesContribution,storiesState)
         VALUES (#{title},#{storiesDescription},#{storiesPicture},#{storiesContent},#{storiesContribution},#{storiesState})
     </insert>
 
+    <!--查询具体的抗战故事-->
     <select id="antiStoriesDisplay" resultMap="AntiWarStoriesMap">
-        SELECT * FROM antiwarstories WHERE antiWarId = #{antiWarId};
+        SELECT * FROM antiwarstories WHERE antiWarId = #{antiWarId} and storiesState = '2';
     </select>
 
+    <!--普通用户查询通过抗战故事-->
+    <select id="consumerPassStories" resultMap="AntiWarStoriesMap">
+        SELECT * FROM antiwarstories WHERE storiesContribution = #{storiesContribution} and storiesState = '2';
+    </select>
+    <!--普通用户查询待审核-->
+    <select id="consumerAuditStories" resultMap="AntiWarStoriesMap">
+        SELECT * FROM antiwarstories WHERE storiesContribution = #{storiesContribution} and storiesState = '0';
+    </select>
+    <!--普通用户查询未通过抗战故事-->
+    <select id="consumerNotAdoptedStores" resultMap="AntiWarStoriesMap">
+        SELECT * FROM antiwarstories WHERE storiesContribution = #{storiesContribution} and storiesState = '1';
+    </select>
+
+    <!--管理员查询通过-->
+    <select id="adminPassStories" resultMap="AntiWarStoriesMap">
+        SELECT * FROM antiwarstories WHERE  storiesState = '2';
+    </select>
+    <!--管理员查询待审核-->
+    <select id="adminAuditStories" resultMap="AntiWarStoriesMap">
+        SELECT * FROM antiwarstories WHERE  storiesState = '0';
+    </select>
+    <!--管理员查询未通过-->
+    <select id="adminNotAdoptedStories" resultMap="AntiWarStoriesMap">
+        SELECT * FROM antiwarstories WHERE  storiesState = '1';
+    </select>
 
     <!--<select id="listAll" resultMap="departMap">
         SELECT departId,departName,departmentLeading,departmentNum,departmentAddress,departmentResponsible

@@ -18,7 +18,12 @@ public interface UserMapper {
     //登录
     @Select("SELECT * FROM user WHERE userName = #{userName} AND userPassword = #{userPassword}")
     User login(@Param("userName") String userName,@Param("userPassword") String userPassword);
-
     //用户信息修改
     int update(User user);
+    //查询所有用户名信息
+    List<User> userMessageListAll();
+    //用户信息模糊查询
+    List<User> searchByKeyWord(@Param(value = "keyWord") String keyWord);
+    //用户信息删除
+    int deleteById(Long userId);
 }

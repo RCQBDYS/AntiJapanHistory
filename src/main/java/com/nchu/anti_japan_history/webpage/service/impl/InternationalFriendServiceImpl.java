@@ -31,4 +31,34 @@ public class InternationalFriendServiceImpl implements InternationalFriendServic
     public InternationalFriend internationalFriendDisplay(Long internationalFriendId) {
         return internationalFriendMapper.internationalFriendDisplay(internationalFriendId);
     }
+
+    @Override
+    public List<InternationalFriend> consumerPassFriend(String friendContribution) {
+        return internationalFriendMapper.consumerPassFriend(friendContribution);
+    }
+
+    @Override
+    public List<InternationalFriend> consumerAuditFriend(String friendContribution) {
+        return internationalFriendMapper.consumerAuditFriend(friendContribution);
+    }
+
+    @Override
+    public List<InternationalFriend> consumerNotAdoptedFriend(String friendContribution) {
+        return internationalFriendMapper.consumerNotAdoptedFriend(friendContribution);
+    }
+
+    @Override
+    public List<InternationalFriend> adminPassFriend() {
+        return internationalFriendMapper.adminPassFriend();
+    }
+
+    @Override
+    public List<InternationalFriend> adminAuditFriend() {
+        return internationalFriendMapper.adminAuditFriend();
+    }
+
+    @Override
+    public List<InternationalFriend> adminNotAdoptedFriend() {
+        return internationalFriendMapper.adminNotAdoptedFriend();
+    }
 }

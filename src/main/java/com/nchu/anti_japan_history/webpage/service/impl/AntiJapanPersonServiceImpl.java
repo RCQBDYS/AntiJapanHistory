@@ -32,4 +32,36 @@ public class AntiJapanPersonServiceImpl implements AntiJapanPersonService {
     public AntiJapanPerson antiPersonDisplay(Long antiJapanPersonId) {
         return antiJapanPersonMapper.antiPersonDisplay(antiJapanPersonId);
     }
+
+    @Override
+    public List<AntiJapanPerson> consumerPassPerson(String personContribution) {
+        return antiJapanPersonMapper.consumerPassPerson(personContribution);
+    }
+
+    @Override
+    public List<AntiJapanPerson> consumerAuditPerson(String personContribution) {
+        return antiJapanPersonMapper.consumerAuditPerson(personContribution);
+    }
+
+    @Override
+    public List<AntiJapanPerson> consumerNotAdoptedPerson(String personContribution) {
+        return antiJapanPersonMapper.consumerNotAdoptedPerson(personContribution);
+    }
+
+    @Override
+    public List<AntiJapanPerson> adminPassPerson() {
+        return antiJapanPersonMapper.adminPassPerson();
+    }
+
+    @Override
+    public List<AntiJapanPerson> adminAuditPerson() {
+        return antiJapanPersonMapper.adminAuditPerson();
+    }
+
+    @Override
+    public List<AntiJapanPerson> adminNotAdoptedPerson() {
+        return antiJapanPersonMapper.adminNotAdoptedPerson();
+    }
+
+
 }

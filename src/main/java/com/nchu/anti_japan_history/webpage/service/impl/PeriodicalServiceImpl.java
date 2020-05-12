@@ -26,4 +26,39 @@ public class PeriodicalServiceImpl implements PeriodicalService {
     public int periodicalSave(Periodical periodical) {
         return periodicalMapper.periodicalSave(periodical);
     }
+
+    @Override
+    public Periodical periodicalDisplay(Long periodicalId) {
+        return periodicalMapper.periodicalDisplay(periodicalId);
+    }
+
+    @Override
+    public List<Periodical> consumerPassPeriodical(String periodicalContribution) {
+        return periodicalMapper.consumerPassPeriodical(periodicalContribution);
+    }
+
+    @Override
+    public List<Periodical> consumerAuditPeriodical(String periodicalContribution) {
+        return periodicalMapper.consumerAuditPeriodical(periodicalContribution);
+    }
+
+    @Override
+    public List<Periodical> consumerNotAdoptedPeriodical(String periodicalContribution) {
+        return periodicalMapper.consumerNotAdoptedPeriodical(periodicalContribution);
+    }
+
+    @Override
+    public List<Periodical> adminPassPeriodical() {
+        return periodicalMapper.adminPassPeriodical();
+    }
+
+    @Override
+    public List<Periodical> adminAuditPeriodical() {
+        return periodicalMapper.adminAuditPeriodical();
+    }
+
+    @Override
+    public List<Periodical> adminNotAdoptedPeriodical() {
+        return periodicalMapper.adminNotAdoptedPeriodical();
+    }
 }

@@ -14,4 +14,17 @@ public interface InternationalFriendService {
     int internationalFriendSave(InternationalFriend internationalFriend);
     //国际友人信息详细显示
     InternationalFriend internationalFriendDisplay(Long internationalFriendId);
+    //普通用户查询通过的国际友人信息
+    List<InternationalFriend> consumerPassFriend(String friendContribution);
+    //普通用户查询待审核
+    List<InternationalFriend> consumerAuditFriend(String friendContribution);
+    //普通用户查询未通过
+    List<InternationalFriend> consumerNotAdoptedFriend(String friendContribution);
+
+    //管理员查询通过
+    List<InternationalFriend> adminPassFriend();
+    //管理员查询待审核
+    List<InternationalFriend> adminAuditFriend();
+    //管理员查询未通过
+    List<InternationalFriend> adminNotAdoptedFriend();
 }
