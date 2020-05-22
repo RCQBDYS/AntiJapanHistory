@@ -43,6 +43,9 @@ public interface AntiHistoryMapper {
     //历史时间轴信息显示
     List<AntiHistory> timeListAll();
 
+    //历史条目的删除
+    int deleteByAntiHistoryId(Long antiHistoryId);
+
     //普通用户中心待审核历史条目查询
     List<AntiHistory> consumerAuditHistoryListAll(String antiHistoryContribution);
     //普通用户中心审核通过历史条目查询

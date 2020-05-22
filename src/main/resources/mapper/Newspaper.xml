@@ -30,7 +30,7 @@
 
     <!--报纸信息的详细显示-->
     <select id="newspaperDisplay" resultMap="newspaperMap">
-        SELECT * FROM newspaper where newspaperId = #{newspaperId} and newspaperState = '2';
+        SELECT * FROM newspaper where newspaperId = #{newspaperId};
     </select>
 
     <!--普通用户查询通过的报纸信息-->
@@ -59,14 +59,17 @@
     <select id="adminNotAdoptedNews" resultMap="newspaperMap">
         SELECT * FROM newspaper where  newspaperState = '1';
     </select>
+
+    <delete id="deleteByNewsId">
+        DELETE FROM newspaper WHERE newspaperId = #{newspaperId};
+    </delete>
+
     <!--<select id="listAll" resultMap="departMap">
         SELECT departId,departName,departmentLeading,departmentNum,departmentAddress,departmentResponsible
         FROM department_message
     </select>-->
 
-    <!--<delete id="delete">
-        DELETE FROM department_message WHERE departId = #{departId};
-    </delete>
+    <!--
 
     <insert id="save" parameterType="cn.nchu.edu.software.policeManager.entity.DepartmentMessage">
         INSERT INTO department_message(departName,departmentAddress,departmentLeading, departmentNum,departmentResponsible)

@@ -62,4 +62,9 @@ public class BookServiceImpl implements BookService {
     public List<Books> adminNotAdoptedBook() {
         return bookMapper.adminNotAdoptedBook();
     }
+
+    @Override
+    public int deleteByBookId(Long bookId) {
+        return bookMapper.deleteByBookId(bookId);
+    }
 }

@@ -26,4 +26,8 @@ public interface NewspaperService {
     //管理员查询未通过
     List<Newspaper> adminNotAdoptedNews();
 
+
+    //删除报纸信息
+    int deleteByNewsId(Long newspaperId);
+
 }

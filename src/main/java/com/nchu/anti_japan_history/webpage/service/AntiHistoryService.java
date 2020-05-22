@@ -49,6 +49,9 @@ public interface AntiHistoryService {
     //普通用户历史条目修改保存
     void editAntiHistoryUpdate(AntiHistory antiHistory);
 
+    //历史条目的删除
+    int deleteByAntiHistoryId(Long antiHistoryId);
+
     //地图信息显示
     //地点江西战役信息显示
     List<AntiHistory> JiangxiListAll();

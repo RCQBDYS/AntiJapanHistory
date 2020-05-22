@@ -74,7 +74,7 @@
         <!--内容主体-->
         <div class="col-lg-9">
             <div class="panel panel-default">
-                <div class="panel-body" style="height:500px;">
+                <div class="panel-body" >
                     <div class="tab-content">
                         <!--我的信息-->
                         <div class="tab-pane fade in active" id="userMessage">
@@ -86,6 +86,27 @@
                                         <input name="userPower" type="hidden" th:value="${session.user.userPower}">
                                     </div>
                                 </div>
+                                <div class="form-group">
+                                    <label class="control-label col-lg-2"><i class="fa fa-diamond">用户等级:</i></label>
+                                    <div class="col-lg-10" th:switch="${session.user.userPower}">
+                                        <label class="control-label" th:case="2">贡献者</label>
+                                        <label class="control-label" th:case="0">普通用户</label>
+                                        <label class="control-label" th:case="1">管理员</label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-lg-2"><i class="fa fa-star">用户积分:</i></label>
+                                    <div class="col-lg-10">
+                                        <label class="control-label" th:text="${session.user.userPoint}"></label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-lg-2"><i class="fa fa-pencil">贡献次数:</i></label>
+                                    <div class="col-lg-10">
+                                        <label class="control-label" th:text="${session.user.number}"></label>
+                                    </div>
+                                </div>
+
                                 <div class="form-group">
                                     <label class="control-label col-lg-2"><i class="fa fa-photo">用户头像:</i></label>
                                     <div class="col-lg-10">

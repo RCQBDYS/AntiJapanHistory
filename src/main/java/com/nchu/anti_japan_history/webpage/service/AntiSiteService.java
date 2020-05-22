@@ -28,4 +28,10 @@ public interface AntiSiteService {
     //管理员查询未通过
     List<AntiSite> adminNotAdoptSite();
 
+    //删除遗址信息
+    int deleteByAntiSiteId(Long antiSiteId);
+
+    //审核信息的保存
+    void examineSiteUpdate(AntiSite antiSite);
+
 }

@@ -63,4 +63,14 @@ public class AntiWarStoriesServiceImpl implements AntiWarStoriesService {
     public List<AntiWarStories> adminNotAdoptedStories() {
         return antiWarStoriesMapper.adminNotAdoptedStories();
     }
+
+    @Override
+    public int deleteByStoriesId(Long antiWarId) {
+        return antiWarStoriesMapper.deleteByStoriesId(antiWarId);
+    }
+
+    @Override
+    public void examineStoriesSave(AntiWarStories antiWarStories) {
+        antiWarStoriesMapper.examineStoriesSave(antiWarStories);
+    }
 }

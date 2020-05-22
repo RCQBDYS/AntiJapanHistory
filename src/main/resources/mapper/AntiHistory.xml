@@ -58,7 +58,7 @@
     <!--抗战历史的添加-->
     <select id="addEntriesDataSave" parameterType="com.nchu.anti_japan_history.webpage.entity.AntiHistory" statementType="CALLABLE">
         {call antiHistory_insert(
-        #{antiHistoryName,jdbcType=INTEGER,mode=IN},
+        #{antiHistoryName,jdbcType=VARCHAR,mode=IN},
         #{antiHistoryDescription,jdbcType=VARCHAR,mode=IN},
         #{antiHistoryPicture,jdbcType=VARCHAR, mode=IN},
         #{antiHistoryContent, jdbcType=VARCHAR,mode=IN},
@@ -93,7 +93,7 @@
     </update>
     <!--时间轴历史事件显示-->
     <select id="timeListAll" resultMap="AntiHistoryMap">
-        SELECT * FROM antihistory where antiHistoryState='2' group by antiHistoryTime asc;
+        SELECT * FROM antihistory where antiHistoryState='2' and antiHistoryType !='4' group by antiHistoryTime asc;
     </select>
 
     <!--普通用户中心查询通过历史条目-->
@@ -118,6 +118,12 @@
          antiHistoryType=#{antiHistoryType},antiHistoryTime=#{antiHistoryTime},antiHistorySite=#{antiHistorySite}
         WHERE antiHistoryId=#{antiHistoryId}
     </update>
+
+    <delete id="deleteByAntiHistoryId" statementType="CALLABLE">
+       {call deleteAntiHistory(#{antiHistoryId,jdbcType=VARCHAR,mode=IN})}
+     </delete>
+
+
 
     <!--地图信息显示-->
     <select id="JiangxiListAll" resultMap="AntiHistoryMap">

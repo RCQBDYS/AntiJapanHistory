@@ -61,9 +61,30 @@ public class UserServiceImpl implements UserService {
         return userMapper.searchByKeyWord(keyWord);
     }
 
+    //删除用户信息
     @Override
     public int deleteById(Long userId) {
         return userMapper.deleteById(userId);
+    }
+
+    @Override
+    public void coreUpdate(User user) {
+        userMapper.coreUpdate(user);
+    }
+
+    @Override
+    public User userMessage(String userName) {
+        return userMapper.userMessage(userName);
+    }
+
+    @Override
+    public void powerUpdate(User user) {
+        userMapper.powerUpdate(user);
+    }
+
+    @Override
+    public void numberUpdate(User user) {
+        userMapper.numberUpdate(user);
     }
 
 

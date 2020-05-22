@@ -63,5 +63,15 @@ public class AntiJapanPersonServiceImpl implements AntiJapanPersonService {
         return antiJapanPersonMapper.adminNotAdoptedPerson();
     }
 
+    @Override
+    public int deleteByPersonId(Long antiJapanPersonId) {
+        return antiJapanPersonMapper.deleteByPersonId(antiJapanPersonId);
+    }
+
+    @Override
+    public void examinePersonUpdate(AntiJapanPerson antiJapanPerson) {
+        antiJapanPersonMapper.examinePersonUpdate(antiJapanPerson);
+    }
+
 
 }

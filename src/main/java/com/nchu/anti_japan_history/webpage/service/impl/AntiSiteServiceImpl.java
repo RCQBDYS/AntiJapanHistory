@@ -63,4 +63,14 @@ public class AntiSiteServiceImpl implements AntiSiteService {
     public List<AntiSite> adminNotAdoptSite() {
         return antiSiteMapper.adminNotAdoptSite();
     }
+
+    @Override
+    public int deleteByAntiSiteId(Long antiSiteId) {
+        return antiSiteMapper.deleteByAntiSiteId(antiSiteId);
+    }
+
+    @Override
+    public void examineSiteUpdate(AntiSite antiSite) {
+        antiSiteMapper.examineSiteUpdate(antiSite);
+    }
 }

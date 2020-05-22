@@ -26,4 +26,7 @@ public interface BookService {
     //管理员查询未通过
     List<Books> adminNotAdoptedBook();
 
+    //删除书籍信息
+    int deleteByBookId(Long bookId);
+
 }

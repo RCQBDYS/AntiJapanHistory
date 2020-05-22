@@ -25,4 +25,12 @@ public interface PictureMapper {
     List<Picture> adminAuditPicture();
     //管理员查询未通过
     List<Picture> adminNotAdoptedPicture();
+
+
+    //删除图片信息
+    int deleteByPictureId(Long pictureId);
+
+    //图片审核信息保存
+    void examinePictureUpdate(Picture picture);
+
 }

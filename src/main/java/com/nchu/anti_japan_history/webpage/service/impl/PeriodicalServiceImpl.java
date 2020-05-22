@@ -61,4 +61,9 @@ public class PeriodicalServiceImpl implements PeriodicalService {
     public List<Periodical> adminNotAdoptedPeriodical() {
         return periodicalMapper.adminNotAdoptedPeriodical();
     }
+
+    @Override
+    public int deleteByPeriodicalId(Long periodicalId) {
+        return periodicalMapper.deleteByPeriodicalId(periodicalId);
+    }
 }

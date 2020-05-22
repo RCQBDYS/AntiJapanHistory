@@ -17,6 +17,5 @@ public class User implements Serializable {
     private String userPicture;     //用户头像
     private Integer userPower;      //用户权限
     private Integer userPoint;      //用户积分
-
-
+    private Integer number;         //贡献次数
 }

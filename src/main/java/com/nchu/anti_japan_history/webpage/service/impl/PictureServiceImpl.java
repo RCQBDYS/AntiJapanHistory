@@ -62,4 +62,14 @@ public class PictureServiceImpl implements PictureService {
         return pictureMapper.adminNotAdoptedPicture();
     }
 
+    @Override
+    public int deleteByPictureId(Long pictureId) {
+        return pictureMapper.deleteByPictureId(pictureId);
+    }
+
+    @Override
+    public void examinePictureUpdate(Picture picture) {
+        pictureMapper.examinePictureUpdate(picture);
+    }
+
 }

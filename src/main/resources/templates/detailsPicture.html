@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <!--
 /**
@@ -47,11 +47,24 @@
                     <label>来源:</label>
                     <P th:text="${pictureDisplay.pictureContribution}"></P>
                     <label>下载链接:</label>
-                    <a th:href="@{/pictureDownload(pictureName=${pictureDisplay.pictureWay})}"><p>下载</p></a>
+                    <a id="downLoad" th:href="@{/pictureDownload(pictureName=${pictureDisplay.pictureWay})}"><p>下载</p></a>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    //判断积分是否足够
+    $("#downLoad").click(function () {
+        var core = '[[${session.user.userPoint}]]';
+        if (core < 5){
+            alert("积分不够！");
+            return false;
+        }else{
+            return true;
+        }
+    });
+
+</script>
 </body>
 </html>

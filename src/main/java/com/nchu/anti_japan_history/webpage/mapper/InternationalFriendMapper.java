@@ -26,4 +26,11 @@ public interface InternationalFriendMapper {
     List<InternationalFriend> adminAuditFriend();
     //管理员查询未通过
     List<InternationalFriend> adminNotAdoptedFriend();
+
+
+    //删除国际友人信息
+    int deleteByFriendId(Long internationalFriendId);
+
+    //国际友人审核信息保存
+    void examineFriendUpdate(InternationalFriend internationalFriend);
 }

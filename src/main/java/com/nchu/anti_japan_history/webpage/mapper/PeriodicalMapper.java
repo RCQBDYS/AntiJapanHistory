@@ -25,4 +25,7 @@ public interface PeriodicalMapper {
     List<Periodical> adminAuditPeriodical();
     //管理员查询未通过
     List<Periodical> adminNotAdoptedPeriodical();
+
+    //删除期刊信息
+    int deleteByPeriodicalId(Long periodicalId);
 }

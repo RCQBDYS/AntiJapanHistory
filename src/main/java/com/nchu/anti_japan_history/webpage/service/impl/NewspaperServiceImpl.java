@@ -61,4 +61,9 @@ public class NewspaperServiceImpl implements NewspaperService {
     public List<Newspaper> adminNotAdoptedNews() {
         return newspaperMapper.adminNotAdoptedNews();
     }
+
+    @Override
+    public int deleteByNewsId(Long newspaperId) {
+        return newspaperMapper.deleteByNewsId(newspaperId);
+    }
 }

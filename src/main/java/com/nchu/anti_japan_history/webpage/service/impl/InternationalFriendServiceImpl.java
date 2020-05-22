@@ -61,4 +61,14 @@ public class InternationalFriendServiceImpl implements InternationalFriendServic
     public List<InternationalFriend> adminNotAdoptedFriend() {
         return internationalFriendMapper.adminNotAdoptedFriend();
     }
+
+    @Override
+    public int deleteByFriendId(Long internationalFriendId) {
+        return internationalFriendMapper.deleteByFriendId(internationalFriendId);
+    }
+
+    @Override
+    public void examineFriendUpdate(InternationalFriend internationalFriend) {
+        internationalFriendMapper.examineFriendUpdate(internationalFriend);
+    }
 }

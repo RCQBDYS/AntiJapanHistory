@@ -33,6 +33,11 @@ public interface AntiJapanPersonService {
     //管理员查询未通过的人物信息
     List<AntiJapanPerson> adminNotAdoptedPerson();
 
+    //删除人物信息
+    int deleteByPersonId(Long antiJapanPersonId);
+
+    //审核信息保存
+    void examinePersonUpdate(AntiJapanPerson antiJapanPerson);
 
 }
 

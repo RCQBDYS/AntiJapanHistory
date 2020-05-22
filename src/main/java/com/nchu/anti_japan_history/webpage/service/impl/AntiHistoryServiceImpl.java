@@ -114,6 +114,10 @@ public class AntiHistoryServiceImpl implements AntiHistoryService {
         antiHistoryMapper.editAntiHistoryUpdate(antiHistory);
     }
 
+    @Override
+    public int deleteByAntiHistoryId(Long antiHistoryId) {
+        return antiHistoryMapper.deleteByAntiHistoryId(antiHistoryId);
+    }
 
 
     //地图信息显示

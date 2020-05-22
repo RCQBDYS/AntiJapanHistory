@@ -1,5 +1,6 @@
 package com.nchu.anti_japan_history.webpage.controller;
 
+import com.nchu.anti_japan_history.utils.MatchString;
 import com.nchu.anti_japan_history.utils.RandomUtils;
 import com.nchu.anti_japan_history.utils.SensitiveWordFilter;
 import com.nchu.anti_japan_history.webpage.entity.AntiHistory;
@@ -77,6 +78,10 @@ public class HistoryController {
         sensitiveWordFilter.InitializationWork();
         //System.out.println("被检测字符长度="+antiHistoryContent.length());
         antiHistoryContent = sensitiveWordFilter.filterInfo(antiHistoryContent);
+        MatchString matchString = new MatchString();
+        String child = "\\*";
+        int count = matchString.matchStringByRegularExpression(antiHistoryContent,child);
+        System.out.println(count);
         //System.out.println("过滤之后的Content="+antiHistoryContent);
         //logger.info("替换后的内容：" + antiHistoryContent);
         antiHistory.setAntiHistoryContent(antiHistoryContent);

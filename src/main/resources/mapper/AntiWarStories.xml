@@ -33,7 +33,7 @@
 
     <!--查询具体的抗战故事-->
     <select id="antiStoriesDisplay" resultMap="AntiWarStoriesMap">
-        SELECT * FROM antiwarstories WHERE antiWarId = #{antiWarId} and storiesState = '2';
+        SELECT * FROM antiwarstories WHERE antiWarId = #{antiWarId};
     </select>
 
     <!--普通用户查询通过抗战故事-->
@@ -62,25 +62,29 @@
         SELECT * FROM antiwarstories WHERE  storiesState = '1';
     </select>
 
+    <delete id="deleteByStoriesId">
+        DELETE FROM antiwarstories WHERE antiWarId = #{antiWarId};
+    </delete>
+
+    <!--审核信息保存-->
+    <update id="examineStoriesSave" parameterType="com.nchu.anti_japan_history.webpage.entity.AntiWarStories">
+        UPDATE antiwarstories SET storiesState=#{storiesState},storiesNotReason=#{storiesNotReason}
+        WHERE antiWarId=#{antiWarId}
+    </update>
+
     <!--<select id="listAll" resultMap="departMap">
         SELECT departId,departName,departmentLeading,departmentNum,departmentAddress,departmentResponsible
         FROM department_message
     </select>-->
 
-    <!--<delete id="delete">
-        DELETE FROM department_message WHERE departId = #{departId};
-    </delete>
+    <!--
 
     <insert id="save" parameterType="cn.nchu.edu.software.policeManager.entity.DepartmentMessage">
         INSERT INTO department_message(departName,departmentAddress,departmentLeading, departmentNum,departmentResponsible)
         VALUES (#{departName},#{departmentAddress},#{departmentLeading},#{departmentNum},#{departmentResponsible})
     </insert>
 
-    <update id="update" parameterType="cn.nchu.edu.software.policeManager.entity.DepartmentMessage">
-        UPDATE department_message SET departName=#{departName},departmentAddress=#{departmentAddress},
-        departmentLeading=#{departmentLeading},departmentNum=#{departmentNum},departmentResponsible=#{departmentResponsible}
-        WHERE departId=#{departId}
-    </update>
+
 
     <select id="selectDepartId" resultMap="departMap">
         SELECT departId,departName,departmentLeading,departmentNum,departmentAddress,departmentResponsible

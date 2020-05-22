@@ -67,7 +67,7 @@
                             <img class="img-circle" th:src="${session.user.userPicture}" width="50" height="50">
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a th:href="@{/unit}"><i class="fa fa-user"></i>个人中心</a></li>
+                            <li th:if="${session.user.userPower ne 1}"><a th:href="@{/unit}"><i class="fa fa-user"></i>个人中心</a></li>
                             <li th:if="${session.user.userPower eq 1}"><a th:href="@{/adminCenter}" target="_bank"><i class="fa fa-wrench"></i>管理中心</a></li>
                             <li><a th:href="@{/logout}"><i class="fa fa-power-off"></i>退出</a></li>
                         </ul>

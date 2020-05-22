@@ -1,9 +1,7 @@
 package com.nchu.anti_japan_history.webpage.controller;
 
-import com.nchu.anti_japan_history.webpage.service.BookService;
-import com.nchu.anti_japan_history.webpage.service.NewspaperService;
-import com.nchu.anti_japan_history.webpage.service.PeriodicalService;
-import com.nchu.anti_japan_history.webpage.service.PictureService;
+import com.nchu.anti_japan_history.webpage.entity.User;
+import com.nchu.anti_japan_history.webpage.service.*;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,7 +9,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.*;
 
 /**
@@ -31,6 +31,8 @@ public class ResourceDownloadController {
     PeriodicalService periodicalService;
     @Autowired
     PictureService pictureService;
+    @Autowired
+    UserService userService;
 
     //配置文件中的图片保存路径
     @Value("${cbs.imagesPath}")
@@ -40,8 +42,25 @@ public class ResourceDownloadController {
     @Value("${cbs.pdf}")
     private String pdfPath;
 
+    //图片下载
     @RequestMapping("/pictureDownload")
-    public void PictureDownload(String pictureName, HttpServletResponse response) throws IOException {
+    public void PictureDownload(String pictureName, HttpServletResponse response, HttpServletRequest request) throws IOException {
+        HttpSession session = request.getSession();
+        Object ourSer = session.getAttribute("user");
+        User user = null;
+        if (ourSer instanceof  User){
+            user =(User)ourSer;
+        }
+        int power = user.getUserPower();
+        if (power == 0){
+            int core = user.getUserPoint();
+            //下载图片扣除5积分
+            core -=5;
+            user.setUserPoint(core);
+            userService.coreUpdate(user);
+        }
+
+
         //二进制数据文件
         response.setContentType("application/octet-stream");
         //获取图片名称

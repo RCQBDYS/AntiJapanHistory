@@ -88,6 +88,8 @@ public class UserController {
                              @RequestParam(value = "userName") String userName,
                              @RequestParam(value = "userPassword") String userPassword,
                              @RequestParam(value = "userPower") Integer userPower,
+                             @RequestParam(value = "userPoint")int userPoint,
+                             @RequestParam(value = "number")int number,
                              HttpServletRequest httpServletRequest) {
         //注册与否的标志,message传递信息
         int flag = 0;
@@ -95,6 +97,8 @@ public class UserController {
         user.setUserName(userName);
         user.setUserPassword(userPassword);
         user.setUserPower(userPower);
+        user.setUserPoint(userPoint);
+        user.setNumber(number);
         //通过对imagesPath路径的截取，以获得图片存储的文件路径
         String parentDirPath = ImagesPath.substring(ImagesPath.indexOf(':') + 1, ImagesPath.length());
         //logger.info("parentDirPath=" + parentDirPath);

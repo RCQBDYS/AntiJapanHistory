@@ -54,9 +54,6 @@ public class indexController {
     public String skipIndex(HttpSession httpSession) {
         //读取抗战历史
         List<AntiHistory> partList = antiHistoryService.partHistorySelect();
-        /*for (int i = 0; i < partList.size();i++){
-            System.out.println(partList.get(i) + " ");
-        }*/
         List<AntiHistory> nationwideList = antiHistoryService.nationwideHistorySelect();
         List<AntiHistory> victoryList = antiHistoryService.victoryHistorySelect();
         List<AntiHistory> guerrillaList = antiHistoryService.guerrillaWarfareSelect();
@@ -85,7 +82,7 @@ public class indexController {
      * */
     @GetMapping("/index")
     public String skipIndexData() {
-        return "index";
+        return "redirect:/";
     }
 
     /*

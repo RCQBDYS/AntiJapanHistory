@@ -27,4 +27,10 @@ public interface AntiWarStoriesService {
     List<AntiWarStories> adminAuditStories();
     //管理员查询未通过
     List<AntiWarStories> adminNotAdoptedStories();
+
+    //删除故事信息
+    int deleteByStoriesId(Long antiWarId);
+
+    //审核信息保存
+    void examineStoriesSave(AntiWarStories antiWarStories);
 }

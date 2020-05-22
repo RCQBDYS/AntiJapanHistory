@@ -25,7 +25,7 @@ import java.sql.Date;
  */
 
 @Controller
-public class ContentAddController {
+public class  ContentAddController {
 
     //日志
     Logger logger = LoggerFactory.getLogger(indexController.class);

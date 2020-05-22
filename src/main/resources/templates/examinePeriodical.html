@@ -3,8 +3,8 @@
 <!--
 /**
 *@Author: wangshen
-*@Date: 2020/5/9
-*@Description: 历史条目审查页面
+*@Date: 2020/5/10
+*@Description: 期刊审核概览页面
 */
 -->
 <head>
@@ -54,7 +54,7 @@
         <div class="col-lg-9">
             <!-- <div class=" panel panel-default">
                  <div class="panel-body" style="height: 60px;">
-                     <form class="form-inline" th:action="@{/searchUser}" enctype="multipart/form-data" method="post">
+                     <form class="form-inline" enctype="multipart/form-data" method="post">
                          <div class="form-group">
                              <input type="text" class="form-control" th:value="${keyWord}" name="keyWord">
                          </div>
@@ -81,27 +81,22 @@
                                 <thead>
                                 <tr>
                                     <td>#</td>
-                                    <td>条目名称</td>
-                                    <td>条目类型</td>
-                                    <td>条目来源</td>
+                                    <td>名称</td>
+                                    <td>出版社</td>
+                                    <td>贡献者</td>
                                     <td>操作</td>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr th:each="case,state:${antiHistoryPastList}">
+                                <tr th:each="case,state:${periodicalsPass}">
                                     <td th:text="${state.count}"></td>
-                                    <td><span th:text="${case.antiHistoryName}"></span></td>
-                                    <td th:switch="${case.antiHistoryType}">
-                                        <span th:case="'1'">局部战争</span>
-                                        <span th:case="'2'">全国抗战</span>
-                                        <span th:case="'3'">伟大胜利</span>
-                                        <span th:case="'4'">游击战争</span>
-                                    </td>
-                                    <td><span th:text="${case.antiHistoryContribution}"></span></td>
+                                    <td><span th:text="${case.periodicalName}"></span></td>
+                                    <td><span th:text="${case.publishingCompany}"></span></td>
+                                    <td><span th:text="${case.periodicalContribution}"></span></td>
                                     <td><a class="btn btn-info"
-                                           th:href="@{/partHistoryDisplay(antiHistoryId=${case.antiHistoryId})}">查看</a>
+                                           th:href="@{/periodicalDisplay(periodicalId=${case.periodicalId})}">查看</a>
                                         <a class="delBtn btn btn-danger"
-                                           th:attr="del_uri=@{/deleteAntiHistory(antiHistoryId=${case.antiHistoryId})}">删除</a>
+                                           th:attr="del_uri=@{/deletePeriodical(periodicalId=${case.periodicalId})}">删除</a>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -112,26 +107,20 @@
                                 <thead>
                                 <tr>
                                     <td>#</td>
-                                    <td>条目名称</td>
-                                    <td>条目类型</td>
-                                    <td>条目来源</td>
+                                    <td>名称</td>
+                                    <td>出版社</td>
+                                    <td>贡献者</td>
                                     <td>操作</td>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr th:each="case,state:${antiHistoryAuditList}">
+                                <tr th:each="case,state:${periodicalsAudit}">
                                     <td th:text="${state.count}"></td>
-                                    <td><span th:text="${case.antiHistoryName}"></span></td>
-                                    <td th:switch="${case.antiHistoryType}">
-                                        <span th:case="'1'">局部战争</span>
-                                        <span th:case="'2'">全国抗战</span>
-                                        <span th:case="'3'">伟大胜利</span>
-                                        <span th:case="'4'">游击战争</span>
-                                    </td>
-                                    <td><span th:text="${case.antiHistoryContribution}"></span></td>
-                                    <td>
-                                        <a class="btn btn-info"
-                                           th:href="@{/examineInAntiHistory(antiHistoryId=${case.antiHistoryId})}">审核</a>
+                                    <td><span th:text="${case.periodicalName}"></span></td>
+                                    <td><span th:text="${case.publishingCompany}"></span></td>
+                                    <td><span th:text="${case.periodicalContribution}"></span></td>
+                                    <td><a class="btn btn-info"
+                                           th:href="@{/examineInPeriodical(periodicalId=${case.periodicalId})}">审核</a>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -142,24 +131,19 @@
                                 <thead>
                                 <tr>
                                     <td>#</td>
-                                    <td>条目名称</td>
-                                    <td>条目类型</td>
-                                    <td>条目来源</td>
+                                    <td>名称</td>
+                                    <td>出版社</td>
+                                    <td>贡献者</td>
                                     <td>未通过原因</td>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr th:each="case,state:${antiHistoryListNotAdoptedList}">
+                                <tr th:each="case,state:${periodicalsNotAdopted}">
                                     <td th:text="${state.count}"></td>
-                                    <td><span th:text="${case.antiHistoryName}"></span></td>
-                                    <td th:switch="${case.antiHistoryType}">
-                                        <span th:case="'1'">局部战争</span>
-                                        <span th:case="'2'">全国抗战</span>
-                                        <span th:case="'3'">伟大胜利</span>
-                                        <span th:case="'4'">游击战争</span>
-                                    </td>
-                                    <td><span th:text="${case.antiHistoryContribution}"></span></td>
-                                    <td><span th:text="${case.notAdoptedReason}"></span></td>
+                                    <td><span th:text="${case.periodicalName}"></span></td>
+                                    <td><span th:text="${case.publishingCompany}"></span></td>
+                                    <td><span th:text="${case.periodicalContribution}"></span></td>
+                                    <td><span th:text="${case.periodicalNotReason}"></span></td>
                                 </tr>
                                 </tbody>
                             </table>

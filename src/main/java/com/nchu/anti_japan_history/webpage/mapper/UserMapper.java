@@ -26,4 +26,16 @@ public interface UserMapper {
     List<User> searchByKeyWord(@Param(value = "keyWord") String keyWord);
     //用户信息删除
     int deleteById(Long userId);
+
+    //更新积分
+    void coreUpdate(User user);
+
+    //根据用户名查询用户信息
+    User userMessage(String userName);
+
+    //更新权限
+    void powerUpdate(User user);
+
+    //更新用户贡献次数
+    void numberUpdate(User user);
 }

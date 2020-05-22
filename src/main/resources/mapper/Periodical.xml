@@ -28,7 +28,7 @@
 
     <!--期刊信息的详细显示-->
     <select id="periodicalDisplay" resultMap="periodicalMap">
-        SELECT * FROM periodical where periodicalId = #{periodicalId} and periodicalState = '2';
+        SELECT * FROM periodical where periodicalId = #{periodicalId};
     </select>
 
     <!--普通用户查询通过期刊信息-->
@@ -57,14 +57,17 @@
         SELECT * FROM periodical where periodicalState = '1';
     </select>
 
+    <!--删除信息-->
+    <delete id="deleteByPeriodicalId">
+        DELETE FROM periodical WHERE periodicalId = #{periodicalId};
+    </delete>
+
     <!--<select id="listAll" resultMap="departMap">
         SELECT departId,departName,departmentLeading,departmentNum,departmentAddress,departmentResponsible
         FROM department_message
     </select>-->
 
-    <!--<delete id="delete">
-        DELETE FROM department_message WHERE departId = #{departId};
-    </delete>
+    <!--
 
     <insert id="save" parameterType="cn.nchu.edu.software.policeManager.entity.DepartmentMessage">
         INSERT INTO department_message(departName,departmentAddress,departmentLeading, departmentNum,departmentResponsible)
