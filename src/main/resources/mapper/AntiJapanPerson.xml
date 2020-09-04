@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nchu.anti_japan_history.webpage.mapper.AntiJapanPersonMapper">
+    <resultMap id="AntiJapanPersonMap" type="com.nchu.anti_japan_history.webpage.entity.AntiJapanPerson">
+        <id column="antiJapanPersonId" property="antiJapanPersonId" jdbcType="INTEGER"/>
+        <result column="personName" property="personName" jdbcType="VARCHAR"/>
+        <result column="personDescription" property="personDescription" jdbcType="VARCHAR"/>
+        <result column="timeQuantum" property="timeQuantum" jdbcType="VARCHAR"/>
+        <result column="content" property="content" jdbcType="VARCHAR"/>
+        <result column="personPicture" property="personPicture" jdbcType="VARCHAR"/>
+        <result column="personState" property="personState" jdbcType="INTEGER"/>
+        <result column="personContribution" property="personContribution" jdbcType="VARCHAR"/>
+        <result column="personNotReason" property="personNotReason" jdbcType="VARCHAR"/>
+    </resultMap>
+    <select id="antiJapanPersonSelect" resultMap="AntiJapanPersonMap">
+        SELECT * FROM antijapanperson where personState = '2' LIMIT 4;
+    </select>
+
+    <!--显示全部listAll-->
+    <select id="antiPersonListAll" resultMap="AntiJapanPersonMap">
+        SELECT * FROM antijapanperson where personState = '2';
+    </select>
+
+    <!--保存历史人物信息-->
+    <insert id="antiPersonSave" parameterType="com.nchu.anti_japan_history.webpage.entity.AntiJapanPerson">
+        INSERT INTO antijapanperson(personName,personDescription,personPicture,timeQuantum,content,personState,personContribution)
+        VALUES (#{personName},#{personDescription},#{personPicture},#{timeQuantum},#{content},#{personState},#{personContribution})
+    </insert>
+
+    <!--历史人物信息具体显示-->
+    <select id="antiPersonDisplay" resultMap="AntiJapanPersonMap">
+        SELECT * FROM antijapanperson WHERE antiJapanPersonId = #{antiPersonDisplay};
+    </select>
+
+    <!--普通用户查询通过的历史人物信息-->
+    <select id="consumerPassPerson" resultMap="AntiJapanPersonMap">
+        SELECT * FROM antijapanperson WHERE personContribution = #{personContribution} and personState = '2';
+    </select>
+
+    <!--普通用户查询待审查的历史人物信息-->
+    <select id="consumerAuditPerson" resultMap="AntiJapanPersonMap">
+        SELECT * FROM antijapanperson WHERE personContribution = #{personContribution} and personState = '0';
+    </select>
+
+    <!--普通用户查询未通过的历史人物信息-->
+    <select id="consumerNotAdoptedPerson" resultMap="AntiJapanPersonMap">
+        SELECT * FROM antijapanperson WHERE personContribution = #{personContribution} and personState = '1';
+    </select>
+
+    <!--管理员查询通过历史人物信息-->
+    <select id="adminPassPerson" resultMap="AntiJapanPersonMap">
+        SELECT * FROM antijapanperson WHERE  personState = '2';
+    </select>
+    <!--管理员查询待审核历史人物信息-->
+    <select id="adminAuditPerson" resultMap="AntiJapanPersonMap">
+        SELECT * FROM antijapanperson WHERE  personState = '0';
+    </select>
+    <!--管理员查询未通过历史人物信息-->
+    <select id="adminNotAdoptedPerson" resultMap="AntiJapanPersonMap">
+        SELECT * FROM antijapanperson WHERE  personState = '1';
+    </select>
+
+
+    <delete id="deleteByPersonId">
+        DELETE FROM antijapanperson WHERE antiJapanPersonId = #{antiJapanPersonId};
+    </delete>
+
+    <update id="examinePersonUpdate" parameterType="com.nchu.anti_japan_history.webpage.entity.AntiJapanPerson">
+        UPDATE antijapanperson SET personState=#{personState},personNotReason=#{personNotReason}
+        WHERE antiJapanPersonId=#{antiJapanPersonId}
+    </update>
+
+
+    <!--
+
+
+    <select id="selectDepartId" resultMap="departMap">
+        SELECT departId,departName,departmentLeading,departmentNum,departmentAddress,departmentResponsible
+        FROM department_message
+        WHERE departId = #{departId}
+    </select>
+
+    <select id="queryByKeyword" resultMap="departMap">
+        SELECT departId,departName,departmentLeading,departmentNum,departmentAddress,departmentResponsible
+        FROM department_message
+        <where>
+            <if test="keyword!=null">
+                <bind name="keywordLike" value="'%'+keyword+'%'"></bind>
+                AND ((departName LIKE #{keywordLike}) OR (departmentLeading LIKE #{keywordLike})
+                OR (departmentNum LIKE #{keywordLike}) OR (departmentAddress LIKE #{keywordLike})
+                OR (departmentResponsible LIKE #{keywordLike}))
+            </if>
+        </where>
+    </select>-->
+
+</mapper>

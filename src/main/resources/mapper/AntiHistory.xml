@@ -3,25 +3,216 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.nchu.anti_japan_history.webpage.mapper.AntiHistoryMapper">
-    <resultMap id="BaseResultMap" type="com.nchu.anti_japan_history.webpage.entity.AntiHistory">
-        <id column="antiHistoryId" property="antiHistoryId"/>
-        <result column="antiHistoryName" property="antiHistoryName"/>
-        <result column="antiHistoryPicture" property="antiHistoryName"/>
-        <result column="antiHistoryContent" property="antiHistoryContent"/>
+    <resultMap id="AntiHistoryMap" type="com.nchu.anti_japan_history.webpage.entity.AntiHistory">
+        <id column="antiHistoryId" property="antiHistoryId" jdbcType="INTEGER"/>
+        <result column="antiHistoryName" property="antiHistoryName" jdbcType="VARCHAR"/>
+        <result column="antiHistoryDescription" property="antiHistoryDescription" jdbcType="VARCHAR"/>
+        <result column="antiHistoryPicture" property="antiHistoryPicture" jdbcType="VARCHAR"/>
+        <result column="antiHistoryContent" property="antiHistoryContent" jdbcType="VARCHAR"/>
+        <result column="antiHistoryType" property="antiHistoryType" jdbcType="INTEGER"/>
+        <result column="antiHistoryState" property="antiHistoryState" jdbcType="INTEGER"/>
+        <result column="antiHistoryContribution" property="antiHistoryContribution" jdbcType="VARCHAR"/>
+        <result column="notAdoptedReason" property="notAdoptedReason" jdbcType="VARCHAR"/>
+        <result column="antiHistoryTime" property="antiHistoryTime" jdbcType="DATE"/>
+        <result column="antiHistorySite" property="antiHistorySite" jdbcType="VARCHAR"/>
     </resultMap>
-    <!--<select id="listAll" resultMap="departMap">
-        SELECT departId,departName,departmentLeading,departmentNum,departmentAddress,departmentResponsible
-        FROM department_message
-    </select>-->
+    <!--index显示局部战争历史-->
+    <select id="partHistorySelect" resultMap="AntiHistoryMap">
+        SELECT * FROM antihistory where antiHistoryState='2' and antiHistoryType='1' LIMIT 4;
+    </select>
+    <!--index显示全国战争历史-->
+    <select id="nationwideHistorySelect" resultMap="AntiHistoryMap">
+        SELECT * FROM antihistory where antiHistoryState='2' and antiHistoryType='2' LIMIT 4  ;
+    </select>
+    <!--index显示伟大胜利历史-->
+    <select id="victoryHistorySelect" resultMap="AntiHistoryMap">
+        SELECT * FROM antihistory where  antiHistoryState='2' and antiHistoryType='3' LIMIT 4 ;
+    </select>
 
-    <!--<delete id="delete">
-        DELETE FROM department_message WHERE departId = #{departId};
-    </delete>-->
+    <!--index显示游击战争历史-->
+    <select id="guerrillaWarfareSelect" resultMap="AntiHistoryMap">
+        SELECT * FROM antihistory where antiHistoryState='2' and antiHistoryType='4' LIMIT 4  ;
+    </select>
 
-    <insert id="addEntriesDataSave" parameterType="com.nchu.anti_japan_history.webpage.entity.AntiHistory">
-        INSERT INTO antihistory(antiHistoryName,antiHistoryPicture,antiHistoryContent)
-        VALUES (#{antiHistoryName},#{antiHistoryPicture},#{antiHistoryContent})
-    </insert>
+    <!-- 局部抗战LISTAAL-->
+    <select id="partListAll" resultMap="AntiHistoryMap">
+        SELECT * FROM antihistory where antiHistoryType='1' and antiHistoryState='2';
+    </select>
+
+    <!--全国抗战listAll-->
+    <select id="nationwideListAll" resultMap="AntiHistoryMap">
+        SELECT * FROM antihistory where antiHistoryType='2' and antiHistoryState='2';
+    </select>
+
+    <!--伟大胜利listAll-->
+    <select id="victoryListAll" resultMap="AntiHistoryMap">
+        SELECT * FROM antihistory where antiHistoryType='3' and antiHistoryState='2';
+    </select>
+
+    <!--游击战争listAll-->
+    <select id="guerrillaWarfareListAll" resultMap="AntiHistoryMap">
+        SELECT * FROM antihistory where antiHistoryType='4' and antiHistoryState='2';
+    </select>
+
+
+    <!--抗战历史的添加-->
+    <select id="addEntriesDataSave" parameterType="com.nchu.anti_japan_history.webpage.entity.AntiHistory" statementType="CALLABLE">
+        {call antiHistory_insert(
+        #{antiHistoryName,jdbcType=VARCHAR,mode=IN},
+        #{antiHistoryDescription,jdbcType=VARCHAR,mode=IN},
+        #{antiHistoryPicture,jdbcType=VARCHAR, mode=IN},
+        #{antiHistoryContent, jdbcType=VARCHAR,mode=IN},
+        #{antiHistoryType,jdbcType=INTEGER,mode=IN},
+        #{antiHistoryContribution,jdbcType=VARCHAR,mode=IN},
+        #{antiHistoryState,jdbcType=INTEGER,mode=IN},
+        #{antiHistoryTime,jdbcType=DATE,mode=IN},
+        #{antiHistorySite,jdbcType=VARCHAR,mode=IN}
+        )}
+    </select>
+
+    <!--历史条目的详细显示-->
+    <select id="selectHistoryDisplay" resultMap="AntiHistoryMap">
+        SELECT * FROM antihistory where antiHistoryId=#{antiHistoryId};
+    </select>
+    <!--后台已通过的历史条目信息的全部显示-->
+    <select id="antiHistoryPastListAll" resultMap="AntiHistoryMap">
+        SELECT * FROM antihistory where antiHistoryState = '2';
+    </select>
+    <!--后台查询待审核的历史条目listall-->
+    <select id="antiHistoryAuditListAll" resultMap="AntiHistoryMap">
+        SELECT * FROM antihistory where antiHistoryState = '0';
+    </select>
+    <!--后台查询未通过的历史条目listall-->
+    <select id="antiHistoryNotAdoptedListAll" resultMap="AntiHistoryMap">
+        SELECT * FROM antihistory where antiHistoryState = '1';
+    </select>
+    <!--管理员审核内容保存-->
+    <update id="examineUpdate" parameterType="com.nchu.anti_japan_history.webpage.entity.AntiHistory">
+        UPDATE antihistory SET antiHistoryState=#{antiHistoryState},notAdoptedReason=#{notAdoptedReason}
+        WHERE antiHistoryId=#{antiHistoryId}
+    </update>
+    <!--时间轴历史事件显示-->
+    <select id="timeListAll" resultMap="AntiHistoryMap">
+        SELECT * FROM antihistory where antiHistoryState='2' and antiHistoryType !='4' group by antiHistoryTime asc;
+    </select>
+
+    <!--普通用户中心查询通过历史条目-->
+    <select id="consumerPassHistoryListAll" resultMap="AntiHistoryMap">
+        SELECT * FROM antihistory where antiHistoryState='2' and antiHistoryContribution = #{antiHistoryContribution};
+    </select>
+
+    <!--普通用户中心查询待审核的历史条目-->
+    <select id="consumerAuditHistoryListAll" resultMap="AntiHistoryMap">
+        SELECT * FROM antihistory where antiHistoryState='0' and antiHistoryContribution = #{antiHistoryContribution};
+    </select>
+
+    <!--普通用户中心查询未通过的历史条目-->
+    <select id="consumerNotAdoptedListAll" resultMap="AntiHistoryMap">
+        SELECT * FROM antihistory where antiHistoryState='1' and antiHistoryContribution = #{antiHistoryContribution};
+    </select>
+
+    <!--普通用户进行历史条目修改更新-->
+    <update id="editAntiHistoryUpdate" parameterType="com.nchu.anti_japan_history.webpage.entity.AntiHistory">
+        UPDATE antihistory SET antiHistoryName=#{antiHistoryName},antiHistoryDescription=#{antiHistoryDescription},
+         antiHistoryPicture=#{antiHistoryPicture},antiHistoryContent=#{antiHistoryContent},
+         antiHistoryType=#{antiHistoryType},antiHistoryTime=#{antiHistoryTime},antiHistorySite=#{antiHistorySite}
+        WHERE antiHistoryId=#{antiHistoryId}
+    </update>
+
+    <delete id="deleteByAntiHistoryId" statementType="CALLABLE">
+       {call deleteAntiHistory(#{antiHistoryId,jdbcType=VARCHAR,mode=IN})}
+     </delete>
+
+
+
+    <!--地图信息显示-->
+    <select id="JiangxiListAll" resultMap="AntiHistoryMap">
+        SELECT * FROM antihistory where antiHistorySite like '%江西%' and antiHistoryState='2';
+    </select>
+
+    <select id="HeilongjiangListAll" resultMap="AntiHistoryMap">
+        SELECT * FROM antihistory where antiHistorySite like '%黑龙江%' and antiHistoryState='2';
+    </select>
+
+    <select id="JilinListAll" resultMap="AntiHistoryMap">
+        SELECT * FROM antihistory where antiHistorySite like '%吉林%' and antiHistoryState='2';
+    </select>
+
+    <select id="LiaoningListAll" resultMap="AntiHistoryMap">
+        SELECT * FROM antihistory where antiHistorySite like '%辽宁%' and antiHistoryState='2';
+    </select>
+
+    <select id="HebeiListAll" resultMap="AntiHistoryMap">
+        SELECT * FROM antihistory where antiHistorySite like '%河北%' and antiHistoryState='2';
+    </select>
+
+    <select id="ShandongListAll" resultMap="AntiHistoryMap">
+        SELECT * FROM antihistory where antiHistorySite like '%山东%' and antiHistoryState='2';
+    </select>
+
+    <select id="JiangsuListAll" resultMap="AntiHistoryMap">
+        SELECT * FROM antihistory where antiHistorySite like '%江苏%' and antiHistoryState='2';
+    </select>
+
+    <select id="ZhejiangListAll" resultMap="AntiHistoryMap">
+        SELECT * FROM antihistory where antiHistorySite like '%浙江%' and antiHistoryState='2';
+    </select>
+
+    <select id="HenanListAll" resultMap="AntiHistoryMap">
+        SELECT * FROM antihistory where antiHistorySite like '%河南%' and antiHistoryState='2';
+    </select>
+
+    <select id="ShanxiListAll" resultMap="AntiHistoryMap">
+        SELECT * FROM antihistory where antiHistorySite like '%山西%' and antiHistoryState='2';
+    </select>
+
+    <select id="HubeiListAll" resultMap="AntiHistoryMap">
+        SELECT * FROM antihistory where antiHistorySite like '%湖北%' and antiHistoryState='2';
+    </select>
+
+    <select id="HunanListAll" resultMap="AntiHistoryMap">
+        SELECT * FROM antihistory where antiHistorySite like '%湖南%' and antiHistoryState='2';
+    </select>
+
+    <select id="YunnanListAll" resultMap="AntiHistoryMap">
+        SELECT * FROM antihistory where antiHistorySite like '%云南%' and antiHistoryState='2';
+    </select>
+
+    <select id="ShanghaiListAll" resultMap="AntiHistoryMap">
+        SELECT * FROM antihistory where antiHistorySite like '%上海%' and antiHistoryState='2';
+    </select>
+
+    <select id="ChongqingListAll" resultMap="AntiHistoryMap">
+        SELECT * FROM antihistory where antiHistorySite like '%重庆%' and antiHistoryState='2';
+    </select>
+
+    <select id="BeijingListAll" resultMap="AntiHistoryMap">
+        SELECT * FROM antihistory where antiHistorySite like '%北京%' and antiHistoryState='2';
+    </select>
+
+    <select id="NeimengguListAll" resultMap="AntiHistoryMap">
+        SELECT * FROM antihistory where antiHistorySite like '%内蒙古%' and antiHistoryState='2';
+    </select>
+
+    <select id="GuangxiListAll" resultMap="AntiHistoryMap">
+        SELECT * FROM antihistory where antiHistorySite like '%广西%' and antiHistoryState='2';
+    </select>
+
+    <select id="GuangdongListAll" resultMap="AntiHistoryMap">
+        SELECT * FROM antihistory where antiHistorySite like '%广东%' and antiHistoryState='2';
+    </select>
+
+
+
+
+
+
+
+
+
+
+
+
 
     <!--<update id="update" parameterType="cn.nchu.edu.software.policeManager.entity.DepartmentMessage">
         UPDATE department_message SET departName=#{departName},departmentAddress=#{departmentAddress},

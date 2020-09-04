@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nchu.anti_japan_history.webpage.mapper.AntiWarStoriesMapper">
+    <resultMap id="AntiWarStoriesMap" type="com.nchu.anti_japan_history.webpage.entity.AntiWarStories">
+        <id column="antiWarId" property="antiWarId" jdbcType="INTEGER"/>
+        <result column="title" property="title" jdbcType="VARCHAR"/>
+        <result column="storiesDescription" property="storiesDescription" jdbcType="VARCHAR"/>
+        <result column="storiesContent" property="storiesContent" jdbcType="VARCHAR"/>
+        <result column="storiesPicture" property="storiesPicture" jdbcType="VARCHAR"/>
+        <result column="storiesState" property="storiesState" jdbcType="INTEGER"/>
+        <result column="storiesContribution" property="storiesContribution" jdbcType="VARCHAR"/>
+        <result column="storiesNotReason" property="storiesNotReason" jdbcType="VARCHAR"/>
+    </resultMap>
+
+
+    <!--主页查询抗战故事-->
+    <select id="antiWarStoriesSelect" resultMap="AntiWarStoriesMap">
+        SELECT * FROM antiwarstories where storiesState = '2' LIMIT 4;
+    </select>
+
+    <!--查询所有抗战故事-->
+    <select id="antiStoriesListAll" resultMap="AntiWarStoriesMap">
+        SELECT * FROM antiwarstories where storiesState = '2';
+    </select>
+
+    <!--插入新的抗战故事-->
+    <insert id="antiStoriesSave" parameterType="com.nchu.anti_japan_history.webpage.entity.AntiWarStories">
+        INSERT INTO antiwarstories(title,storiesDescription,storiesPicture,storiesContent, storiesContribution,storiesState)
+        VALUES (#{title},#{storiesDescription},#{storiesPicture},#{storiesContent},#{storiesContribution},#{storiesState})
+    </insert>
+
+    <!--查询具体的抗战故事-->
+    <select id="antiStoriesDisplay" resultMap="AntiWarStoriesMap">
+        SELECT * FROM antiwarstories WHERE antiWarId = #{antiWarId};
+    </select>
+
+    <!--普通用户查询通过抗战故事-->
+    <select id="consumerPassStories" resultMap="AntiWarStoriesMap">
+        SELECT * FROM antiwarstories WHERE storiesContribution = #{storiesContribution} and storiesState = '2';
+    </select>
+    <!--普通用户查询待审核-->
+    <select id="consumerAuditStories" resultMap="AntiWarStoriesMap">
+        SELECT * FROM antiwarstories WHERE storiesContribution = #{storiesContribution} and storiesState = '0';
+    </select>
+    <!--普通用户查询未通过抗战故事-->
+    <select id="consumerNotAdoptedStores" resultMap="AntiWarStoriesMap">
+        SELECT * FROM antiwarstories WHERE storiesContribution = #{storiesContribution} and storiesState = '1';
+    </select>
+
+    <!--管理员查询通过-->
+    <select id="adminPassStories" resultMap="AntiWarStoriesMap">
+        SELECT * FROM antiwarstories WHERE  storiesState = '2';
+    </select>
+    <!--管理员查询待审核-->
+    <select id="adminAuditStories" resultMap="AntiWarStoriesMap">
+        SELECT * FROM antiwarstories WHERE  storiesState = '0';
+    </select>
+    <!--管理员查询未通过-->
+    <select id="adminNotAdoptedStories" resultMap="AntiWarStoriesMap">
+        SELECT * FROM antiwarstories WHERE  storiesState = '1';
+    </select>
+
+    <delete id="deleteByStoriesId">
+        DELETE FROM antiwarstories WHERE antiWarId = #{antiWarId};
+    </delete>
+
+    <!--审核信息保存-->
+    <update id="examineStoriesSave" parameterType="com.nchu.anti_japan_history.webpage.entity.AntiWarStories">
+        UPDATE antiwarstories SET storiesState=#{storiesState},storiesNotReason=#{storiesNotReason}
+        WHERE antiWarId=#{antiWarId}
+    </update>
+
+    <!--<select id="listAll" resultMap="departMap">
+        SELECT departId,departName,departmentLeading,departmentNum,departmentAddress,departmentResponsible
+        FROM department_message
+    </select>-->
+
+    <!--
+
+    <insert id="save" parameterType="cn.nchu.edu.software.policeManager.entity.DepartmentMessage">
+        INSERT INTO department_message(departName,departmentAddress,departmentLeading, departmentNum,departmentResponsible)
+        VALUES (#{departName},#{departmentAddress},#{departmentLeading},#{departmentNum},#{departmentResponsible})
+    </insert>
+
+
+
+    <select id="selectDepartId" resultMap="departMap">
+        SELECT departId,departName,departmentLeading,departmentNum,departmentAddress,departmentResponsible
+        FROM department_message
+        WHERE departId = #{departId}
+    </select>
+
+    <select id="queryByKeyword" resultMap="departMap">
+        SELECT departId,departName,departmentLeading,departmentNum,departmentAddress,departmentResponsible
+        FROM department_message
+        <where>
+            <if test="keyword!=null">
+                <bind name="keywordLike" value="'%'+keyword+'%'"></bind>
+                AND ((departName LIKE #{keywordLike}) OR (departmentLeading LIKE #{keywordLike})
+                OR (departmentNum LIKE #{keywordLike}) OR (departmentAddress LIKE #{keywordLike})
+                OR (departmentResponsible LIKE #{keywordLike}))
+            </if>
+        </where>
+    </select>-->
+
+</mapper>

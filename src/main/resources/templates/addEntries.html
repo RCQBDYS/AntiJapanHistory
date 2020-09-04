@@ -9,7 +9,6 @@
 -->
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to=no">
     <title>添加条目</title>
 
     <!-- Bootstrap core CSS -->
@@ -29,11 +28,19 @@
     <!--富文本js以及热键插件-->
     <script src="/js/bootstrap-wysiwyg.js"></script>
     <script src="/js/jquery.hotkeys.js"></script>
+    <!--表单验证-->
+    <!-- <script src="https://static.runoob.com/assets/jquery-validation-1.14.0/dist/jquery.validate.min.js"></script>
+     <script src="https://static.runoob.com/assets/jquery-validation-1.14.0/dist/localization/messages_zh.js"></script>-->
+    <style>
+        .error {
+            color: orangered;
+        }
+    </style>
 
 
 </head>
 <body>
-<div th:include="~{index::navTop}"></div>
+<div th:include="~{partHistory::navTop}"></div>
 <div th:include="~{partHistory::ulTop}"></div>
 <div class="container theme-showcase" role="main">
     <div class="page-header" id="idOne">
@@ -42,21 +49,59 @@
     <div class="panel panel-default center-block" style="width: 800px;">
         <!--提交表单-->
         <div class="panel-body">
-            <form role="form" th:action="@{/addEntriesData}" enctype="multipart/form-data" method="post" class="form-horizontal">
+            <form role="form" id="historyForm" th:action="@{/addEntriesData}" enctype="multipart/form-data"
+                  method="post"
+                  class="form-horizontal">
                 <div class="form-group">
                     <label class="col-sm-2 control-label">条目名称</label>
                     <div class="col-sm-10">
                         <input class="form-control" id="antiHistoryName" name="antiHistoryName" type="text"
-                               style="width: 300px;" required>
+                               style="width: 300px;">
+                        <input name="antiHistoryContribution" th:value="${session.user.userName}" type="hidden">
+                        <input name="antiHistoryState" value="0" type="hidden">
+                        <span class="error" id="historyNameMessage"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">条目描述</label>
+                    <div class="col-sm-10">
+                        <input class="form-control" id="antiHistoryDescription" name="antiHistoryDescription"
+                               type="text"
+                               style="height: 200px;">
+                        <span class="error" id="historyDescriptionMessage"></span>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label">条目图片</label>
                     <div class="col-sm-10">
                         <input id="antiHistoryPicture" name="antiHistoryPicture" class="form-control" type="file"
-                               style="display: none" required>
+                               style="display: none">
                         <img id="antiHistoryImg" src="static\images\plus.svg" style="width: 200px;height:200px;"
                              class="img-thumbnail form-control">
+                        <span class="error" id="historyPictureMessage"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">条目类型</label>
+                    <div class="col-sm-10">
+                        <select class="form-control" type="text" style="width: 150px;" name="specialTopicId">
+                            <option value="1">局部抗战</option>
+                            <option value="2">全国抗战</option>
+                            <option value="3">伟大胜利</option>
+                            <option value="4">游击战争</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">条目时间</label>
+                    <div class="col-sm-10">
+                        <input type="date" name="antiHistoryTime">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">条目地点</label>
+                    <div class="col-sm-10">
+                        <input type="text" name="antiHistorySite">
                     </div>
                 </div>
                 <div class="form-group">
@@ -144,13 +189,12 @@
                                 <a data-edit="redo" title="恢复 (Ctrl/Cmd+Y)" class="btn">
                                     <i class="	fa fa-rotate-right"></i>
                                 </a>
-                                <!--  </div>-->
-
                             </div>
                         </div>
                         <!--编辑框-->
-                        <div id="editor">Go ahead&hellip;</div>
+                        <div id="editor"></div>
                         <input id="antiHistoryContent" name="antiHistoryContent" type="hidden" value="">
+                        <span class="error" id="historyContentMessage"></span>
                     </div>
                 </div>
                 <button type="submit" class="btn btn-success center-block" id="submit">提交</button>
@@ -162,10 +206,7 @@
 
 <!--javascript-->
 <script type="text/javascript">
-    /*
-    *
-    * 上传图片的预览
-    * */
+    //图片预览
     $("#antiHistoryImg").click(function () {
         $("#antiHistoryPicture").click();
     });
@@ -180,21 +221,18 @@
                 $("#antiHistoryImg").attr("src", e.target.result);    //e.target.result就是最后的路径地址
             };
         }
-        ;
     });
 
 
-    /*
-    * 进行<div>的替换成编辑框
-    * */
+    //进行<div>的替换成编辑框
     $(function () {
         initToolbarBootstrapBindings();
         $('#editor').wysiwyg();
     });
 
-    /*
-    * 编辑框中的编辑按钮触发函数
-    * */
+
+    //编辑框中的编辑按钮触发函数
+
     function initToolbarBootstrapBindings() {
         var fonts = ['Serif', 'Sans', 'Arial', 'Arial Black', 'Courier',
                 'Courier New', 'Comic Sans MS', 'Helvetica', 'Impact', 'Lucida Grande', 'Lucida Sans', 'Tahoma', 'Times',
@@ -221,27 +259,34 @@
 
     };
 
-    /*
-    * 提交按钮
-    * */
+    //提交表单内容加手动验证表单内容
+
     $(document).ready(function () {
         $("#submit").click(function () {
             var content = $("#editor").html();
             var str = html_encode(content);
-            if (str == "") {
-                alert("请输入内容！");
+            $("#antiHistoryContent").val(str);
+            var historyNameMessage = $("#antiHistoryName").val();
+            var historyContentMessage = $("#antiHistoryContent").val();
+            if (historyNameMessage == "" && historyContentMessage == "") {
+                alert("historyName="+historyNameMessage);
+                alert("historyContent="+historyContentMessage);
+                $("#historyNameMessage").html("请输入条目名称");
+                $("#historyContentMessage").html("请输入内容");
                 return false;
-            } else {
-                $("#antiHistoryContent").val(str);
+            } else if (historyNameMessage == "") {
+                $("#historyNameMessage").html("请输入条目名称");
+                return false;
+            } else if (historyContentMessage == ""){
+                $("#historyContentMessage").html("#请输入条目内容");
+                return false;
+            }else{
                 return true;
             }
         });
     });
 
-    /*
-    *
-    *编辑器内容中的元素进行转码函数
-    * */
+    //编辑器内容中的元素进行转码函数
     function html_encode(str) {
         var s = "";
         if (str.length == 0)

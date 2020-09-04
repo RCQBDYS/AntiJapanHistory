@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nchu.anti_japan_history.webpage.mapper.AntiSiteMapper">
+    <resultMap id="AntiSiteMap" type="com.nchu.anti_japan_history.webpage.entity.AntiSite">
+        <id column="antiSiteId" property="antiSiteId" jdbcType="INTEGER"/>
+        <result column="antiSiteName" property="antiSiteName" jdbcType="VARCHAR"/>
+        <result column="exhibitions" property="exhibitions" jdbcType="VARCHAR"/>
+        <result column="collections" property="collections" jdbcType="VARCHAR"/>
+        <result column="address" property="address" jdbcType="VARCHAR"/>
+        <result column="url" property="url" jdbcType="VARCHAR"/>
+        <result column="antiSitePicture" property="antiSitePicture" jdbcType="VARCHAR"/>
+        <result column="antiSiteState" property="antiSiteState" jdbcType="INTEGER"/>
+        <result column="antiSiteContribution" property="antiSiteContribution" jdbcType="VARCHAR"/>
+        <result column="antiSiteNotReason" property="antiSiteNotReason" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--历史遗址主页面信息的显示-->
+    <select id="antiSiteSelect" resultMap="AntiSiteMap">
+        SELECT * FROM antisite where antiSiteState='2' LIMIT 4;
+    </select>
+
+    <!--历史博物馆信息的全部显示-->
+    <select id="antiSiteListAll" resultMap="AntiSiteMap">
+        SELECT * FROM antisite where antiSiteState = '2';
+    </select>
+
+    <!--历史遗址信息的保存-->
+    <insert id="antiSiteSave" parameterType="com.nchu.anti_japan_history.webpage.entity.AntiSite">
+        INSERT INTO antisite(antiSiteName,antiSitePicture,exhibitions, collections,address,url,antiSiteState,antiSiteContribution)
+        VALUES (#{antiSiteName},#{antiSitePicture},#{exhibitions},#{collections},#{address},#{url},#{antiSiteState},#{antiSiteContribution})
+    </insert>
+
+    <!--历史遗址详细显示-->
+    <select id="antiSiteDisplay" resultMap="AntiSiteMap">
+        SELECT * FROM antisite WHERE antiSiteId = #{antiSiteId};
+    </select>
+
+    <!--普通用户查询通过故事-->
+    <select id="consumerPassSite" resultMap="AntiSiteMap">
+        SELECT * FROM antisite WHERE antiSiteContribution = #{antiSiteContribution} and antiSiteState = '2';
+    </select>
+    <!--普通查询待审核故事-->
+    <select id="consumerAuditSite" resultMap="AntiSiteMap">
+        SELECT * FROM antisite WHERE antiSiteContribution = #{antiSiteContribution} and antiSiteState = '0';
+    </select>
+    <!--普通查询未通过故事-->
+    <select id="consumerNotAdoptedSite" resultMap="AntiSiteMap">
+        SELECT * FROM antisite WHERE antiSiteContribution = #{antiSiteContribution} and antiSiteState = '1';
+    </select>
+
+    <!--管理员查询通过-->
+    <select id="adminPassSite" resultMap="AntiSiteMap">
+        SELECT * FROM antisite WHERE antiSiteState = '2';
+    </select>
+    <!--管理员查询待审核-->
+    <select id="adminAuditSite" resultMap="AntiSiteMap">
+        SELECT * FROM antisite WHERE antiSiteState = '0';
+    </select>
+    <!--管理员查询未通过-->
+    <select id="adminNotAdoptSite" resultMap="AntiSiteMap">
+        SELECT * FROM antisite WHERE  antiSiteState = '1';
+    </select>
+
+    <!--删除信息-->
+    <delete id="deleteByAntiSiteId">
+        DELETE FROM antisite WHERE antiSiteId = #{antiSiteId};
+    </delete>
+
+    <!--审核信息保存-->
+    <update id="examineSiteUpdate" parameterType="com.nchu.anti_japan_history.webpage.entity.AntiSite">
+         UPDATE antisite SET antiSiteState=#{antiSiteState},antiSiteNotReason=#{antiSiteNotReason}
+         WHERE antiSiteId=#{antiSiteId}
+     </update>
+
+    <!--   <select id="listAll" resultMap="departMap">
+           SELECT departId,departName,departmentLeading,departmentNum,departmentAddress,departmentResponsible
+           FROM department_message
+       </select>
+   -->
+    <!--
+
+     <insert id="save" parameterType="cn.nchu.edu.software.policeManager.entity.DepartmentMessage">
+         INSERT INTO department_message(departName,departmentAddress,departmentLeading, departmentNum,departmentResponsible)
+         VALUES (#{departName},#{departmentAddress},#{departmentLeading},#{departmentNum},#{departmentResponsible})
+     </insert>
+
+
+
+     <select id="selectDepartId" resultMap="departMap">
+         SELECT departId,departName,departmentLeading,departmentNum,departmentAddress,departmentResponsible
+         FROM department_message
+         WHERE departId = #{departId}
+     </select>
+
+     <select id="queryByKeyword" resultMap="departMap">
+         SELECT departId,departName,departmentLeading,departmentNum,departmentAddress,departmentResponsible
+         FROM department_message
+         <where>
+             <if test="keyword!=null">
+                 <bind name="keywordLike" value="'%'+keyword+'%'"></bind>
+                 AND ((departName LIKE #{keywordLike}) OR (departmentLeading LIKE #{keywordLike})
+                 OR (departmentNum LIKE #{keywordLike}) OR (departmentAddress LIKE #{keywordLike})
+                 OR (departmentResponsible LIKE #{keywordLike}))
+             </if>
+         </where>
+     </select>
+ -->
+</mapper>

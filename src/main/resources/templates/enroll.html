@@ -35,25 +35,29 @@
         <form th:action="@{/enrollSave}" method="post" role="form" enctype="multipart/form-data">
             <div class="form-group">
                 <img id="imgFile" src="static\picture\header.jpg" style="width: 100px;height:100px;"
-                         class="img-thumbnail center-block">
+                     class="img-thumbnail center-block">
                 <input id="userPicture" name="userPicture" class="center-block" type="file" style="display: none;">
                 <input id="userPower" name="userPower" value="0" style="display: none">
-                <button id="btnFile" class="btn btn-default center-block" type="button">浏览</button>
             </div>
             <div class="form-group">
                 <label for="userName" class="sr-only">账号</label>
                 <input id="userName" name="userName" class="form-control" placeholder="账号" required autofocus>
+                <input name="userPoint" value="0" hidden>
+                <input name="number" value="0" hidden>
+                <span id="userNameMessage" style="color: firebrick"></span>
             </div>
             <div class="form-group">
                 <label for="userPassword" class="sr-only">密码</label>
                 <input id="userPassword" name="userPassword" type="password" class="form-control" placeholder="密码"
                        required>
+                <span id="userPasswordMessage" style="color: firebrick"></span>
             </div>
             <div class="form-group">
                 <label for="confirmPassword" class="sr-only">确认密码</label>
                 <input id="confirmPassword" type="password" class="form-control"
-                       placeholder="确认面码"
+                       placeholder="确认密码"
                        required>
+                <span id="passwordMessage" style="color:firebrick;"></span>
             </div>
             <div>
                 <button id="btnEnroll" class="btn btn-success btn-block" type="submit">注册</button>
@@ -66,23 +70,27 @@
 
 
 <script type="text/javascript">
+    //用户名校验
+    $(function () {
+        //获取用户名输入框中的值
+        $("#userName").blur(function () {
+            var UserName = $(this).val();
+            $.ajax({
+                url: "/checkout",
+                type: "get",
+                data: "UserName=" + UserName,
+                dataType: "text",
+                async: false,
+                success: function (result) {
+                    $("#userNameMessage").html(result);
+                }
+            });
+        });
+    });
 
-    /*
-    * 注册失败
-    * */
-
-    /*
-    * 头像预览
-    * */
+    //头像预览
     $(document).ready(function () {
-        /*var flag = document.getElementsByName("message");
-        if(flag == 0){
-            alert("注册失败！");
-        }else {
-            alert("注册成功");
-        }*/
-
-        $("#btnFile").click(function () {
+        $("#imgFile").click(function () {
             //设置按钮变成选择文件的按钮
             $("#userPicture").click();
         });
@@ -98,24 +106,34 @@
                     //alert("文件路径为："+ e.target.result);
                     $("#imgFile").attr("src", e.target.result);    //e.target.result就是最后的路径地址
                 };
-            };
+            }
 
         });
     });
 
-   /*
-   * 确认输入密码是否一致
-   * */
-        $("#btnEnroll").click(function () {
-            var userPassword = $("#userPassword").val();
-            var userPasswordConfirm = $("#confirmPassword").val();
-            if(userPassword != userPasswordConfirm){
-                alert("两次密码不一致");
-                $("#userPassword").val("");
-                $("#confirmPassword").val("");
-                return false;
-            }
-        });
+    //判空校验
+    $("#btnEnroll").click(function () {
+        //获取值
+        var userName = $("#userName").val();
+        var userPassword = $("#userPassword").val();
+        var userPasswordConfirm = $("#confirmPassword").val();
+        if(userName == ""){
+            $("#userNameMessage").html("用户名不能为空");
+        }
+        if(userPassword == "") {
+            $("#userPasswordMessage").html("密码不能为空")
+        }
+
+        if(userPasswordConfirm == ""){
+            $("#passwordMessage").html("请确认密码")
+        }
+        if (userPassword != userPasswordConfirm) {
+            $("#passwordMessage").html("密码不一致");
+            $("#userPassword").val("");
+            $("#confirmPassword").val("");
+            return false;
+        }
+    });
 
 
 </script>

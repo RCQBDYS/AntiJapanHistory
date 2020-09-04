@@ -1,5 +1,6 @@
 package com.nchu.anti_japan_history.webpage.controller;
 
+import com.nchu.anti_japan_history.utils.MatchString;
 import com.nchu.anti_japan_history.utils.RandomUtils;
 import com.nchu.anti_japan_history.utils.SensitiveWordFilter;
 import com.nchu.anti_japan_history.webpage.entity.AntiHistory;
@@ -16,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.Date;
 
 /**
  * @Author: wangshen
@@ -55,15 +57,31 @@ public class HistoryController {
     * */
     @PostMapping("/addEntriesData")
     public String addEntriesData(@RequestParam(value = "antiHistoryName")String antiHistoryName,
+                                 @RequestParam(value = "antiHistoryDescription")String antiHistoryDescription,
                                  @RequestParam(value = "antiHistoryPicture")MultipartFile antiHistoryPicture,
-                                 @RequestParam(value = "antiHistoryContent")String antiHistoryContent){
+                                 @RequestParam(value = "antiHistoryContent")String antiHistoryContent,
+                                 @RequestParam(value = "specialTopicId")Integer specialTopicId,
+                                 @RequestParam(value = "antiHistoryContribution")String antiHistoryContribution,
+                                 @RequestParam(value = "antiHistoryState")Integer antiHistoryState,
+                                 @RequestParam(value = "antiHistorySite")String antiHistorySite,
+                                 @RequestParam(value = "antiHistoryTime") Date antiHistoryTime){
         AntiHistory antiHistory = new AntiHistory();
         antiHistory.setAntiHistoryName(antiHistoryName);
+        antiHistory.setAntiHistoryDescription(antiHistoryDescription);
+        antiHistory.setAntiHistoryContribution(antiHistoryContribution);
+        antiHistory.setAntiHistoryState(antiHistoryState);
+        antiHistory.setAntiHistoryType(specialTopicId);
+        antiHistory.setAntiHistoryTime(antiHistoryTime);
+        antiHistory.setAntiHistorySite(antiHistorySite);
         //进行敏感词汇过滤，铭感词汇替换成
         SensitiveWordFilter sensitiveWordFilter = new SensitiveWordFilter("CensorWords.txt");
         sensitiveWordFilter.InitializationWork();
         //System.out.println("被检测字符长度="+antiHistoryContent.length());
         antiHistoryContent = sensitiveWordFilter.filterInfo(antiHistoryContent);
+        MatchString matchString = new MatchString();
+        String child = "\\*";
+        int count = matchString.matchStringByRegularExpression(antiHistoryContent,child);
+        System.out.println(count);
         //System.out.println("过滤之后的Content="+antiHistoryContent);
         //logger.info("替换后的内容：" + antiHistoryContent);
         antiHistory.setAntiHistoryContent(antiHistoryContent);

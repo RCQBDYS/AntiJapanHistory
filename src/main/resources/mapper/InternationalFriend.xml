@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nchu.anti_japan_history.webpage.mapper.InternationalFriendMapper">
+    <resultMap id="internationalFriendMap" type="com.nchu.anti_japan_history.webpage.entity.InternationalFriend">
+        <id column="internationalFriendId" property="internationalFriendId" jdbcType="INTEGER"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="friendDescription" property="friendDescription" jdbcType="VARCHAR"/>
+        <result column="achievement" property="achievement" jdbcType="VARCHAR"/>
+        <result column="picture" property="picture" jdbcType="VARCHAR"/>
+        <result column="friendState" property="friendState" jdbcType="INTEGER"/>
+        <result column="friendContribution" property="friendContribution" jdbcType="VARCHAR"/>
+        <result column="friendNotReason" property="friendNotReason" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--主页国际友人信息显示-->
+    <select id="internationalFriendSelect" resultMap="internationalFriendMap">
+        SELECT * FROM internationalfriend where friendState = '2' LIMIT 4;
+    </select>
+
+    <!--国际友人信息全部显示-->
+    <select id="internationalFriendListAll" resultMap="internationalFriendMap">
+        SELECT * FROM internationalfriend where friendState = '2';
+    </select>
+
+    <!--国际友人信息保存-->
+    <insert id="internationalFriendSave" parameterType="com.nchu.anti_japan_history.webpage.entity.InternationalFriend">
+        INSERT INTO internationalfriend(name,friendDescription,achievement,picture, friendState,friendContribution)
+        VALUES (#{name},#{friendDescription},#{achievement},#{picture},#{friendState},#{friendContribution})
+    </insert>
+
+    <!--国际友人信息详细显示-->
+    <select id="internationalFriendDisplay" resultMap="internationalFriendMap">
+        SELECT * FROM internationalfriend WHERE internationalFriendId=#{internationalFriendId};
+    </select>
+
+    <!--普通用户查询通过国际友人信息-->
+    <select id="consumerPassFriend" resultMap="internationalFriendMap">
+        SELECT * FROM internationalfriend WHERE friendContribution=#{friendContribution} and friendState = '2';
+    </select>
+    <!--普通用户查询待审核-->
+    <select id="consumerAuditFriend" resultMap="internationalFriendMap">
+        SELECT * FROM internationalfriend WHERE friendContribution=#{friendContribution} and friendState = '0';
+    </select>
+    <!--普通用户查询未通过-->
+    <select id="consumerNotAdoptedFriend" resultMap="internationalFriendMap">
+        SELECT * FROM internationalfriend WHERE friendContribution=#{friendContribution} and friendState = '1';
+    </select>
+
+    <!--管理员查询通过-->
+    <select id="adminPassFriend" resultMap="internationalFriendMap">
+        SELECT * FROM internationalfriend WHERE friendState = '2';
+    </select>
+    <!--管理员查询待审核-->
+    <select id="adminAuditFriend" resultMap="internationalFriendMap">
+        SELECT * FROM internationalfriend WHERE friendState = '0';
+    </select>
+    <!--管理员查询未通过-->
+    <select id="adminNotAdoptedFriend" resultMap="internationalFriendMap">
+        SELECT * FROM internationalfriend WHERE friendState = '1';
+    </select>
+
+    <!--删除国际友人信息-->
+    <delete id="deleteByFriendId">
+        DELETE FROM internationalfriend WHERE internationalFriendId = #{internationalFriendId};
+    </delete>
+
+    <!--国际友人信息报存-->
+    <update id="examineFriendUpdate" parameterType="com.nchu.anti_japan_history.webpage.entity.InternationalFriend">
+        UPDATE internationalfriend SET friendState=#{friendState},friendNotReason=#{friendNotReason}
+        WHERE internationalFriendId=#{internationalFriendId}
+    </update>
+
+
+    <!--<select id="listAll" resultMap="departMap">
+        SELECT departId,departName,departmentLeading,departmentNum,departmentAddress,departmentResponsible
+        FROM department_message
+    </select>-->
+
+    <!--
+
+    <insert id="save" parameterType="cn.nchu.edu.software.policeManager.entity.DepartmentMessage">
+        INSERT INTO department_message(departName,departmentAddress,departmentLeading, departmentNum,departmentResponsible)
+        VALUES (#{departName},#{departmentAddress},#{departmentLeading},#{departmentNum},#{departmentResponsible})
+    </insert>
+
+
+    <select id="selectDepartId" resultMap="departMap">
+        SELECT departId,departName,departmentLeading,departmentNum,departmentAddress,departmentResponsible
+        FROM department_message
+        WHERE departId = #{departId}
+    </select>
+
+    <select id="queryByKeyword" resultMap="departMap">
+        SELECT departId,departName,departmentLeading,departmentNum,departmentAddress,departmentResponsible
+        FROM department_message
+        <where>
+            <if test="keyword!=null">
+                <bind name="keywordLike" value="'%'+keyword+'%'"></bind>
+                AND ((departName LIKE #{keywordLike}) OR (departmentLeading LIKE #{keywordLike})
+                OR (departmentNum LIKE #{keywordLike}) OR (departmentAddress LIKE #{keywordLike})
+                OR (departmentResponsible LIKE #{keywordLike}))
+            </if>
+        </where>
+    </select>-->
+
+</mapper>

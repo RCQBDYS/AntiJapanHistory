@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nchu.anti_japan_history.webpage.mapper.NewspaperMapper">
+    <resultMap id="newspaperMap" type="com.nchu.anti_japan_history.webpage.entity.Newspaper">
+        <id column="newspaperId" property="newspaperId" jdbcType="INTEGER"/>
+        <result column="newspaperName" property="newspaperName" jdbcType="VARCHAR"/>
+        <result column="newspaperPicture" property="newspaperPicture" jdbcType="VARCHAR"/>
+        <result column="newspaperPath" property="newspaperPath" jdbcType="VARCHAR"/>
+        <result column="principalPerson" property="principalPerson" jdbcType="VARCHAR"/>
+        <result column="publishing" property="publishing" jdbcType="VARCHAR"/>
+        <result column="placeOfPublication" property="placeOfPublication" jdbcType="VARCHAR"/>
+        <result column="publicationTime" property="publicationTime" jdbcType="VARCHAR"/>
+        <result column="newspaperState" property="newspaperState" jdbcType="INTEGER"/>
+        <result column="newspaperContribution" property="newspaperContribution" jdbcType="VARCHAR"/>
+        <result column="newspaperNotReason" property="newspaperNotReason" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--报纸信息的全部显示-->
+    <select id="newspaperListAll" resultMap="newspaperMap">
+        SELECT * FROM newspaper where newspaperState = '2';
+    </select>
+
+    <!--报纸信息的保存-->
+    <insert id="newspaperSave" parameterType="com.nchu.anti_japan_history.webpage.entity.Newspaper">
+        INSERT INTO newspaper(newspaperName,newspaperPicture,newspaperPath, principalPerson,publishing,placeOfPublication,publicationTime,newspaperState,newspaperContribution)
+        VALUES (#{newspaperName},#{newspaperPicture},#{newspaperPath},#{principalPerson},#{publishing},#{placeOfPublication},#{publicationTime},#{newspaperState},#{newspaperContribution})
+    </insert>
+
+    <!--报纸信息的详细显示-->
+    <select id="newspaperDisplay" resultMap="newspaperMap">
+        SELECT * FROM newspaper where newspaperId = #{newspaperId};
+    </select>
+
+    <!--普通用户查询通过的报纸信息-->
+    <select id="consumerPassNewspaper" resultMap="newspaperMap">
+        SELECT * FROM newspaper where newspaperContribution = #{newspaperContribution} and newspaperState = '2';
+    </select>
+    <!--普通用户查询待审核-->
+    <select id="consumerAuditNewspaper" resultMap="newspaperMap">
+        SELECT * FROM newspaper where newspaperContribution = #{newspaperContribution} and newspaperState = '0';
+    </select>
+    <!--普通用户查询未通过-->
+    <select id="consumerNotAdoptedNewspaper" resultMap="newspaperMap">
+        SELECT * FROM newspaper where newspaperContribution = #{newspaperContribution} and newspaperState = '1';
+    </select>
+
+
+    <!--管理员查询通过-->
+    <select id="adminPassNews" resultMap="newspaperMap">
+        SELECT * FROM newspaper where newspaperState = '2';
+    </select>
+    <!--管理员查询待审核-->
+    <select id="adminAuditNews" resultMap="newspaperMap">
+        SELECT * FROM newspaper where newspaperState = '0';
+    </select>
+    <!--管理员查询未通过-->
+    <select id="adminNotAdoptedNews" resultMap="newspaperMap">
+        SELECT * FROM newspaper where  newspaperState = '1';
+    </select>
+
+    <delete id="deleteByNewsId">
+        DELETE FROM newspaper WHERE newspaperId = #{newspaperId};
+    </delete>
+
+    <!--<select id="listAll" resultMap="departMap">
+        SELECT departId,departName,departmentLeading,departmentNum,departmentAddress,departmentResponsible
+        FROM department_message
+    </select>-->
+
+    <!--
+
+    <insert id="save" parameterType="cn.nchu.edu.software.policeManager.entity.DepartmentMessage">
+        INSERT INTO department_message(departName,departmentAddress,departmentLeading, departmentNum,departmentResponsible)
+        VALUES (#{departName},#{departmentAddress},#{departmentLeading},#{departmentNum},#{departmentResponsible})
+    </insert>
+
+    <update id="update" parameterType="cn.nchu.edu.software.policeManager.entity.DepartmentMessage">
+        UPDATE department_message SET departName=#{departName},departmentAddress=#{departmentAddress},
+        departmentLeading=#{departmentLeading},departmentNum=#{departmentNum},departmentResponsible=#{departmentResponsible}
+        WHERE departId=#{departId}
+    </update>
+
+    <select id="selectDepartId" resultMap="departMap">
+        SELECT departId,departName,departmentLeading,departmentNum,departmentAddress,departmentResponsible
+        FROM department_message
+        WHERE departId = #{departId}
+    </select>
+
+    <select id="queryByKeyword" resultMap="departMap">
+        SELECT departId,departName,departmentLeading,departmentNum,departmentAddress,departmentResponsible
+        FROM department_message
+        <where>
+            <if test="keyword!=null">
+                <bind name="keywordLike" value="'%'+keyword+'%'"></bind>
+                AND ((departName LIKE #{keywordLike}) OR (departmentLeading LIKE #{keywordLike})
+                OR (departmentNum LIKE #{keywordLike}) OR (departmentAddress LIKE #{keywordLike})
+                OR (departmentResponsible LIKE #{keywordLike}))
+            </if>
+        </where>
+    </select>-->
+
+</mapper>
